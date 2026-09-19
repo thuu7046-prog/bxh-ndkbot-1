@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BẢNG XẾP HẠNG NDK BOT</title>
-    <!-- Phông chữ Mecha Sci-Fi cao cấp -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Orbitron:wght@800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-cyan: #00f0ff;    /* Xanh Neon Cyber Robot */
-            --secondary-blue: #0066ff;  /* Xanh Laser Chiến Binh */
-            --accent-glow: #7000ff;     /* Tím Neon Accent */
-            --bg-dark: #03060c;
-            --card-bg: rgba(8, 14, 26, 0.85);
-            --border-cyan: rgba(0, 240, 255, 0.4);
+            --primary-cyan: #00f0ff;
+            --electric-blue: #0077ff;
+            --dark-core: #030712;
+            --card-bg: rgba(6, 15, 30, 0.88);
+            --border-cyan: rgba(0, 240, 255, 0.45);
             --text-main: #f1f5f9;
         }
 
@@ -28,874 +26,182 @@
 
         body { 
             font-family: 'Rajdhani', sans-serif;
-            background-color: var(--bg-dark); 
-            /* Hình nền Robot Cyberpunk 3D kết hợp ma trận Lưới HUD Sci-Fi */
+            background-color: var(--dark-core); 
             background-image: 
-                radial-gradient(circle at 50% 30%, rgba(0, 240, 255, 0.15) 0%, rgba(3, 6, 12, 0.95) 80%),
+                radial-gradient(circle at 50% 25%, rgba(0, 240, 255, 0.15) 0%, rgba(3, 7, 18, 0.95) 85%),
                 linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
-            background-size: cover, 40px 40px, 40px 40px, cover;
-            background-repeat: no-repeat, repeat, repeat, no-repeat;
-            background-position: center top;
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: cover, 35px 35px, 35px 35px;
+            background-repeat: no-repeat, repeat, repeat;
             background-attachment: fixed;
             color: var(--text-main); 
-            text-align: center; 
-            padding: 40px 20px; 
+            padding: 20px; 
             min-height: 100vh;
             user-select: none; 
             -webkit-user-select: none;
         }
-        
-        /* Tiêu đề Robot Mecha Xanh Neon cực ngầu */
-        h1 { 
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.2rem;
-            font-weight: 900;
-            letter-spacing: 5px;
-            color: #fff;
-            text-transform: uppercase;
-            margin-bottom: 50px; 
-            text-shadow: 
-                0 0 12px rgba(0, 240, 255, 0.9),
-                0 0 25px rgba(0, 240, 255, 0.6),
-                0 0 50px rgba(0, 102, 255, 0.4);
-            position: relative;
-            display: inline-block;
-        }
 
-        h1::before {
-            content: '[ WARRIOR BOT SYSTEM ONLINE ]';
-            position: absolute;
-            top: -24px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Chakra Petch', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            color: var(--primary-cyan);
-            text-shadow: 0 0 10px var(--primary-cyan);
-            white-space: nowrap;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--primary-cyan), var(--secondary-blue), var(--primary-cyan), transparent);
-            box-shadow: 0 0 15px var(--primary-cyan);
-        }
-
-        .gallery {
+        /* Thanh Top Bar chứa bộ đếm & tìm kiếm */
+        .top-bar {
+            max-width: 1000px;
+            margin: 0 auto 25px auto;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 28px;
-            max-width: 1450px;
-            margin: 0 auto;
-            padding-bottom: 50px;
+            gap: 15px;
         }
 
-        /* Khung Giáp Robot Vát Góc (Mecha Armor Frame) */
-        .image-container {
-            position: relative;
-            width: 320px;
-            cursor: pointer; 
-            overflow: hidden;
-            background: var(--card-bg);
-            border: 1px solid var(--border-cyan);
-            /* Vát góc phong cách khiên giáp robot chiến binh */
-            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
-            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
-            content-visibility: auto; 
-            contain-intrinsic-size: 320px 180px;
+        .header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--primary-cyan);
         }
 
-        .image-container:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--primary-cyan);
-            box-shadow: 
-                0 0 25px rgba(0, 240, 255, 0.5),
-                0 0 15px rgba(0, 102, 255, 0.3) inset;
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .image-container img { 
-            width: 100%; 
-            height: auto; 
-            display: block;
-            transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
-            background-color: rgba(4, 8, 16, 0.8);
-            -webkit-user-drag: none;
-        }
-
-        .image-container:hover img {
-            transform: scale(1.12);
-        }
-
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 5;
-            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0, 240, 255, 0.1) 100%);
-            pointer-events: none;
-        }
-
-        /* Huy hiệu TOP ở góc trái - Định dạng TOP #01, TOP #02 */
-        .image-number {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+        .counter-badge {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 6px 16px;
+            border-radius: 20px;
             font-family: 'Chakra Petch', sans-serif;
-            background: rgba(3, 6, 12, 0.92);
-            color: var(--primary-cyan); 
-            padding: 4px 14px;
             font-weight: 700;
             font-size: 14px;
-            letter-spacing: 1.5px;
-            pointer-events: none; 
-            border-left: 3px solid var(--primary-cyan);
-            border-bottom: 2px solid var(--secondary-blue);
-            box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
-            z-index: 10;
-            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
         }
 
-        /* Lightbox nâng cấp Sci-Fi Overlay */
-        .lightbox-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(2, 4, 8, 0.96);
-            backdrop-filter: blur(16px);
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 1000; 
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .lightbox-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .lightbox-wrapper {
+        .search-box {
             position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 50px rgba(0, 240, 255, 0.4);
         }
 
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 88vh;
-            border-radius: 4px;
-            border: 1px solid var(--primary-cyan);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-            -webkit-user-drag: none;
-        }
-
-        .lightbox-overlay.active .lightbox-image {
-            transform: scale(1);
-        }
-
-        .close-lightbox {
-            position: absolute;
-            top: 20px;
-            right: 35px;
-            color: var(--primary-cyan);
-            font-size: 45px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1010;
-            transition: all 0.2s;
-            text-shadow: 0 0 12px var(--primary-cyan);
-        }
-
-        .close-lightbox:hover {
-            color: #fff;
-            transform: scale(1.2) rotate(90deg);
-        }
-
-        /* Frame Cảnh báo DevTools */
-        #devtools-warning {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #020408;
-            color: var(--primary-cyan);
-            z-index: 999999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            padding: 20px;
-            box-sizing: border-box;
-            text-shadow: 0 0 25px var(--primary-cyan);
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; letter-spacing: 2px; }
-            .image-container { width: 100%; max-width: 340px; }
-        }
-    </style>
-</head>
-<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
-
-    <!-- CẢNH BÁO MỞ F12 -->
-    <div id="devtools-warning">
-        <p>⚠️ ACCESS DENIED / DEVTOOLS DETECTED</p>
-        <p style="color: #fff; font-size: 18px; font-family: 'Chakra Petch', sans-serif; font-weight: 600; margin-top: 15px;">
-            Vui lòng tắt DevTools (F12) để tiếp tục xem nội dung!
-        </p>
-    </div>
-
-    <div id="main-content">
-        <h1>BẢNG XẾP HẠNG NDK BOT</h1>
-        <div class="gallery" id="gallery-container"></div>
-    </div>
-
-    <!-- KHUNG LIGHTBOX -->
-    <div class="lightbox-overlay" id="lightbox">
-        <span class="close-lightbox" id="close-btn">&times;</span>
-        <div class="lightbox-wrapper">
-            <img src="" alt="Ảnh lớn" class="lightbox-image" id="lightbox-img">
-            <div class="image-overlay"></div>
-        </div>
-    </div>
-
-    <script>
-        const warningEl = document.getElementById('devtools-warning');
-        const mainContentEl = document.getElementById('main-content');
-        const gallery = document.getElementById('gallery-container');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const closeBtn = document.getElementById('close-btn');
-
-        const blobCache = {};
-
-        function detectDevTools() {
-            const threshold = 160;
-            const widthDiff = window.outerWidth - window.innerWidth > threshold;
-            const heightDiff = window.outerHeight - window.innerHeight > threshold;
-            
-            if (widthDiff || heightDiff) {
-                warningEl.style.display = 'flex';
-                mainContentEl.style.display = 'none';
-            } else {
-                warningEl.style.display = 'none';
-                mainContentEl.style.display = 'block';
-            }
-        }
-
-        window.addEventListener('resize', detectDevTools);
-        setInterval(detectDevTools, 1000);
-
-        async function fetchAndCreateBlobUrl(imageSrc) {
-            try {
-                const response = await fetch(imageSrc);
-                if (!response.ok) return null;
-                const blob = await response.blob();
-                const blobUrl = URL.createObjectURL(blob);
-                blobCache[imageSrc] = blobUrl;
-                return blobUrl;
-            } catch (e) {
-                return null;
-            }
-        }
-
-        const fragment = document.createDocumentFragment();
-
-        for (let i = 1; i <= 200; i++) {
-            const div = document.createElement('div');
-            div.className = 'image-container';
-
-            const fileName = i + '.png';
-
-            const img = document.createElement('img');
-            img.alt = 'Bảng ' + i;
-            img.loading = 'lazy';
-
-            fetchAndCreateBlobUrl(fileName).then(blobUrl => {
-                if (blobUrl) {
-                    img.src = blobUrl;
-                } else {
-                    div.style.display = 'none';
-                }
-            });
-
-            div.onclick = function() {
-                if (blobCache[fileName]) {
-                    openLightbox(blobCache[fileName]);
-                }
-            };
-
-            const overlay = document.createElement('div');
-            overlay.className = 'image-overlay';
-
-            // Định dạng hiển thị TOP #01, TOP #02 ở góc trái
-            const numberSpan = document.createElement('span');
-            numberSpan.className = 'image-number';
-            const formattedNum = i < 10 ? '0' + i : i;
-            numberSpan.innerText = 'TOP #' + formattedNum; 
-
-            div.appendChild(img);
-            div.appendChild(overlay);
-            div.appendChild(numberSpan);
-            fragment.appendChild(div);
-        }
-
-        gallery.appendChild(fragment);
-
-        function openLightbox(blobUrl) {
-            lightboxImg.src = blobUrl; 
-            lightbox.classList.add('active'); 
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active'); 
-            document.body.style.overflow = ''; 
-            setTimeout(() => { lightboxImg.src = ''; }, 300);
-        }
-
-        closeBtn.onclick = closeLightbox;
-
-        lightbox.onclick = function(e) {
-            if (e.target !== lightboxImg) {
-                closeLightbox();
-            }
-        };
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                closeLightbox();
-            }
-        });
-    </script>
-</body>
-</html>
-            background-size: cover, 40px 40px, 40px 40px, cover;
-            background-repeat: no-repeat, repeat, repeat, no-repeat;
-            background-position: center top;
-            background-attachment: fixed;
-            color: var(--text-main); 
-            text-align: center; 
-            padding: 40px 20px; 
-            min-height: 100vh;
-            user-select: none; 
-            -webkit-user-select: none;
-        }
-        
-        /* Tiêu đề Mecha Cyberpunk Neon Cyan */
-        h1 { 
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.2rem;
-            font-weight: 900;
-            letter-spacing: 6px;
-            color: #ffffff;
-            text-transform: uppercase;
-            margin-bottom: 50px; 
-            text-shadow: 
-                0 0 12px rgba(0, 240, 255, 0.9),
-                0 0 25px rgba(0, 240, 255, 0.6),
-                0 0 50px rgba(0, 102, 255, 0.4);
-            position: relative;
-            display: inline-block;
-        }
-
-        h1::before {
-            content: '[ CYBER MECHA PROTOCOL ONLINE ]';
-            position: absolute;
-            top: -22px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Chakra Petch', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            color: var(--primary-cyan);
-            text-shadow: 0 0 10px var(--primary-cyan);
-            white-space: nowrap;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary-cyan), var(--electric-blue), var(--primary-cyan), transparent);
-            box-shadow: 0 0 15px var(--primary-cyan);
-        }
-
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 28px;
-            max-width: 1450px;
-            margin: 0 auto;
-            padding-bottom: 50px;
-        }
-
-        /* Khung chứa ảnh thiết kế Giáp Robot Mecha */
-        .image-container {
-            position: relative;
-            width: 320px;
-            cursor: pointer; 
-            overflow: hidden;
-            background: var(--card-bg);
+        .search-box input {
+            background: rgba(6, 15, 30, 0.9);
             border: 1px solid var(--border-cyan);
-            /* Góc vát Sci-Fi Mecha Armor Cutout */
-            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
-            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
-            content-visibility: auto; 
-            contain-intrinsic-size: 320px 180px;
+            color: var(--text-main);
+            padding: 8px 16px 8px 36px;
+            border-radius: 6px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
         }
 
-        .image-container:hover {
-            transform: translateY(-8px) scale(1.02);
+        .search-box input:focus {
             border-color: var(--primary-cyan);
-            box-shadow: 
-                0 0 25px rgba(0, 240, 255, 0.5),
-                0 0 12px rgba(0, 102, 255, 0.3) inset;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
         }
 
-        .image-container img { 
-            width: 100%; 
-            height: auto; 
-            display: block;
-            transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
-            background-color: rgba(0, 0, 0, 0.7);
-            -webkit-user-drag: none;
-        }
-
-        .image-container:hover img {
-            transform: scale(1.12);
-        }
-
-        .image-overlay {
+        .search-box::before {
+            content: '🔍';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 5;
-            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0, 240, 255, 0.08) 100%);
-            pointer-events: none;
-        }
-
-        /* Huy hiệu Tag Số thứ tự ở góc trái (01, 02, 03...) */
-        .image-number {
-            position: absolute;
-            top: 0;
-            left: 0;
-            font-family: 'Orbitron', sans-serif;
-            background: rgba(3, 6, 13, 0.92);
-            color: var(--primary-cyan); 
-            padding: 6px 16px;
-            font-weight: 800;
-            font-size: 16px;
-            letter-spacing: 2px;
-            pointer-events: none; 
-            border-right: 2px solid var(--primary-cyan);
-            border-bottom: 2px solid var(--electric-blue);
-            /* Vát nhẹ góc thẻ số */
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
-            z-index: 10;
-        }
-
-        /* Lightbox phóng to ảnh */
-        .lightbox-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(2, 4, 10, 0.96);
-            backdrop-filter: blur(16px);
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 1000; 
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .lightbox-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .lightbox-wrapper {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 50px rgba(0, 240, 255, 0.35);
-        }
-
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 88vh;
-            border-radius: 4px;
-            border: 1px solid var(--primary-cyan);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-            -webkit-user-drag: none;
-        }
-
-        .lightbox-overlay.active .lightbox-image {
-            transform: scale(1);
-        }
-
-        .close-lightbox {
-            position: absolute;
-            top: 20px;
-            right: 35px;
-            color: var(--primary-cyan);
-            font-size: 45px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1010;
-            transition: all 0.2s;
-            text-shadow: 0 0 12px var(--primary-cyan);
-        }
-
-        .close-lightbox:hover {
-            color: #ffffff;
-            transform: scale(1.2) rotate(90deg);
-        }
-
-        /* Khung Cảnh báo DevTools */
-        #devtools-warning {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #02040a;
-            color: var(--primary-cyan);
-            z-index: 999999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            padding: 20px;
-            box-sizing: border-box;
-            text-shadow: 0 0 25px var(--primary-cyan);
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; letter-spacing: 2px; }
-            .image-container { width: 100%; max-width: 340px; }
-        }
-    </style>
-</head>
-<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
-
-    <!-- CẢNH BÁO MỞ F12 -->
-    <div id="devtools-warning">
-        <p>⚠️ ACCESS DENIED / DEVTOOLS DETECTED</p>
-        <p style="color: #fff; font-size: 18px; font-family: 'Chakra Petch', sans-serif; font-weight: 600; margin-top: 15px;">
-            Vui lòng tắt DevTools (F12) để tiếp tục xem nội dung!
-        </p>
-    </div>
-
-    <div id="main-content">
-        <h1>BẢNG XẾP HẠNG NDK BOT</h1>
-        <div class="gallery" id="gallery-container"></div>
-    </div>
-
-    <!-- KHUNG LIGHTBOX -->
-    <div class="lightbox-overlay" id="lightbox">
-        <span class="close-lightbox" id="close-btn">&times;</span>
-        <div class="lightbox-wrapper">
-            <img src="" alt="Ảnh lớn" class="lightbox-image" id="lightbox-img">
-            <div class="image-overlay"></div>
-        </div>
-    </div>
-
-    <script>
-        const warningEl = document.getElementById('devtools-warning');
-        const mainContentEl = document.getElementById('main-content');
-        const gallery = document.getElementById('gallery-container');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const closeBtn = document.getElementById('close-btn');
-
-        const blobCache = {};
-
-        function detectDevTools() {
-            const threshold = 160;
-            const widthDiff = window.outerWidth - window.innerWidth > threshold;
-            const heightDiff = window.outerHeight - window.innerHeight > threshold;
-            
-            if (widthDiff || heightDiff) {
-                warningEl.style.display = 'flex';
-                mainContentEl.style.display = 'none';
-            } else {
-                warningEl.style.display = 'none';
-                mainContentEl.style.display = 'block';
-            }
-        }
-
-        window.addEventListener('resize', detectDevTools);
-        setInterval(detectDevTools, 1000);
-
-        async function fetchAndCreateBlobUrl(imageSrc) {
-            try {
-                const response = await fetch(imageSrc);
-                if (!response.ok) return null;
-                const blob = await response.blob();
-                const blobUrl = URL.createObjectURL(blob);
-                blobCache[imageSrc] = blobUrl;
-                return blobUrl;
-            } catch (e) {
-                return null;
-            }
-        }
-
-        const fragment = document.createDocumentFragment();
-
-        for (let i = 1; i <= 200; i++) {
-            const div = document.createElement('div');
-            div.className = 'image-container';
-
-            const fileName = i + '.png';
-
-            const img = document.createElement('img');
-            img.alt = 'Bảng ' + i;
-            img.loading = 'lazy';
-
-            fetchAndCreateBlobUrl(fileName).then(blobUrl => {
-                if (blobUrl) {
-                    img.src = blobUrl;
-                } else {
-                    div.style.display = 'none';
-                }
-            });
-
-            div.onclick = function() {
-                if (blobCache[fileName]) {
-                    openLightbox(blobCache[fileName]);
-                }
-            };
-
-            const overlay = document.createElement('div');
-            overlay.className = 'image-overlay';
-
-            // Định dạng hiển thị dạng 01, 02, 09, 10...
-            const numberSpan = document.createElement('span');
-            numberSpan.className = 'image-number';
-            numberSpan.innerText = i < 10 ? '0' + i : i; 
-
-            div.appendChild(img);
-            div.appendChild(overlay);
-            div.appendChild(numberSpan);
-            fragment.appendChild(div);
-        }
-
-        gallery.appendChild(fragment);
-
-        function openLightbox(blobUrl) {
-            lightboxImg.src = blobUrl; 
-            lightbox.classList.add('active'); 
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active'); 
-            document.body.style.overflow = ''; 
-            setTimeout(() => { lightboxImg.src = ''; }, 300);
-        }
-
-        closeBtn.onclick = closeLightbox;
-
-        lightbox.onclick = function(e) {
-            if (e.target !== lightboxImg) {
-                closeLightbox();
-            }
-        };
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                closeLightbox();
-            }
-        });
-    </script>
-</body>
-</html>
-                url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
-            background-size: cover, 40px 40px, 40px 40px, cover;
-            background-repeat: no-repeat, repeat, repeat, no-repeat;
-            background-position: center top;
-            background-attachment: fixed;
-            color: var(--text-main); 
-            text-align: center; 
-            padding: 40px 20px; 
-            min-height: 100vh;
-            user-select: none; 
-            -webkit-user-select: none;
-        }
-        
-        /* Tiêu đề Mecha Robot Cyan */
-        h1 { 
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            font-weight: 900;
-            letter-spacing: 4px;
-            color: #fff;
-            text-transform: uppercase;
-            margin-bottom: 45px; 
-            text-shadow: 
-                0 0 10px var(--neon-cyan),
-                0 0 25px var(--neon-cyan),
-                0 0 50px var(--neon-blue);
-            position: relative;
-            display: inline-block;
-        }
-
-        h1::before {
-            content: '🤡 NDK BOT STUDIO 🤡';
-            position: absolute;
-            top: -22px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Chakra Petch', sans-serif;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 8px var(--neon-cyan);
-            white-space: nowrap;
+            opacity: 0.7;
         }
 
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-blue), var(--neon-cyan), transparent);
-            box-shadow: 0 0 15px var(--neon-cyan);
-        }
-
-        /* Khung gallery căn chỉnh khoa học */
+        /* Danh sách Bảng Xếp Hạng */
         .gallery {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            gap: 24px;
-            max-width: 1420px;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 1000px;
             margin: 0 auto;
             padding-bottom: 50px;
         }
 
-        /* Thẻ giáp Robot (Mecha Card) vát góc xịn */
+        /* Khung hiển thị từng hàng BXH */
         .image-container {
             position: relative;
-            width: 320px;
-            cursor: pointer; 
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background: var(--card-bg);
             border: 1px solid var(--border-cyan);
-            /* Cắt góc Sci-Fi Mecha Armor */
-            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            padding: 12px 20px;
+            border-radius: 8px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
-            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
-            content-visibility: auto; 
-            contain-intrinsic-size: 320px 180px;
+            transition: all 0.3s ease;
         }
 
         .image-container:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--neon-cyan);
-            box-shadow: 
-                0 0 25px var(--glow-cyan),
-                0 0 10px rgba(0, 240, 255, 0.2) inset;
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            transform: translateX(4px);
         }
 
-        .image-container img { 
-            width: 100%; 
-            height: auto; 
-            display: block;
-            transition: transform 0.5s ease;
-            background-color: rgba(0, 0, 0, 0.6);
-            -webkit-user-drag: none;
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .image-container:hover img {
-            transform: scale(1.1);
+        /* Ảnh thu nhỏ preview */
+        .img-wrapper {
+            position: relative;
+            width: 120px;
+            height: 68px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            cursor: pointer;
         }
 
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .img-wrapper img {
             width: 100%;
             height: 100%;
-            z-index: 5;
-            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0, 240, 255, 0.08) 100%);
-            pointer-events: none;
+            object-fit: cover;
         }
 
-        /* Tag số thứ tự ở GÓC TRÁI chuẩn dạng 01, 02... */
         .image-number {
             position: absolute;
-            top: 8px;
-            left: 8px;
+            top: 4px;
+            left: 4px;
+            background: rgba(3, 7, 18, 0.85);
+            color: var(--primary-cyan);
+            padding: 2px 6px;
             font-family: 'Chakra Petch', sans-serif;
-            background: rgba(3, 7, 18, 0.9);
-            color: var(--neon-cyan); 
-            padding: 3px 12px;
+            font-size: 11px;
             font-weight: 700;
-            font-size: 16px;
-            letter-spacing: 1px;
-            pointer-events: none; 
-            border-left: 3px solid var(--neon-cyan);
-            border-bottom: 1px solid var(--border-cyan);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-            z-index: 10;
+            border-radius: 3px;
+            border: 1px solid var(--primary-cyan);
         }
 
-        /* Lightbox nâng cấp */
+        .item-info {
+            text-align: left;
+        }
+
+        .item-title {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .item-tag {
+            display: inline-block;
+            margin-top: 4px;
+            background: rgba(0, 119, 255, 0.2);
+            border: 1px solid var(--electric-blue);
+            color: var(--primary-cyan);
+            padding: 2px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+            font-family: 'Chakra Petch', sans-serif;
+        }
+
+        /* Lightbox */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -903,223 +209,149 @@
             width: 100%;
             height: 100%;
             background-color: rgba(2, 4, 10, 0.95);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(12px);
             display: none; 
             justify-content: center;
             align-items: center;
             z-index: 1000; 
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .lightbox-overlay.active {
             display: flex;
-            opacity: 1;
-        }
-
-        .lightbox-wrapper {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 40px var(--glow-cyan);
         }
 
         .lightbox-image {
-            max-width: 100%;
-            max-height: 88vh;
-            border-radius: 4px;
-            border: 1px solid var(--neon-cyan);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-            -webkit-user-drag: none;
-        }
-
-        .lightbox-overlay.active .lightbox-image {
-            transform: scale(1);
+            max-width: 90%;
+            max-height: 85vh;
+            border: 1px solid var(--primary-cyan);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            border-radius: 6px;
         }
 
         .close-lightbox {
             position: absolute;
             top: 20px;
-            right: 35px;
-            color: var(--neon-cyan);
-            font-size: 42px;
-            font-weight: bold;
+            right: 30px;
+            color: var(--primary-cyan);
+            font-size: 40px;
             cursor: pointer;
-            z-index: 1010;
-            transition: all 0.2s;
-            text-shadow: 0 0 12px var(--neon-cyan);
         }
 
-        .close-lightbox:hover {
-            color: #fff;
-            transform: scale(1.2) rotate(90deg);
-        }
-
-        /* DevTools Warning */
         #devtools-warning {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #020408;
-            color: #ff0055;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #02040a;
+            color: var(--primary-cyan);
             z-index: 999999;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             font-family: 'Orbitron', sans-serif;
-            font-size: 26px;
-            font-weight: 900;
-            padding: 20px;
-            box-sizing: border-box;
-            text-shadow: 0 0 20px #ff0055;
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; letter-spacing: 2px; }
-            .gallery { justify-content: center; }
-            .image-container { width: 100%; max-width: 340px; }
+            font-size: 24px;
         }
     </style>
 </head>
 <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
 
-    <!-- CẢNH BÁO MỞ F12 -->
     <div id="devtools-warning">
-        <p>⚠️ CẢNH BÁO BẢO MẬT</p>
-        <p style="color: #fff; font-size: 16px; font-family: 'Chakra Petch', sans-serif; font-weight: 600; margin-top: 15px;">
-            Vui lòng tắt DevTools (F12) để tiếp tục xem nội dung!
-        </p>
+        <p>⚠️ ACCESS DENIED / DEVTOOLS DETECTED</p>
     </div>
 
     <div id="main-content">
-        <h1>BẢNG XẾP HẠNG NDK BOT</h1>
+        <!-- Thanh công cụ điều khiển -->
+        <div class="top-bar">
+            <div class="header-title">LỊCH SỬ BẢNG XẾP HẠNG</div>
+            <div class="controls">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Tìm số BXH..." oninput="filterBXH()">
+                </div>
+                <div class="counter-badge" id="counter">200 / 200 bảng</div>
+            </div>
+        </div>
+
+        <!-- Danh sách chứa 200 BXH -->
         <div class="gallery" id="gallery-container"></div>
     </div>
 
-    <!-- KHUNG LIGHTBOX -->
+    <!-- Lightbox Xem Ảnh Lớn -->
     <div class="lightbox-overlay" id="lightbox">
         <span class="close-lightbox" id="close-btn">&times;</span>
-        <div class="lightbox-wrapper">
-            <img src="" alt="Ảnh lớn" class="lightbox-image" id="lightbox-img">
-            <div class="image-overlay"></div>
-        </div>
+        <img src="" alt="BXH Chi Tiết" class="lightbox-image" id="lightbox-img">
     </div>
 
     <script>
-        const warningEl = document.getElementById('devtools-warning');
-        const mainContentEl = document.getElementById('main-content');
+        const TOTAL_ITEMS = 200; // Cấu hình đủ 200/200 bảng
         const gallery = document.getElementById('gallery-container');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.getElementById('close-btn');
 
-        const blobCache = {};
+        // Khởi tạo danh sách 200 mục trực tiếp không ẩn item nếu fetch chậm
+        function initGallery() {
+            const fragment = document.createDocumentFragment();
 
-        function detectDevTools() {
-            const threshold = 160;
-            const widthDiff = window.outerWidth - window.innerWidth > threshold;
-            const heightDiff = window.outerHeight - window.innerHeight > threshold;
-            
-            if (widthDiff || heightDiff) {
-                warningEl.style.display = 'flex';
-                mainContentEl.style.display = 'none';
-            } else {
-                warningEl.style.display = 'none';
-                mainContentEl.style.display = 'block';
+            for (let i = 1; i <= TOTAL_ITEMS; i++) {
+                const div = document.createElement('div');
+                div.className = 'image-container';
+                div.setAttribute('data-index', i);
+
+                const fileName = i + '.png';
+
+                div.innerHTML = `
+                    <div class="item-left">
+                        <div class="img-wrapper" onclick="openLightbox('${fileName}')">
+                            <img src="${fileName}" alt="BXH #${i}" onerror="this.src='https://via.placeholder.com/150x85/060f1e/00f0ff?text=BXH+${i}'">
+                            <span class="image-number">${i}</span>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-title">BXH #${i}</div>
+                            <span class="item-tag">BXH #${i}</span>
+                        </div>
+                    </div>
+                `;
+
+                fragment.appendChild(div);
             }
+
+            gallery.appendChild(fragment);
         }
 
-        window.addEventListener('resize', detectDevTools);
-        setInterval(detectDevTools, 1000);
+        // Tìm kiếm theo số BXH
+        function filterBXH() {
+            const input = document.getElementById('search-input').value.trim();
+            const items = document.querySelectorAll('.image-container');
+            let visibleCount = 0;
 
-        async function fetchAndCreateBlobUrl(imageSrc) {
-            try {
-                const response = await fetch(imageSrc);
-                if (!response.ok) return null;
-                const blob = await response.blob();
-                const blobUrl = URL.createObjectURL(blob);
-                blobCache[imageSrc] = blobUrl;
-                return blobUrl;
-            } catch (e) {
-                return null;
-            }
-        }
-
-        const fragment = document.createDocumentFragment();
-
-        for (let i = 1; i <= 200; i++) {
-            const div = document.createElement('div');
-            div.className = 'image-container';
-
-            const fileName = i + '.png';
-
-            const img = document.createElement('img');
-            img.alt = 'Bảng ' + i;
-            img.loading = 'lazy';
-
-            fetchAndCreateBlobUrl(fileName).then(blobUrl => {
-                if (blobUrl) {
-                    img.src = blobUrl;
+            items.forEach(item => {
+                const index = item.getAttribute('data-index');
+                if (input === '' || index.includes(input)) {
+                    item.style.display = 'flex';
+                    visibleCount++;
                 } else {
-                    div.style.display = 'none';
+                    item.style.display = 'none';
                 }
             });
 
-            div.onclick = function() {
-                if (blobCache[fileName]) {
-                    openLightbox(blobCache[fileName]);
-                }
-            };
-
-            const overlay = document.createElement('div');
-            overlay.className = 'image-overlay';
-
-            // Định dạng số thứ tự chuẩn 01, 02, 03... nằm ở góc trái
-            const numberSpan = document.createElement('span');
-            numberSpan.className = 'image-number';
-            numberSpan.innerText = i < 10 ? '0' + i : i; 
-
-            div.appendChild(img);
-            div.appendChild(overlay);
-            div.appendChild(numberSpan);
-            fragment.appendChild(div);
+            document.getElementById('counter').innerText = `${visibleCount} / ${TOTAL_ITEMS} bảng`;
         }
 
-        gallery.appendChild(fragment);
-
-        function openLightbox(blobUrl) {
-            lightboxImg.src = blobUrl; 
-            lightbox.classList.add('active'); 
-            document.body.style.overflow = 'hidden'; 
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
-            lightbox.classList.remove('active'); 
-            document.body.style.overflow = ''; 
-            setTimeout(() => { lightboxImg.src = ''; }, 300);
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
         closeBtn.onclick = closeLightbox;
+        lightbox.onclick = (e) => { if (e.target !== lightboxImg) closeLightbox(); };
 
-        lightbox.onclick = function(e) {
-            if (e.target !== lightboxImg) {
-                closeLightbox();
-            }
-        };
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                closeLightbox();
-            }
-        });
+        // Chạy khởi tạo
+        initGallery();
     </script>
 </body>
 </html>
-html>
