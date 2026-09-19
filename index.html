@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BẢNG XẾP HẠNG NDK BOT</title>
+    <!-- Phông chữ Sci-Fi Mecha -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Orbitron:wght@800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Orbitron:wght@800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary-cyan: #00f0ff;
             --electric-blue: #0077ff;
             --dark-core: #030712;
-            --card-bg: rgba(6, 15, 30, 0.88);
-            --border-cyan: rgba(0, 240, 255, 0.45);
+            --card-bg: rgba(6, 15, 30, 0.85);
+            --border-cyan: rgba(0, 240, 255, 0.35);
             --text-main: #f1f5f9;
         }
 
@@ -28,39 +29,343 @@
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--dark-core); 
             background-image: 
-                radial-gradient(circle at 50% 25%, rgba(0, 240, 255, 0.15) 0%, rgba(3, 7, 18, 0.95) 85%),
+                radial-gradient(circle at 50% 20%, rgba(0, 240, 255, 0.12) 0%, rgba(3, 7, 18, 0.98) 80%),
                 linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-            background-size: cover, 35px 35px, 35px 35px;
-            background-repeat: no-repeat, repeat, repeat;
+            background-size: cover, 30px 30px, 30px 30px;
             background-attachment: fixed;
             color: var(--text-main); 
-            padding: 20px; 
+            padding: 30px 15px; 
             min-height: 100vh;
-            user-select: none; 
-            -webkit-user-select: none;
+            user-select: none;
         }
 
-        /* Thanh Top Bar chứa bộ đếm & tìm kiếm */
+        /* Thanh Điều Hướng Trên Cùng */
         .top-bar {
-            max-width: 1000px;
-            margin: 0 auto 25px auto;
+            max-width: 950px;
+            margin: 0 auto 30px auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
         }
 
         .header-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-size: 1.6rem;
+            font-weight: 900;
             color: #fff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--primary-cyan);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 12px var(--primary-cyan);
         }
 
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-box input {
+            background: rgba(4, 12, 24, 0.9);
+            border: 1px solid var(--border-cyan);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .counter-badge {
+            background: rgba(0, 240, 255, 0.12);
+            border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+        }
+
+        /* Danh Sách BXH */
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        /* Khung Hàng BXH Phong Cách Mecha */
+        .image-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--border-cyan);
+            padding: 14px 20px;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .image-container:hover {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+            transform: translateX(6px);
+        }
+
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        /* Khung chứa ảnh xem trước */
+        .img-wrapper {
+            position: relative;
+            width: 130px;
+            height: 75px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .img-wrapper:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-number {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            background: rgba(3, 7, 18, 0.9);
+            color: var(--primary-cyan);
+            padding: 2px 6px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid var(--primary-cyan);
+            border-radius: 2px;
+        }
+
+        .item-info {
+            text-align: left;
+        }
+
+        .item-title {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .item-tag {
+            display: inline-block;
+            margin-top: 6px;
+            background: rgba(0, 119, 255, 0.18);
+            border: 1px solid var(--electric-blue);
+            color: var(--primary-cyan);
+            padding: 3px 10px;
+            font-size: 12px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 600;
+            border-radius: 3px;
+        }
+
+        /* Phóng to ảnh (Lightbox) */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(2, 4, 10, 0.95);
+            backdrop-filter: blur(12px);
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; 
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+        }
+
+        .lightbox-image {
+            max-width: 90%;
+            max-height: 85vh;
+            border: 1px solid var(--primary-cyan);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.5);
+            border-radius: 4px;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--primary-cyan);
+            font-size: 40px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .close-lightbox:hover {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 600px) {
+            .top-bar { flex-direction: column; align-items: flex-start; }
+            .controls { width: 100%; justify-content: space-between; }
+            .img-wrapper { width: 100px; height: 60px; }
+            .item-title { font-size: 15px; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
+
+    <div id="main-content">
+        <div class="top-bar">
+            <div class="header-title">LỊCH SỬ BẢNG XẾP HẠNG</div>
+            <div class="controls">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="🔍 Tìm số BXH..." oninput="filterBXH()">
+                </div>
+                <div class="counter-badge" id="counter">Đang tải...</div>
+            </div>
+        </div>
+
+        <div class="gallery" id="gallery-container"></div>
+    </div>
+
+    <!-- Lightbox xem ảnh toàn màn hình -->
+    <div class="lightbox-overlay" id="lightbox">
+        <span class="close-lightbox" id="close-btn">&times;</span>
+        <img src="" alt="BXH Chi Tiết" class="lightbox-image" id="lightbox-img">
+    </div>
+
+    <script>
+        const MAX_CHECK = 200; // Giới hạn kiểm tra tối đa
+        const gallery = document.getElementById('gallery-container');
+        const counterEl = document.getElementById('counter');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('close-btn');
+
+        let totalLoaded = 0;
+
+        // Hàm kiểm tra sự tồn tại của file ảnh
+        function checkImageExists(url) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = url;
+            });
+        }
+
+        // Tự động quét và nạp ảnh thực tế
+        async function autoLoadGallery() {
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 1; i <= MAX_CHECK; i++) {
+                const fileName = i + '.png';
+                const exists = await checkImageExists(fileName);
+
+                if (exists) {
+                    totalLoaded++;
+                    const div = document.createElement('div');
+                    div.className = 'image-container';
+                    div.setAttribute('data-index', i);
+
+                    div.innerHTML = `
+                        <div class="item-left">
+                            <div class="img-wrapper" onclick="openLightbox('${fileName}')">
+                                <img src="${fileName}" alt="BXH #${i}" loading="lazy">
+                                <span class="image-number">${i}</span>
+                            </div>
+                            <div class="item-info">
+                                <div class="item-title">BXH #${i}</div>
+                                <span class="item-tag">BXH #${i}</span>
+                            </div>
+                        </div>
+                    `;
+                    fragment.appendChild(div);
+                } else {
+                    // Dừng quét khi gặp file không tồn tại đầu tiên
+                    break;
+                }
+            }
+
+            gallery.appendChild(fragment);
+            updateCounter(totalLoaded, totalLoaded);
+        }
+
+        function updateCounter(visible, total) {
+            counterEl.innerText = `${visible} / ${total} bảng`;
+        }
+
+        // Lọc danh sách khi tìm kiếm
+        function filterBXH() {
+            const input = document.getElementById('search-input').value.trim();
+            const items = document.querySelectorAll('.image-container');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const index = item.getAttribute('data-index');
+                if (input === '' || index.includes(input)) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            updateCounter(visibleCount, totalLoaded);
+        }
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeBtn.onclick = closeLightbox;
+        lightbox.onclick = (e) => { if (e.target !== lightboxImg) closeLightbox(); };
+
+        // Khởi chạy
+        autoLoadGallery();
+    </script>
+</body>
+</html>
         .controls {
             display: flex;
             align-items: center;
