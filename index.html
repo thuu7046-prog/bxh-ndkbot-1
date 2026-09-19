@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LỊCH SỬ BẢNG XẾP HẠNG</title>
     <style>
-        /* --- GIAO DIỆN DARK MODE CAO CẤP --- */
+        /* --- GIAO DIỆN DARK MODE THEO BẢN MẪU --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,74 +14,33 @@
 
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #080b10; 
+            background-color: #0b0e14; 
             color: #9ba1b0; 
-            padding: 20px 16px 80px 16px; /* Chừa khoảng trống phía dưới cho Music Player */
+            padding: 24px 16px;
             user-select: none;
         }
 
-        /* Header Bar: Logo bên trái, Chữ ở giữa, Stats ở phải */
-        .header-bar {
+        /* Thanh trên cùng: Đếm số lượng bảng */
+        .header-stats {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            gap: 12px;
+            justify-content: flex-end;
+            margin-bottom: 20px;
         }
 
-        /* Logo với viền Glowing Neon cao cấp */
-        .header-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 3px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00e5ff, rgba(0, 229, 255, 0.2), #38bdf8);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4), inset 0 0 10px rgba(0, 229, 255, 0.3);
-        }
-
-        .header-logo img {
-            width: 44px;
-            height: 44px;
-            object-fit: cover;
-            border-radius: 50%;
-            display: block;
-            background-color: #080b10;
-        }
-
-        /* Chữ NDKBOT STUDIO Phông Chữ Gaming/Cyberpunk ở giữa */
-        .brand-title {
-            font-family: 'Arial Black', -apple-system, sans-serif;
-            font-size: 16px;
-            font-weight: 900;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #ffffff 0%, #00e5ff 50%, #38bdf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        /* Badge đếm số lượng góc phải */
         .stats-badge {
-            background: linear-gradient(135deg, #101a26, #0d1520);
+            background-color: #16202c;
             color: #00e5ff;
-            padding: 8px 14px;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
-            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(0, 229, 255, 0.2);
         }
 
         /* Tiêu đề & Thanh tìm kiếm */
         .title {
             color: #8c9ba5;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -91,7 +50,7 @@
         .search-container {
             display: flex;
             gap: 12px;
-            margin-bottom: 28px;
+            margin-bottom: 30px;
         }
 
         .search-input-wrapper {
@@ -102,18 +61,13 @@
 
         .search-input-wrapper input {
             width: 100%;
-            background-color: #0f172a;
+            background-color: #121820;
             border: 1px solid #1e293b;
             border-radius: 8px;
             padding: 10px 12px 10px 36px;
             color: #ffffff;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .search-input-wrapper input:focus {
-            border-color: #00e5ff;
         }
 
         .search-input-wrapper input::placeholder {
@@ -128,12 +82,11 @@
             width: 14px;
             height: 14px;
             opacity: 0.5;
-            stroke: #9ba1b0;
         }
 
         .filter-btn {
-            width: 70px;
-            background-color: #0f172a;
+            width: 80px;
+            background-color: #121820;
             border: 1px solid #1e293b;
             border-radius: 8px;
         }
@@ -142,38 +95,26 @@
         .gallery {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .bxh-item {
             display: flex;
             align-items: flex-start;
             gap: 16px;
-            padding: 10px;
-            background: linear-gradient(145deg, #0d131f, #0a0f18);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .bxh-item:hover {
-            border-color: rgba(0, 229, 255, 0.3);
-            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.1);
-        }
-
-        /* Khung hiển thị ảnh viền Game/Cyberpunk */
+        /* Khung hiển thị ảnh */
         .image-container {
             position: relative;
-            width: 200px;
-            height: 115px;
+            width: 220px;
+            height: 125px;
             background-color: #121820;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             flex-shrink: 0;
             cursor: pointer;
-            padding: 2px;
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.5), rgba(30, 41, 59, 0.8), rgba(0, 229, 255, 0.2));
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #1e293b;
             content-visibility: auto;
         }
 
@@ -182,31 +123,24 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 8px;
-            transition: transform 0.4s ease;
         }
 
-        .image-container:hover img {
-            transform: scale(1.05);
-        }
-
-        /* Badge số thứ tự đè góc ảnh */
+        /* Số thứ tự đè góc trên bên trái ảnh */
         .image-number {
             position: absolute;
             top: 8px;
             left: 8px;
-            background: rgba(10, 15, 26, 0.85);
-            color: #00e5ff;
-            width: 26px;
-            height: 26px;
-            border-radius: 6px;
+            background-color: rgba(15, 23, 42, 0.85);
+            color: #ffffff;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
             font-weight: bold;
-            border: 1px solid rgba(0, 229, 255, 0.4);
-            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Thông tin chi tiết bên phải ảnh */
@@ -214,109 +148,23 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 10px;
-            padding-top: 6px;
+            gap: 8px;
+            padding-top: 4px;
         }
 
         .bxh-title {
             color: #ffffff;
             font-size: 14px;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
         .bxh-tag {
-            background-color: rgba(14, 165, 233, 0.15);
+            background-color: #1e293b;
             color: #38bdf8;
-            font-size: 11px;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: 600;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-
-        /* --- TRÌNH PHÁT NHẠC TÂM TRẠNG MINI (MUSIC PLAYER) --- */
-        .music-player-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 16px;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 229, 255, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        .music-btn {
-            background: linear-gradient(135deg, #00e5ff, #0284c7);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
-            outline: none;
-        }
-
-        .music-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: #ffffff;
-        }
-
-        .music-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .music-title {
-            color: #ffffff;
             font-size: 12px;
-            font-weight: 600;
-        }
-
-        .music-sub {
-            color: #38bdf8;
-            font-size: 10px;
-        }
-
-        /* Hiệu ứng sóng âm đập khi nhạc bật */
-        .sound-wave {
-            display: flex;
-            align-items: flex-end;
-            gap: 2px;
-            height: 14px;
-        }
-
-        .sound-wave span {
-            width: 3px;
-            height: 100%;
-            background-color: #00e5ff;
-            border-radius: 2px;
-            animation: bounce 1.2s infinite ease-in-out;
-            animation-play-state: paused;
-        }
-
-        .sound-wave.playing span {
-            animation-play-state: running;
-        }
-
-        .sound-wave span:nth-child(1) { animation-delay: 0.1s; }
-        .sound-wave span:nth-child(2) { animation-delay: 0.3s; }
-        .sound-wave span:nth-child(3) { animation-delay: 0.2s; }
-
-        @keyframes bounce {
-            0%, 100% { height: 4px; }
-            50% { height: 14px; }
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
         }
 
         /* --- LIGHTBOX (XEM ẢNH PHÓNG TO) --- */
@@ -326,12 +174,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.92);
+            background-color: rgba(0, 0, 0, 0.9);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            backdrop-filter: blur(5px);
         }
 
         .lightbox-overlay.active {
@@ -341,9 +188,7 @@
         .lightbox-image {
             max-width: 90%;
             max-height: 90%;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+            border-radius: 8px;
         }
 
         .close-lightbox {
@@ -358,12 +203,8 @@
 </head>
 <body>
 
-    <!-- Header Bar: Logo góc trái | Chữ ở giữa | Thống kê góc phải -->
-    <div class="header-bar">
-        <div class="header-logo">
-            <img src="https://i.ibb.co/fYyQBxgr/400.png" alt="Studio NDK Logo">
-        </div>
-        <div class="brand-title">NDKBOT STUDIO</div>
+    <!-- Đếm tổng số bảng -->
+    <div class="header-stats">
         <div class="stats-badge" id="stats-count">0 / 0 bảng</div>
     </div>
 
@@ -381,30 +222,8 @@
         <div class="filter-btn"></div>
     </div>
 
-    <!-- Danh sách BXH -->
+    <!-- Danh sách các BXH -->
     <div class="gallery" id="gallery-container"></div>
-
-    <!-- Trình Phát Nhạc Tâm Trạng Mini -->
-    <div class="music-player-widget">
-        <button class="music-btn" id="music-toggle" onclick="toggleMusic()">
-            <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg id="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-        </button>
-        <div class="music-info">
-            <div class="music-title">Nhạc Tâm Trạng</div>
-            <div class="music-sub">Chill & Relaxing</div>
-        </div>
-        <div class="sound-wave" id="sound-wave">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-
-    <!-- File Âm Nhạc Nền -->
-    <audio id="bg-music" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
-    </audio>
 
     <!-- Xem ảnh lớn -->
     <div class="lightbox-overlay" id="lightbox">
@@ -413,47 +232,16 @@
     </div>
 
     <script>
-        const MAX_CHECK = 200;
+        const MAX_CHECK = 200; // Giới hạn kiểm tra ảnh tối đa
         const gallery = document.getElementById('gallery-container');
         const statsCount = document.getElementById('stats-count');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.getElementById('close-btn');
 
-        // Khai báo trình phát nhạc
-        const bgMusic = document.getElementById('bg-music');
-        const playIcon = document.getElementById('play-icon');
-        const pauseIcon = document.getElementById('pause-icon');
-        const soundWave = document.getElementById('sound-wave');
-
-        let isPlaying = false;
-
-        function toggleMusic() {
-            if (isPlaying) {
-                bgMusic.pause();
-                playIcon.style.display = 'block';
-                pauseIcon.style.display = 'none';
-                soundWave.classList.remove('playing');
-                isPlaying = false;
-            } else {
-                bgMusic.play();
-                playIcon.style.display = 'none';
-                pauseIcon.style.display = 'block';
-                soundWave.classList.add('playing');
-                isPlaying = true;
-            }
-        }
-
-        // Tự động phát nhạc ở tương tác đầu tiên của người dùng (tránh trình duyệt chặn tự bật âm thanh)
-        document.addEventListener('click', function startAudioOnFirstClick() {
-            if (!isPlaying) {
-                toggleMusic();
-            }
-            document.removeEventListener('click', startAudioOnFirstClick);
-        }, { once: true });
-
         let validImageCount = 0;
 
+        // Hàm kiểm tra xem file ảnh có tồn tại thực sự hay không
         function checkImageExists(src) {
             return new Promise((resolve) => {
                 const img = new Image();
@@ -490,14 +278,18 @@
 
                     fragment.appendChild(item);
                 } else {
+                    // Nếu gặp ảnh không tồn tại, ngừng vòng lặp đếm
                     break; 
                 }
             }
 
             gallery.appendChild(fragment);
+
+            // Cập nhật số lượng đếm thực tế (VD: "18 / 18 bảng")
             statsCount.innerText = `${validImageCount} / ${validImageCount} bảng`;
         }
 
+        // Chức năng Tìm kiếm theo số BXH
         function filterBXH() {
             const value = document.getElementById('search-input').value.trim();
             const items = document.querySelectorAll('.bxh-item');
@@ -512,6 +304,7 @@
             });
         }
 
+        // --- XỬ LÝ LIGHTBOX ---
         function openLightbox(src) {
             lightboxImg.src = src;
             lightbox.classList.add('active');
@@ -530,6 +323,7 @@
             if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
         });
 
+        // Bắt đầu tải danh sách
         loadGallery();
     </script>
 </body>
