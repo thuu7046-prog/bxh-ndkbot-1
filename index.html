@@ -458,17 +458,17 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" id="search-input" placeholder="Nhập số BXH (VD: 1, 2, 3...)" oninput="filterBXH()">
+            <input type="text" id="search-input" placeholder="Nhập số BẢNG (VD: 1, 2, 3...)" oninput="filterBXH()">
         </div>
     </div>
 
-    <!-- Danh sách các BXH -->
+    <!-- Danh sách các BẢNG XẾP HẠNG -->
     <div class="gallery" id="gallery-container"></div>
 
     <!-- Lightbox Xem ảnh lớn -->
     <div class="lightbox-overlay" id="lightbox">
         <span class="close-lightbox" id="close-btn">&times;</span>
-        <img src="" alt="BXH Chi Tiết" class="lightbox-image" id="lightbox-img">
+        <img src="" alt="BẢNG XẾP HẠNG Chi Tiết" class="lightbox-image" id="lightbox-img">
     </div>
 
     <script>
@@ -566,7 +566,7 @@
             gallery.appendChild(fragment);
             loadedCount += nextBatch.length;
 
-            // Khi nạp xong toàn bộ BXH thì hiển thị thẻ Chúc Mừng Năm Mới ở dưới cùng
+            // Khi nạp xong toàn bộ BẢNG XẾP HẠNG thì hiển thị thẻ Chúc Mừng Năm Mới ở dưới cùng
             if (loadedCount >= validItems.length && !document.getElementById('thanks-card')) {
                 renderThanksFooter();
             }
@@ -602,7 +602,7 @@
             }, 50);
         }
 
-        // LỌC THEO SỐ BXH
+        // LỌC THEO SỐ BẢNG XẾP HẠNG
         function filterBXH() {
             const value = document.getElementById('search-input').value.trim();
             const items = document.querySelectorAll('.bxh-item');
