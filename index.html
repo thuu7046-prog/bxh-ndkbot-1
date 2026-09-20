@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LỊCH SỬ BẢNG XẾP HẠNG</title>
+    <title>LỊCH SỬ BẢNG XẾP HẠNG - VIP</title>
     <style>
-        /* --- GIAO DIỆN DARK MODE THEO BẢN MẪU --- */
+        /* --- GIAO DIỆN DARK MODE VIP --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,77 +14,84 @@
 
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0b0e14; 
+            background-color: #06080d; 
             color: #9ba1b0; 
-            padding: 24px 16px;
+            padding: 24px 16px 90px 16px;
             user-select: none;
         }
 
-        /* --- HEADER MỚI: CÂN BẰNG TỔNG THỂ --- */
-        .top-header {
+        /* --- BANNER HEADER GAMING VIP --- */
+        .vip-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            background: linear-gradient(135deg, rgba(16, 24, 39, 0.8), rgba(8, 12, 20, 0.9));
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.15), inset 0 0 15px rgba(0, 229, 255, 0.05);
+            backdrop-filter: blur(10px);
         }
 
+        /* Stats Badge VIP */
         .stats-badge {
-            background-color: #16202c;
+            background: linear-gradient(135deg, #101a26, #0d1520);
             color: #00e5ff;
             padding: 8px 16px;
             border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+            letter-spacing: 0.5px;
         }
 
-        /* Logo ở góc trên bên phải với viền Glowing xịn */
-        .header-logo-container {
-            position: relative;
-            padding: 3px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00e5ff, rgba(0, 229, 255, 0.2), #38bdf8);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4), inset 0 0 8px rgba(0, 229, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header-logo-container img {
-            width: 48px;
-            height: 48px;
-            object-fit: cover;
-            border-radius: 50%;
-            display: block;
-            background-color: #0b0e14;
-        }
-
-        /* Khung chứa tên Brand ở giữa logo và bảng */
-        .brand-banner {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 10px 0;
-        }
-
-        /* Dòng chữ NDKBOT STUDIO phông đẹp hợp nền */
+        /* NDKBOT STUDIO Text Gradient VIP */
         .brand-title {
             font-family: 'Arial Black', -apple-system, sans-serif;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
             letter-spacing: 2px;
             text-transform: uppercase;
             background: linear-gradient(90deg, #ffffff 0%, #00e5ff 50%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-            display: inline-block;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+            text-align: center;
+        }
+
+        /* Logo Viền Tròn Glowing 3D */
+        .header-logo-container {
+            position: relative;
+            padding: 3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00e5ff, #38bdf8, #0055ff);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-glow 3s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 15px rgba(0, 229, 255, 0.5); }
+            100% { box-shadow: 0 0 25px rgba(0, 229, 255, 0.9), 0 0 10px rgba(56, 189, 248, 0.8); }
+        }
+
+        .header-logo-container img {
+            width: 46px;
+            height: 46px;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            background-color: #0b0e14;
         }
 
         /* Tiêu đề & Thanh tìm kiếm */
         .title {
             color: #8c9ba5;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -94,29 +101,30 @@
         .search-container {
             display: flex;
             gap: 12px;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
 
         .search-input-wrapper {
             position: relative;
             flex: 1;
-            max-width: 250px;
+            max-width: 260px;
         }
 
         .search-input-wrapper input {
             width: 100%;
-            background-color: #121820;
-            border: 1px solid #1e293b;
-            border-radius: 8px;
+            background-color: #0f172a;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 10px;
             padding: 10px 12px 10px 36px;
             color: #ffffff;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .search-input-wrapper input:focus {
             border-color: #00e5ff;
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
         }
 
         .search-input-wrapper input::placeholder {
@@ -130,48 +138,70 @@
             transform: translateY(-50%);
             width: 14px;
             height: 14px;
-            opacity: 0.5;
-            stroke: #9ba1b0;
+            opacity: 0.6;
+            stroke: #00e5ff;
         }
 
         .filter-btn {
-            width: 80px;
-            background-color: #121820;
-            border: 1px solid #1e293b;
-            border-radius: 8px;
+            width: 70px;
+            background-color: #0f172a;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 10px;
         }
 
-        /* Danh sách Bảng Xếp Hạng */
+        /* --- DANH SÁCH BẢNG XẾP HẠNG KHUNG VIỀN VIP --- */
         .gallery {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
 
         .bxh-item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 16px;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.7), rgba(11, 15, 25, 0.9));
+            border-radius: 14px;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
-        /* Khung hiển thị ảnh */
+        /* Viền sáng dạ quang chạy dọc khung item */
+        .bxh-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #00e5ff, #38bdf8);
+            border-radius: 4px 0 0 4px;
+            box-shadow: 0 0 10px #00e5ff;
+        }
+
+        .bxh-item:hover {
+            transform: translateY(-3px) scale(1.005);
+            border-color: rgba(0, 229, 255, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 229, 255, 0.2);
+            background: linear-gradient(135deg, rgba(20, 30, 50, 0.8), rgba(13, 18, 30, 0.95));
+        }
+
+        /* Khung hiển thị ảnh viền Game/Cyberpunk */
         .image-container {
             position: relative;
-            width: 220px;
-            height: 125px;
-            background-color: #121820;
-            border-radius: 8px;
+            width: 210px;
+            height: 120px;
+            border-radius: 10px;
             overflow: hidden;
             flex-shrink: 0;
             cursor: pointer;
-            border: 1px solid #1e293b;
-            content-visibility: auto;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .image-container:hover {
-            border-color: rgba(0, 229, 255, 0.4);
-            transform: translateY(-2px);
+            padding: 2px;
+            background: linear-gradient(135deg, #00e5ff, rgba(30, 41, 59, 0.5), #38bdf8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
         }
 
         .image-container img {
@@ -179,24 +209,28 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            border-radius: 8px;
+            transition: transform 0.4s ease;
         }
 
-        /* Số thứ tự đè góc trên bên trái ảnh */
+        .image-container:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Badge số thứ tự VIP */
         .image-number {
             position: absolute;
             top: 8px;
             left: 8px;
-            background-color: rgba(15, 23, 42, 0.85);
-            color: #ffffff;
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(8, 12, 20, 0.85);
+            color: #00e5ff;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
         }
 
         /* Thông tin chi tiết bên phải ảnh */
@@ -204,23 +238,107 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 8px;
-            padding-top: 4px;
+            gap: 10px;
         }
 
         .bxh-title {
             color: #ffffff;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .bxh-tag {
-            background-color: #1e293b;
-            color: #38bdf8;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(56, 189, 248, 0.1));
+            color: #00e5ff;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.1);
+        }
+
+        /* --- TRÌNH PHÁT NHẠC TÂM TRẠNG MINI --- */
+        .music-player-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        .music-btn {
+            background: linear-gradient(135deg, #00e5ff, #0284c7);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            outline: none;
+        }
+
+        .music-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: #ffffff;
+        }
+
+        .music-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .music-title {
+            color: #ffffff;
             font-size: 12px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 500;
+            font-weight: 600;
+        }
+
+        .music-sub {
+            color: #38bdf8;
+            font-size: 10px;
+        }
+
+        .sound-wave {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 14px;
+        }
+
+        .sound-wave span {
+            width: 3px;
+            height: 100%;
+            background-color: #00e5ff;
+            border-radius: 2px;
+            animation: bounce 1.2s infinite ease-in-out;
+            animation-play-state: paused;
+        }
+
+        .sound-wave.playing span {
+            animation-play-state: running;
+        }
+
+        .sound-wave span:nth-child(1) { animation-delay: 0.1s; }
+        .sound-wave span:nth-child(2) { animation-delay: 0.3s; }
+        .sound-wave span:nth-child(3) { animation-delay: 0.2s; }
+
+        @keyframes bounce {
+            0%, 100% { height: 4px; }
+            50% { height: 14px; }
         }
 
         /* --- LIGHTBOX (XEM ẢNH PHÓNG TO) --- */
@@ -230,11 +348,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.92);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            backdrop-filter: blur(6px);
         }
 
         .lightbox-overlay.active {
@@ -244,9 +363,9 @@
         .lightbox-image {
             max-width: 90%;
             max-height: 90%;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            box-shadow: 0 0 25px rgba(0, 229, 255, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            box-shadow: 0 0 35px rgba(0, 229, 255, 0.3);
         }
 
         .close-lightbox {
@@ -261,17 +380,13 @@
 </head>
 <body>
 
-    <!-- Thanh trên cùng: Đếm số lượng bảng bên trái & Logo nổi bật góc phải -->
-    <div class="top-header">
+    <!-- Header VIP: Đếm số lượng bên trái | Chữ NDKBOT STUDIO ở giữa | Logo VIP bên phải -->
+    <div class="vip-header">
         <div class="stats-badge" id="stats-count">0 / 0 bảng</div>
+        <div class="brand-title">NDKBOT STUDIO</div>
         <div class="header-logo-container">
             <img src="https://i.ibb.co/fYyQBxgr/400.png" alt="NDKBOT STUDIO Logo">
         </div>
-    </div>
-
-    <!-- Tên thương hiệu NDKBOT STUDIO đặt ở giữa logo và bảng -->
-    <div class="brand-banner">
-        <div class="brand-title">NDKBOT STUDIO</div>
     </div>
 
     <div class="title">LỊCH SỬ BẢNG XẾP HẠNG</div>
@@ -291,6 +406,28 @@
     <!-- Danh sách các BXH -->
     <div class="gallery" id="gallery-container"></div>
 
+    <!-- Trình Phát Nhạc Mini -->
+    <div class="music-player-widget">
+        <button class="music-btn" id="music-toggle" onclick="toggleMusic()">
+            <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <div class="music-info">
+            <div class="music-title">Nhạc Tâm Trạng</div>
+            <div class="music-sub">Chill & Relaxing</div>
+        </div>
+        <div class="sound-wave" id="sound-wave">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- File Âm Nhạc -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- Xem ảnh lớn -->
     <div class="lightbox-overlay" id="lightbox">
         <span class="close-lightbox" id="close-btn">&times;</span>
@@ -298,16 +435,46 @@
     </div>
 
     <script>
-        const MAX_CHECK = 200; // Giới hạn kiểm tra ảnh tối đa
+        const MAX_CHECK = 200;
         const gallery = document.getElementById('gallery-container');
         const statsCount = document.getElementById('stats-count');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.getElementById('close-btn');
 
+        // Khai báo âm nhạc
+        const bgMusic = document.getElementById('bg-music');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        const soundWave = document.getElementById('sound-wave');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                soundWave.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                bgMusic.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+                soundWave.classList.add('playing');
+                isPlaying = true;
+            }
+        }
+
+        // Tự động bật nhạc ở cú nhấp chuột đầu tiên
+        document.addEventListener('click', function startAudioOnFirstClick() {
+            if (!isPlaying) {
+                toggleMusic();
+            }
+            document.removeEventListener('click', startAudioOnFirstClick);
+        }, { once: true });
+
         let validImageCount = 0;
 
-        // Hàm kiểm tra xem file ảnh có tồn tại thực sự hay không
         function checkImageExists(src) {
             return new Promise((resolve) => {
                 const img = new Image();
@@ -334,28 +501,24 @@
                     item.innerHTML = `
                         <div class="image-container" onclick="openLightbox('${imgSrc}')">
                             <img src="${imgSrc}" loading="lazy" decoding="async" alt="BXH #${i}">
-                            <div class="image-number">${i}</div>
+                            <div class="image-number">#${i}</div>
                         </div>
                         <div class="bxh-info">
                             <div class="bxh-title">BXH #${i}</div>
-                            <div class="bxh-tag">BXH #${i}</div>
+                            <div class="bxh-tag">TOP RANKING #${i}</div>
                         </div>
                     `;
 
                     fragment.appendChild(item);
                 } else {
-                    // Nếu gặp ảnh không tồn tại, ngừng vòng lặp đếm
                     break; 
                 }
             }
 
             gallery.appendChild(fragment);
-
-            // Cập nhật số lượng đếm thực tế (VD: "18 / 18 bảng")
             statsCount.innerText = `${validImageCount} / ${validImageCount} bảng`;
         }
 
-        // Chức năng Tìm kiếm theo số BXH
         function filterBXH() {
             const value = document.getElementById('search-input').value.trim();
             const items = document.querySelectorAll('.bxh-item');
@@ -370,7 +533,6 @@
             });
         }
 
-        // --- XỬ LÝ LIGHTBOX ---
         function openLightbox(src) {
             lightboxImg.src = src;
             lightbox.classList.add('active');
@@ -389,7 +551,6 @@
             if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
         });
 
-        // Bắt đầu tải danh sách
         loadGallery();
     </script>
 </body>
