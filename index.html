@@ -267,7 +267,7 @@
             filter: brightness(1.1) contrast(1.05);
         }
 
-        /* MÃ SỐ BXH KÍỂU CYBER HUD */
+        /* MÃ SỐ BXH KIỂU CYBER HUD */
         .image-number {
             position: absolute;
             top: 8px;
@@ -468,7 +468,7 @@
     <!-- Lightbox Xem ảnh lớn -->
     <div class="lightbox-overlay" id="lightbox">
         <span class="close-lightbox" id="close-btn">&times;</span>
-        <img src="" alt="BẢNG XẾP HẠNG Chi Tiết" class="lightbox-image" id="lightbox-img">
+        <img src="" alt="Chi Tiết" class="lightbox-image" id="lightbox-img">
     </div>
 
     <script>
@@ -552,11 +552,11 @@
 
                 item.innerHTML = `
                     <div class="image-container" onclick="openLightbox('${src}')">
-                        <img src="${src}" loading="lazy" decoding="async" alt="BẢNG XẾP HẠNG #${id}">
+                        <img src="${src}" loading="lazy" decoding="async" alt="#${id}">
                         <div class="image-number">#${id}</div>
                     </div>
                     <div class="bxh-info">
-                        <div class="bxh-title">BẢNG XẾP HẠNG #${id}</div>
+                        <div class="bxh-title">#${id}</div>
                         <div class="bxh-subtext">SYSTEM STATUS: ONLINE</div>
                     </div>
                 `;
