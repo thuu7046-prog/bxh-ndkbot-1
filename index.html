@@ -251,6 +251,7 @@
             align-items: flex-start;
             gap: 8px;
             overflow: hidden;
+            flex-grow: 1;
         }
 
         .bxh-header-row {
@@ -337,8 +338,8 @@
         .settings-drawer {
             position: fixed;
             top: 0;
-            right: -320px;
-            width: 300px;
+            right: -340px;
+            width: 320px;
             height: 100%;
             background: #0b0f19;
             border-left: 1px solid rgba(0, 229, 255, 0.3);
@@ -349,6 +350,7 @@
             gap: 20px;
             z-index: 1002;
             transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
         }
 
         .settings-overlay.active .settings-drawer {
@@ -415,6 +417,121 @@
             border-color: #00e5ff;
             background: #162238;
             box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+        }
+
+        /* --- MODAL EDIT KEY VIP --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1010;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #0b0f19;
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+            padding-bottom: 12px;
+        }
+
+        .modal-title {
+            color: #00e5ff;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .edit-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .edit-form-group label {
+            color: #8c9ba5;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .edit-form-group input, .edit-form-group select {
+            background: #0f172a;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            color: #ffffff;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .edit-form-group input:focus, .edit-form-group select:focus {
+            border-color: #00e5ff;
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn.save {
+            background: linear-gradient(135deg, #00e5ff, #38bdf8);
+            color: #06080d;
+        }
+
+        .action-btn.cancel {
+            background: #1e293b;
+            color: #9ba1b0;
+        }
+
+        .action-btn.export {
+            background: #101a26;
+            color: #00e5ff;
+            border: 1px solid #00e5ff;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
         /* --- LIGHTBOX (XEM ẢNH PHÓNG TO) --- */
@@ -491,7 +608,7 @@
         <img src="" alt="BXH Chi Tiết" class="lightbox-image" id="lightbox-img">
     </div>
 
-    <!-- Panel Cài Đặt (Drawer) -->
+    <!-- Panel Cài Đặt (Drawer 3 Gạch) -->
     <div class="settings-overlay" id="settings-overlay" onclick="toggleSettings(false)">
         <div class="settings-drawer" onclick="event.stopPropagation()">
             <div class="drawer-header">
@@ -499,10 +616,19 @@
                 <div class="close-drawer" onclick="toggleSettings(false)">&times;</div>
             </div>
 
+            <!-- TÍCH HỢP EDIT KEY -->
+            <div class="setting-group">
+                <div class="setting-label">Quản lý Cấu hình</div>
+                <button class="setting-btn" onclick="openEditKeyModal()">
+                    <span>EDIT KEY (Sửa keys.json)</span>
+                    <span style="color: #00e5ff;">✏️</span>
+                </button>
+            </div>
+
             <div class="setting-group">
                 <div class="setting-label">Dữ liệu & Bộ nhớ</div>
                 <button class="setting-btn" onclick="clearAppCache()">
-                    <span>Tải lại dữ liệu key.json</span>
+                    <span>Tải lại dữ liệu keys.json</span>
                     <span style="color: #00e5ff;">🔄</span>
                 </button>
             </div>
@@ -513,6 +639,42 @@
                     <span id="layout-mode-text">Chuyển sang dạng Lưới</span>
                     <span style="color: #00e5ff;">📱</span>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT KEY -->
+    <div class="modal-overlay" id="edit-key-modal" onclick="closeEditKeyModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">CHỈNH SỬA KEY (KEYS.JSON)</div>
+                <div class="close-drawer" onclick="closeEditKeyModal()">&times;</div>
+            </div>
+
+            <div class="edit-form-group">
+                <label>Chọn ID BXH cần sửa (1 - 71):</label>
+                <select id="edit-id-select" onchange="loadKeyDetailToForm()"></select>
+            </div>
+
+            <div class="edit-form-group">
+                <label>Tên giải đấu (custom_name):</label>
+                <input type="text" id="edit-custom-name" placeholder="VD: Giải Đấu Hoàng Gia - Mùa 1">
+            </div>
+
+            <div class="edit-form-group">
+                <label>Tên viết tắt (short_name):</label>
+                <input type="text" id="edit-short-name" placeholder="VD: HG-M1">
+            </div>
+
+            <div class="edit-form-group">
+                <label>Link Logo hoặc tên file (logo):</label>
+                <input type="text" id="edit-logo" placeholder="VD: 1.png hoặc https://...">
+            </div>
+
+            <div class="modal-actions">
+                <button class="action-btn save" onclick="saveKeyItem()">Lưu Key</button>
+                <button class="action-btn export" onclick="exportKeysJson()">Tải keys.json</button>
+                <button class="action-btn cancel" onclick="closeEditKeyModal()">Đóng</button>
             </div>
         </div>
     </div>
@@ -528,28 +690,37 @@
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.getElementById('close-btn');
         const settingsOverlay = document.getElementById('settings-overlay');
+        const editKeyModal = document.getElementById('edit-key-modal');
 
         let keyDataMap = {};
         let validItems = [];
         let loadedCount = 0;
         let isGridMode = false;
 
-        // DỮ LIỆU KEY.JSON MẶC ĐỊNH (PHÒNG TRƯỜNG HỢP KHÔNG ĐỌC ĐƯỢC FILE KHAC)
+        // DỮ LIỆU KEYS.JSON MẶC ĐỊNH
         const defaultKeyJson = [
             { id: 1, custom_name: "Giải Đấu Hoàng Gia - Mùa 1", short_name: "HG-M1", logo: "1.png" },
             { id: 2, custom_name: "Siêu Cúp Huyền Thoại", short_name: "SCHT", logo: "https://i.ibb.co/fYyQBxgr/400.png" }
         ];
 
-        // ĐỌC CẤU HÌNH TỪ KEY.JSON
+        // ĐỌC CẤU HÌNH TỪ KEYS.JSON HOẶC LOCALSTORAGE
         async function loadKeyConfig() {
+            const savedKeys = localStorage.getItem('ndk_keys_data');
+            if (savedKeys) {
+                mapConfigData(JSON.parse(savedKeys));
+                return;
+            }
+
             try {
-                const response = await fetch('key.json');
-                if (!response.ok) throw new Error("Không thể nạp file key.json");
+                const response = await fetch('keys.json');
+                if (!response.ok) throw new Error("Không thể nạp file keys.json");
                 const data = await response.json();
                 mapConfigData(data);
+                localStorage.setItem('ndk_keys_data', JSON.stringify(data));
             } catch (err) {
-                console.warn("Dùng cấu hình mặc định (Do chưa đọc được file key.json):", err);
+                console.warn("Dùng cấu hình mặc định:", err);
                 mapConfigData(defaultKeyJson);
+                localStorage.setItem('ndk_keys_data', JSON.stringify(defaultKeyJson));
             }
         }
 
@@ -568,6 +739,7 @@
         // TẢI LẠI DỮ LIỆU VÀ XÓA CACHE
         function clearAppCache() {
             localStorage.removeItem('ndk_bxh_cache');
+            localStorage.removeItem('ndk_keys_data');
             alert('Đã làm mới dữ liệu!');
             location.reload();
         }
@@ -578,6 +750,71 @@
             const layoutText = document.getElementById('layout-mode-text');
             gallery.classList.toggle('grid-mode', isGridMode);
             layoutText.innerText = isGridMode ? 'Chuyển sang dạng Danh sách' : 'Chuyển sang dạng Lưới';
+        }
+
+        /* --- CÁC HÀM XỬ LÝ EDIT KEY --- */
+        function openEditKeyModal() {
+            toggleSettings(false);
+            populateIdSelect();
+            loadKeyDetailToForm();
+            editKeyModal.classList.add('active');
+        }
+
+        function closeEditKeyModal() {
+            editKeyModal.classList.remove('active');
+        }
+
+        function populateIdSelect() {
+            const select = document.getElementById('edit-id-select');
+            select.innerHTML = '';
+            for (let i = MIN_ID; i <= MAX_ID; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = `BXH #${i} ${keyDataMap[i] ? '- ' + keyDataMap[i].custom_name : ''}`;
+                select.appendChild(opt);
+            }
+        }
+
+        function loadKeyDetailToForm() {
+            const id = document.getElementById('edit-id-select').value;
+            const item = keyDataMap[id] || { custom_name: '', short_name: '', logo: '' };
+            
+            document.getElementById('edit-custom-name').value = item.custom_name || '';
+            document.getElementById('edit-short-name').value = item.short_name || '';
+            document.getElementById('edit-logo').value = item.logo || '';
+        }
+
+        function saveKeyItem() {
+            const id = parseInt(document.getElementById('edit-id-select').value);
+            const custom_name = document.getElementById('edit-custom-name').value.trim();
+            const short_name = document.getElementById('edit-short-name').value.trim();
+            const logo = document.getElementById('edit-logo').value.trim();
+
+            keyDataMap[id] = {
+                id: id,
+                custom_name: custom_name || `Bảng xếp hạng #${id}`,
+                short_name: short_name || `BXH #${id}`,
+                logo: logo || `${id}.png`
+            };
+
+            // LƯU VÀO LOCALSTORAGE
+            const keyArray = Object.values(keyDataMap);
+            localStorage.setItem('ndk_keys_data', JSON.stringify(keyArray));
+
+            alert(`Đã lưu cấu hình Key cho #${id}!`);
+            closeEditKeyModal();
+            location.reload();
+        }
+
+        function exportKeysJson() {
+            const keyArray = Object.values(keyDataMap);
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(keyArray, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "keys.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
         }
 
         // HIỂN THỊ KHUNG SKELETON KHI DỮ LIỆU ĐANG TẢI
@@ -591,7 +828,7 @@
             gallery.appendChild(fragment);
         }
 
-        // KIỂM TRA SỰ TỒN TẠI CỦA ÁNH SONG SONG DÙNG PROMISE
+        // KIỂM TRA SỰ TỒN TẠI CỦA ẢNH
         function checkImageExists(id) {
             return new Promise((resolve) => {
                 const imgSrc = `${id}.png`;
@@ -628,7 +865,7 @@
             return valid;
         }
 
-        // RENDER DANH SÁCH THEO BATCH ĐỂ TỐI ƯU HIỆU NĂNG
+        // RENDER DANH SÁCH THEO BATCH
         function renderNextBatch() {
             if (loadedCount >= validItems.length) return;
 
@@ -639,7 +876,7 @@
                 const keyInfo = keyDataMap[id] || {};
                 const customName = keyInfo.custom_name || `Bảng xếp hạng #${id}`;
                 const shortName = keyInfo.short_name || `BXH #${id}`;
-                const logoSrc = keyInfo.logo || '1.png';
+                const logoSrc = keyInfo.logo || `${id}.png`;
 
                 const item = document.createElement('div');
                 item.className = 'bxh-item';
@@ -668,7 +905,7 @@
             loadedCount += nextBatch.length;
         }
 
-        // HÀM CHÍNH KHỞI CHẠY TRANG WEBSO
+        // HÀM CHÍNH KHỞI CHẠY TRANG WEB
         async function loadGalleryUltraFast() {
             showSkeletons();
             await loadKeyConfig();
@@ -686,7 +923,7 @@
             }, 50);
         }
 
-        // HÀM TÌM KIẾM Đa NĂNG (TÌM THEO ID, TÊN HOẶC TÊN VIẾT TẮT)
+        // TÌM KIẾM
         function filterBXH() {
             const value = document.getElementById('search-input').value.trim().toLowerCase();
             const items = document.querySelectorAll('.bxh-item');
@@ -723,6 +960,7 @@
             if (e.key === 'Escape') {
                 if (lightbox.classList.contains('active')) closeLightbox();
                 toggleSettings(false);
+                closeEditKeyModal();
             }
         });
 
