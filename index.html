@@ -61,7 +61,7 @@
             text-align: center;
         }
 
-        /* NÚT TÙY CHỌN 3 GẠCH (SETTINGS MENU) */
+        /* NÚT TÙY CHỌN 3 GẠCH */
         .menu-btn-container {
             position: relative;
             width: 44px;
@@ -120,7 +120,7 @@
         .search-input-wrapper {
             position: relative;
             flex: 1;
-            max-width: 260px;
+            max-width: 320px;
         }
 
         .search-input-wrapper input {
@@ -155,13 +155,6 @@
             stroke: #00e5ff;
         }
 
-        .filter-btn {
-            width: 70px;
-            background-color: #0f172a;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            border-radius: 10px;
-        }
-
         /* --- DANH SÁCH BẢNG XẾP HẠNG KHUNG VIỀN VIP --- */
         .gallery {
             display: flex;
@@ -170,7 +163,6 @@
             min-height: 200px;
         }
 
-        /* Hỗ trợ chế độ Grid nếu bật trong cài đặt */
         .gallery.grid-mode {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -210,7 +202,7 @@
             background: linear-gradient(135deg, rgba(20, 30, 50, 0.8), rgba(13, 18, 30, 0.95));
         }
 
-        /* Khung hiển thị ảnh */
+        /* Khung hiển thị ảnh bảng xếp hạng */
         .image-container {
             position: relative;
             width: 210px;
@@ -252,11 +244,29 @@
             box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
         }
 
+        /* Khung thông tin BXH tích hợp Logo Custom */
         .bxh-info {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            gap: 8px;
+            overflow: hidden;
+        }
+
+        .bxh-header-row {
+            display: flex;
+            align-items: center;
             gap: 10px;
+        }
+
+        .bxh-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #00e5ff;
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+            background-color: #0f172a;
         }
 
         .bxh-title {
@@ -264,6 +274,25 @@
             font-size: 15px;
             font-weight: 700;
             letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .bxh-custom-name {
+            color: #38bdf8;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .bxh-tag {
+            background: rgba(0, 229, 255, 0.1);
+            color: #00e5ff;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
         }
 
         /* --- SKELETON LOADER --- */
@@ -427,9 +456,9 @@
 </head>
 <body>
 
-    <!-- Header VIP: Stats bên trái | Tên Studio ở giữa | Nút 3 gạch bên phải -->
+    <!-- Header VIP -->
     <div class="vip-header">
-        <div class="stats-badge" id="stats-count">0 / 0 bảng</div>
+        <div class="stats-badge" id="stats-count">0 / 71 bảng</div>
         <div class="brand-title">NDKBOT STUDIO</div>
         <div class="menu-btn-container" id="open-menu-btn" onclick="toggleSettings(true)" title="Cài đặt VIP">
             <div class="hamburger-icon">
@@ -440,7 +469,7 @@
         </div>
     </div>
 
-    <div class="title">LỊCH SỬ BẢNG XẾP HẠNG</div>
+    <div class="title">LỊCH SỬ BẢNG XẾP HẠNG (1 - 71)</div>
 
     <!-- Thanh tìm kiếm -->
     <div class="search-container">
@@ -449,9 +478,8 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" id="search-input" placeholder="Tìm số BXH..." oninput="filterBXH()">
+            <input type="text" id="search-input" placeholder="Tìm tên, viết tắt hoặc ID..." oninput="filterBXH()">
         </div>
-        <div class="filter-btn"></div>
     </div>
 
     <!-- Danh sách các BXH -->
@@ -474,7 +502,7 @@
             <div class="setting-group">
                 <div class="setting-label">Dữ liệu & Bộ nhớ</div>
                 <button class="setting-btn" onclick="clearAppCache()">
-                    <span>Làm mới bộ nhớ đệm</span>
+                    <span>Tải lại dữ liệu key.json</span>
                     <span style="color: #00e5ff;">🔄</span>
                 </button>
             </div>
@@ -490,8 +518,10 @@
     </div>
 
     <script>
-        const MAX_CHECK = 200;
+        const MIN_ID = 1;
+        const MAX_ID = 71;
         const BATCH_SIZE = 15;
+        
         const gallery = document.getElementById('gallery-container');
         const statsCount = document.getElementById('stats-count');
         const lightbox = document.getElementById('lightbox');
@@ -499,40 +529,58 @@
         const closeBtn = document.getElementById('close-btn');
         const settingsOverlay = document.getElementById('settings-overlay');
 
+        let keyDataMap = {};
         let validItems = [];
         let loadedCount = 0;
         let isGridMode = false;
 
-        // BẬT / TẮT DRAWER CÀI ĐẶT
-        function toggleSettings(show) {
-            if (show) {
-                settingsOverlay.classList.add('active');
-            } else {
-                settingsOverlay.classList.remove('active');
+        // DỮ LIỆU KEY.JSON MẶC ĐỊNH (PHÒNG TRƯỜNG HỢP KHÔNG ĐỌC ĐƯỢC FILE KHAC)
+        const defaultKeyJson = [
+            { id: 1, custom_name: "Giải Đấu Hoàng Gia - Mùa 1", short_name: "HG-M1", logo: "1.png" },
+            { id: 2, custom_name: "Siêu Cúp Huyền Thoại", short_name: "SCHT", logo: "https://i.ibb.co/fYyQBxgr/400.png" }
+        ];
+
+        // ĐỌC CẤU HÌNH TỪ KEY.JSON
+        async function loadKeyConfig() {
+            try {
+                const response = await fetch('key.json');
+                if (!response.ok) throw new Error("Không thể nạp file key.json");
+                const data = await response.json();
+                mapConfigData(data);
+            } catch (err) {
+                console.warn("Dùng cấu hình mặc định (Do chưa đọc được file key.json):", err);
+                mapConfigData(defaultKeyJson);
             }
         }
 
-        // XÓA BỘ NHỚ CACHE ĐỂ NẠP LẠI MỚI DỮ LIỆU
+        function mapConfigData(dataArray) {
+            keyDataMap = {};
+            dataArray.forEach(item => {
+                keyDataMap[item.id] = item;
+            });
+        }
+
+        // BẬT / TẮT SIDEBAR CÀI ĐẶT
+        function toggleSettings(show) {
+            settingsOverlay.classList.toggle('active', show);
+        }
+
+        // TẢI LẠI DỮ LIỆU VÀ XÓA CACHE
         function clearAppCache() {
             localStorage.removeItem('ndk_bxh_cache');
-            alert('Đã xóa bộ nhớ đệm! Trang sẽ được nạp lại.');
+            alert('Đã làm mới dữ liệu!');
             location.reload();
         }
 
-        // CHUYỂN ĐỔI GIAO DIỆN DANH SÁCH / LƯỚI
+        // TẮT / BẬT CHẾ ĐỘ LƯỚI GIAO DIỆN
         function toggleLayoutMode() {
             isGridMode = !isGridMode;
             const layoutText = document.getElementById('layout-mode-text');
-            if (isGridMode) {
-                gallery.classList.add('grid-mode');
-                layoutText.innerText = 'Chuyển sang dạng Danh sách';
-            } else {
-                gallery.classList.remove('grid-mode');
-                layoutText.innerText = 'Chuyển sang dạng Lưới';
-            }
+            gallery.classList.toggle('grid-mode', isGridMode);
+            layoutText.innerText = isGridMode ? 'Chuyển sang dạng Danh sách' : 'Chuyển sang dạng Lưới';
         }
 
-        // TẠO KHUNG SKELETON LOADER
+        // HIỂN THỊ KHUNG SKELETON KHI DỮ LIỆU ĐANG TẢI
         function showSkeletons() {
             const fragment = document.createDocumentFragment();
             for (let i = 0; i < 5; i++) {
@@ -543,7 +591,7 @@
             gallery.appendChild(fragment);
         }
 
-        // KIỂM TRA SỰ TỒN TẠI CỦA ÁNH SONG SONG
+        // KIỂM TRA SỰ TỒN TẠI CỦA ÁNH SONG SONG DÙNG PROMISE
         function checkImageExists(id) {
             return new Promise((resolve) => {
                 const imgSrc = `${id}.png`;
@@ -554,30 +602,23 @@
             });
         }
 
-        // LẤY DANH SÁCH ÁNH HỢP LỆ (CACHE + PARALLEL PROBING)
+        // LẤY DANH SÁCH BẢNG XẾP HẠNG HỢP LỆ (1 ĐẾN 71)
         async function fetchValidImages() {
             const cached = localStorage.getItem('ndk_bxh_cache');
             if (cached) {
                 const cacheData = JSON.parse(cached);
-                if (Date.now() - cacheData.timestamp < 300000) { // Cache trong 5 phút
+                if (Date.now() - cacheData.timestamp < 300000) {
                     return cacheData.items;
                 }
             }
 
             const checkPromises = [];
-            for (let i = 1; i <= MAX_CHECK; i++) {
+            for (let i = MIN_ID; i <= MAX_ID; i++) {
                 checkPromises.push(checkImageExists(i));
             }
 
             const results = await Promise.all(checkPromises);
-            const valid = [];
-            for (const res of results) {
-                if (res.exists) {
-                    valid.push(res);
-                } else {
-                    break;
-                }
-            }
+            const valid = results.filter(res => res.exists);
 
             localStorage.setItem('ndk_bxh_cache', JSON.stringify({
                 timestamp: Date.now(),
@@ -587,7 +628,7 @@
             return valid;
         }
 
-        // RENDER THEO BATCH
+        // RENDER DANH SÁCH THEO BATCH ĐỂ TỐI ƯU HIỆU NĂNG
         function renderNextBatch() {
             if (loadedCount >= validItems.length) return;
 
@@ -595,9 +636,16 @@
             const nextBatch = validItems.slice(loadedCount, loadedCount + BATCH_SIZE);
 
             nextBatch.forEach(({ id, src }) => {
+                const keyInfo = keyDataMap[id] || {};
+                const customName = keyInfo.custom_name || `Bảng xếp hạng #${id}`;
+                const shortName = keyInfo.short_name || `BXH #${id}`;
+                const logoSrc = keyInfo.logo || '1.png';
+
                 const item = document.createElement('div');
                 item.className = 'bxh-item';
                 item.setAttribute('data-id', id);
+                item.setAttribute('data-title', customName.toLowerCase());
+                item.setAttribute('data-short', shortName.toLowerCase());
 
                 item.innerHTML = `
                     <div class="image-container" onclick="openLightbox('${src}')">
@@ -605,7 +653,12 @@
                         <div class="image-number">#${id}</div>
                     </div>
                     <div class="bxh-info">
-                        <div class="bxh-title">BXH #${id}</div>
+                        <div class="bxh-header-row">
+                            <img class="bxh-logo" src="${logoSrc}" onerror="this.src='1.png'" alt="Logo">
+                            <div class="bxh-title">${customName}</div>
+                        </div>
+                        <div class="bxh-custom-name">Mã: ${shortName}</div>
+                        <div class="bxh-tag">ID: ${id}</div>
                     </div>
                 `;
                 fragment.appendChild(item);
@@ -615,14 +668,14 @@
             loadedCount += nextBatch.length;
         }
 
-        // HÀM KHỞI CHẠY CHÍNH
+        // HÀM CHÍNH KHỞI CHẠY TRANG WEBSO
         async function loadGalleryUltraFast() {
             showSkeletons();
-
+            await loadKeyConfig();
             validItems = await fetchValidImages();
 
             gallery.innerHTML = '';
-            statsCount.innerText = `${validItems.length} / ${validItems.length} bảng`;
+            statsCount.innerText = `${validItems.length} / ${MAX_ID} bảng`;
 
             renderNextBatch();
 
@@ -633,14 +686,17 @@
             }, 50);
         }
 
-        // TÌM KIẾM
+        // HÀM TÌM KIẾM Đa NĂNG (TÌM THEO ID, TÊN HOẶC TÊN VIẾT TẮT)
         function filterBXH() {
-            const value = document.getElementById('search-input').value.trim();
+            const value = document.getElementById('search-input').value.trim().toLowerCase();
             const items = document.querySelectorAll('.bxh-item');
 
             items.forEach(item => {
                 const id = item.getAttribute('data-id');
-                if (value === '' || id === value) {
+                const title = item.getAttribute('data-title');
+                const shortName = item.getAttribute('data-short');
+
+                if (value === '' || id === value || title.includes(value) || shortName.includes(value)) {
                     item.style.display = 'flex';
                 } else {
                     item.style.display = 'none';
