@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LỊCH SỬ BẢNG XẾP HẠNG - VIP</title>
+    <title>LỊCH SỬ BẢNG XẾP HẠNG - ROBOT WARRIOR VIP</title>
     <style>
-        /* --- GIAO DIỆN DARK MODE VIP --- */
+        /* --- GIAO DIỆN DARK MODE MECHA ROBOT --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,101 +14,95 @@
 
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #06080d; 
+            background-color: #03060a; 
             color: #9ba1b0; 
             padding: 24px 16px 40px 16px;
             user-select: none;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 80% 100%, rgba(255, 0, 128, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
         }
 
-        /* --- BANNER HEADER GAMING VIP --- */
+        /* --- BANNER HEADER GAMING ROBOT VIP --- */
         .vip-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(135deg, rgba(16, 24, 39, 0.8), rgba(8, 12, 20, 0.9));
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 16px;
+            background: rgba(10, 16, 28, 0.85);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            border-radius: 12px;
             padding: 14px 20px;
             margin-bottom: 24px;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.15), inset 0 0 15px rgba(0, 229, 255, 0.05);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.2), inset 0 0 15px rgba(0, 229, 255, 0.1);
+            backdrop-filter: blur(12px);
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
         }
 
-        /* Stats Badge VIP */
+        .vip-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #00e5ff, #ff007f, #00e5ff);
+            background-size: 200% 100%;
+            animation: moveGradient 3s linear infinite;
+        }
+
+        /* Stats Badge Robot VIP */
         .stats-badge {
-            background: linear-gradient(135deg, #101a26, #0d1520);
+            background: rgba(0, 229, 255, 0.1);
             color: #00e5ff;
             padding: 8px 16px;
-            border-radius: 20px;
+            border-radius: 6px;
             font-size: 13px;
-            font-weight: 700;
-            border: 1px solid rgba(0, 229, 255, 0.4);
-            box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
-            letter-spacing: 0.5px;
+            font-weight: 800;
+            border: 1px solid rgba(0, 229, 255, 0.6);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         /* NDKBOT STUDIO Text Gradient VIP */
         .brand-title {
             font-family: 'Arial Black', -apple-system, sans-serif;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 900;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #ffffff 0%, #00e5ff 50%, #38bdf8 100%);
+            background: linear-gradient(90deg, #ffffff 0%, #00e5ff 40%, #ff007f 80%, #ffffff 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+            animation: moveGradient 4s linear infinite;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.8);
             text-align: center;
-        }
-
-        /* NÚT TÙY CHỌN 3 GẠCH */
-        .menu-btn-container {
-            position: relative;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #101a26, #0d1520);
-            border: 1px solid rgba(0, 229, 255, 0.4);
-            box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .menu-btn-container:hover {
-            border-color: #00e5ff;
-            box-shadow: 0 0 18px rgba(0, 229, 255, 0.5);
-            transform: scale(1.05);
-        }
-
-        .hamburger-icon {
-            width: 20px;
-            height: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .hamburger-icon span {
-            display: block;
-            width: 100%;
-            height: 2px;
-            background: #00e5ff;
-            border-radius: 2px;
-            box-shadow: 0 0 5px rgba(0, 229, 255, 0.8);
-            transition: all 0.3s ease;
         }
 
         /* Tiêu đề & Thanh tìm kiếm */
         .title {
-            color: #8c9ba5;
+            color: #00e5ff;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #ff007f;
+            box-shadow: 0 0 10px #ff007f;
+            border-radius: 50%;
         }
 
         .search-container {
@@ -120,14 +114,14 @@
         .search-input-wrapper {
             position: relative;
             flex: 1;
-            max-width: 320px;
+            max-width: 300px;
         }
 
         .search-input-wrapper input {
             width: 100%;
-            background-color: #0f172a;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            border-radius: 10px;
+            background-color: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 8px;
             padding: 10px 12px 10px 36px;
             color: #ffffff;
             font-size: 14px;
@@ -137,7 +131,7 @@
 
         .search-input-wrapper input:focus {
             border-color: #00e5ff;
-            box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.5), inset 0 0 8px rgba(0, 229, 255, 0.2);
         }
 
         .search-input-wrapper input::placeholder {
@@ -151,11 +145,11 @@
             transform: translateY(-50%);
             width: 14px;
             height: 14px;
-            opacity: 0.6;
+            opacity: 0.8;
             stroke: #00e5ff;
         }
 
-        /* --- DANH SÁCH BẢNG XẾP HẠNG KHUNG VIỀN VIP --- */
+        /* --- DANH SÁCH BẢNG XẾP HẠNG ROBOT CHIẾN BINH --- */
         .gallery {
             display: flex;
             flex-direction: column;
@@ -163,26 +157,31 @@
             min-height: 200px;
         }
 
-        .gallery.grid-mode {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-        }
-
+        /* THẺ ITEM CHIẾN BINH MECHA */
         .bxh-item {
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 12px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.7), rgba(11, 15, 25, 0.9));
-            border-radius: 14px;
-            border: 1px solid rgba(0, 229, 255, 0.15);
+            gap: 18px;
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(12, 18, 32, 0.95), rgba(6, 10, 18, 0.98));
+            border-radius: 10px;
+            border: 1px solid rgba(0, 229, 255, 0.25);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            /* Vết cắt Mecha Futuristic */
+            clip-path: polygon(
+                0 0, 
+                calc(100% - 15px) 0, 
+                100% 15px, 
+                100% 100%, 
+                15px 100%, 
+                0 calc(100% - 15px)
+            );
         }
 
+        /* Viền Neon Trái */
         .bxh-item::before {
             content: '';
             position: absolute;
@@ -190,30 +189,68 @@
             left: 0;
             width: 4px;
             height: 100%;
-            background: linear-gradient(180deg, #00e5ff, #38bdf8);
-            border-radius: 4px 0 0 4px;
-            box-shadow: 0 0 10px #00e5ff;
+            background: linear-gradient(180deg, #00e5ff, #ff007f);
+            box-shadow: 0 0 12px #00e5ff;
+        }
+
+        /* TIA LASER CHIẾN BINH QUÉT TỰ ĐỘNG */
+        .bxh-item::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(
+                135deg, 
+                transparent 45%, 
+                rgba(0, 229, 255, 0.15) 50%, 
+                rgba(255, 0, 128, 0.2) 52%, 
+                transparent 57%
+            );
+            transition: all 0.6s ease;
+            pointer-events: none;
+        }
+
+        .bxh-item:hover::after {
+            top: 100%;
+            left: 100%;
         }
 
         .bxh-item:hover {
-            transform: translateY(-3px) scale(1.005);
-            border-color: rgba(0, 229, 255, 0.5);
-            box-shadow: 0 8px 25px rgba(0, 229, 255, 0.2);
-            background: linear-gradient(135deg, rgba(20, 30, 50, 0.8), rgba(13, 18, 30, 0.95));
+            transform: translateY(-4px) scale(1.008);
+            border-color: #00e5ff;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.35), 0 0 10px rgba(255, 0, 128, 0.2);
         }
 
-        /* Khung hiển thị ảnh bảng xếp hạng */
+        /* KHUNG HIỂN THỊ ẢNH KHỐI MECHA ROBOT */
         .image-container {
             position: relative;
             width: 210px;
             height: 120px;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             flex-shrink: 0;
             cursor: pointer;
             padding: 2px;
-            background: linear-gradient(135deg, #00e5ff, rgba(30, 41, 59, 0.5), #38bdf8);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(135deg, #00e5ff, rgba(15, 23, 42, 0.8), #ff007f);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        /* Góc Mecha Futuristic trên khung ảnh */
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 6px;
+            height: 6px;
+            background: #ff007f;
+            box-shadow: 0 0 8px #ff007f;
+            z-index: 2;
+            border-radius: 50%;
+            animation: pulseEye 1.5s infinite alternate;
         }
 
         .image-container img {
@@ -221,30 +258,34 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 8px;
-            transition: transform 0.4s ease;
+            border-radius: 6px;
+            transition: transform 0.4s ease, filter 0.3s ease;
         }
 
         .image-container:hover img {
             transform: scale(1.08);
+            filter: brightness(1.1) contrast(1.05);
         }
 
+        /* MÃ SỐ BXH KÍỂU CYBER HUD */
         .image-number {
             position: absolute;
             top: 8px;
             left: 8px;
-            background: rgba(8, 12, 20, 0.85);
+            background: rgba(3, 6, 10, 0.9);
             color: #00e5ff;
-            padding: 2px 8px;
-            border-radius: 6px;
+            padding: 3px 10px;
+            border-radius: 4px;
             font-size: 11px;
-            font-weight: 800;
-            border: 1px solid rgba(0, 229, 255, 0.4);
-            backdrop-filter: blur(4px);
-            box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+            font-weight: 900;
+            border: 1px solid rgba(0, 229, 255, 0.6);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+            letter-spacing: 1px;
+            z-index: 2;
         }
 
-        /* Khung thông tin BXH */
+        /* THÔNG TIN BXH ROBOT */
         .bxh-info {
             display: flex;
             flex-direction: column;
@@ -256,33 +297,38 @@
 
         .bxh-title {
             color: #ffffff;
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
-        .bxh-custom-name {
-            color: #38bdf8;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .bxh-tag {
-            background: rgba(0, 229, 255, 0.1);
-            color: #00e5ff;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            padding: 2px 8px;
-            border-radius: 4px;
+        .bxh-subtext {
             font-size: 11px;
-            font-weight: 700;
+            color: #00e5ff;
+            background: rgba(0, 229, 255, 0.08);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        /* ANIMATION HIỆU ỨNG ROBOT */
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @keyframes pulseEye {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
 
         /* --- SKELETON LOADER --- */
         .skeleton {
-            background: linear-gradient(90deg, #0f172a 25%, #1e293b 50%, #0f172a 75%);
+            background: linear-gradient(90deg, #090e17 25%, #141e30 50%, #090e17 75%);
             background-size: 200% 100%;
             animation: skeleton-loading 1.5s infinite;
             border-radius: 10px;
@@ -290,8 +336,8 @@
 
         .skeleton-item {
             height: 144px;
-            border: 1px solid rgba(0, 229, 255, 0.1);
-            border-radius: 14px;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            border-radius: 10px;
         }
 
         @keyframes skeleton-loading {
@@ -299,238 +345,19 @@
             100% { background-position: -200% 0; }
         }
 
-        /* --- SIDEBAR CÀI ĐẶT (SETTINGS DRAWER) --- */
-        .settings-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 1001;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .settings-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .settings-drawer {
-            position: fixed;
-            top: 0;
-            right: -340px;
-            width: 320px;
-            height: 100%;
-            background: #0b0f19;
-            border-left: 1px solid rgba(0, 229, 255, 0.3);
-            box-shadow: -5px 0 25px rgba(0, 229, 255, 0.15);
-            padding: 24px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            z-index: 1002;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-        }
-
-        .settings-overlay.active .settings-drawer {
-            right: 0;
-        }
-
-        .drawer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-        }
-
-        .drawer-title {
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .close-drawer {
-            color: #9ba1b0;
-            font-size: 24px;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .close-drawer:hover {
-            color: #00e5ff;
-        }
-
-        .setting-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .setting-label {
-            color: #8c9ba5;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .setting-btn {
-            background: #10172a;
-            color: #ffffff;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.2s ease;
-        }
-
-        .setting-btn:hover {
-            border-color: #00e5ff;
-            background: #162238;
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
-        }
-
-        /* --- MODAL EDIT KEY VIP --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 1010;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #0b0f19;
-            border: 1px solid rgba(0, 229, 255, 0.4);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 500px;
-            padding: 20px;
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-            padding-bottom: 12px;
-        }
-
-        .modal-title {
-            color: #00e5ff;
-            font-size: 16px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .edit-form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .edit-form-group label {
-            color: #8c9ba5;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .edit-form-group input, .edit-form-group select {
-            background: #0f172a;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            border-radius: 8px;
-            padding: 10px;
-            color: #ffffff;
-            font-size: 13px;
-            outline: none;
-        }
-
-        .edit-form-group input:focus, .edit-form-group select:focus {
-            border-color: #00e5ff;
-            box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .action-btn.save {
-            background: linear-gradient(135deg, #00e5ff, #38bdf8);
-            color: #06080d;
-        }
-
-        .action-btn.cancel {
-            background: #1e293b;
-            color: #9ba1b0;
-        }
-
-        .action-btn.export {
-            background: #101a26;
-            color: #00e5ff;
-            border: 1px solid #00e5ff;
-        }
-
-        .action-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        /* --- LIGHTBOX (XEM ẢNH PHÓNG TO) --- */
+        /* --- LIGHTBOX (XEM ẢNH PHÓNG TO CYBER) --- */
         .lightbox-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.92);
+            background-color: rgba(3, 6, 10, 0.94);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(10px);
         }
 
         .lightbox-overlay.active {
@@ -540,37 +367,37 @@
         .lightbox-image {
             max-width: 90%;
             max-height: 90%;
-            border-radius: 12px;
-            border: 1px solid rgba(0, 229, 255, 0.4);
-            box-shadow: 0 0 35px rgba(0, 229, 255, 0.3);
+            border-radius: 10px;
+            border: 2px solid #00e5ff;
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.4), 0 0 20px rgba(255, 0, 128, 0.3);
         }
 
         .close-lightbox {
             position: absolute;
             top: 20px;
             right: 30px;
-            color: #fff;
+            color: #00e5ff;
             font-size: 36px;
             cursor: pointer;
+            text-shadow: 0 0 10px #00e5ff;
+            transition: all 0.2s;
+        }
+
+        .close-lightbox:hover {
+            color: #ff007f;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
 
-    <!-- Header VIP -->
+    <!-- Header Robot VIP (Đã xóa 3 gạch) -->
     <div class="vip-header">
-        <div class="stats-badge" id="stats-count">0 / 71 bảng</div>
+        <div class="stats-badge" id="stats-count">0 / 0 BẢNG</div>
         <div class="brand-title">NDKBOT STUDIO</div>
-        <div class="menu-btn-container" id="open-menu-btn" onclick="toggleSettings(true)" title="Cài đặt VIP">
-            <div class="hamburger-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
     </div>
 
-    <div class="title">LỊCH SỬ BẢNG XẾP HẠNG (1 - 71)</div>
+    <div class="title">LỊCH SỬ BẢNG XẾP HẠNG</div>
 
     <!-- Thanh tìm kiếm -->
     <div class="search-container">
@@ -579,7 +406,7 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" id="search-input" placeholder="Tìm tên, viết tắt hoặc ID..." oninput="filterBXH()">
+            <input type="text" id="search-input" placeholder="Nhập số BXH (VD: 1, 2, 3...)" oninput="filterBXH()">
         </div>
     </div>
 
@@ -592,208 +419,19 @@
         <img src="" alt="BXH Chi Tiết" class="lightbox-image" id="lightbox-img">
     </div>
 
-    <!-- Panel Cài Đặt (Drawer 3 Gạch) -->
-    <div class="settings-overlay" id="settings-overlay" onclick="toggleSettings(false)">
-        <div class="settings-drawer" onclick="event.stopPropagation()">
-            <div class="drawer-header">
-                <div class="drawer-title">CÀI ĐẶT VIP</div>
-                <div class="close-drawer" onclick="toggleSettings(false)">&times;</div>
-            </div>
-
-            <!-- TÍCH HỢP EDIT KEY -->
-            <div class="setting-group">
-                <div class="setting-label">Quản lý Cấu hình</div>
-                <button class="setting-btn" onclick="openEditKeyModal()">
-                    <span>EDIT KEY (Sửa keys.json)</span>
-                    <span style="color: #00e5ff;">✏️</span>
-                </button>
-            </div>
-
-            <div class="setting-group">
-                <div class="setting-label">Dữ liệu & Bộ nhớ</div>
-                <button class="setting-btn" onclick="clearAppCache()">
-                    <span>Tải lại dữ liệu keys.json</span>
-                    <span style="color: #00e5ff;">🔄</span>
-                </button>
-            </div>
-
-            <div class="setting-group">
-                <div class="setting-label">Chế độ hiển thị</div>
-                <button class="setting-btn" onclick="toggleLayoutMode()">
-                    <span id="layout-mode-text">Chuyển sang dạng Lưới</span>
-                    <span style="color: #00e5ff;">📱</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL EDIT KEY -->
-    <div class="modal-overlay" id="edit-key-modal" onclick="closeEditKeyModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <div class="modal-title">CHỈNH SỬA KEY (KEYS.JSON)</div>
-                <div class="close-drawer" onclick="closeEditKeyModal()">&times;</div>
-            </div>
-
-            <div class="edit-form-group">
-                <label>Chọn ID BXH cần sửa (1 - 71):</label>
-                <select id="edit-id-select" onchange="loadKeyDetailToForm()"></select>
-            </div>
-
-            <div class="edit-form-group">
-                <label>Tên giải đấu (custom_name):</label>
-                <input type="text" id="edit-custom-name" placeholder="VD: Giải Đấu Hoàng Gia - Mùa 1">
-            </div>
-
-            <div class="edit-form-group">
-                <label>Tên viết tắt (short_name):</label>
-                <input type="text" id="edit-short-name" placeholder="VD: HG-M1">
-            </div>
-
-            <div class="modal-actions">
-                <button class="action-btn save" onclick="saveKeyItem()">Lưu Key</button>
-                <button class="action-btn export" onclick="exportKeysJson()">Tải keys.json</button>
-                <button class="action-btn cancel" onclick="closeEditKeyModal()">Đóng</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        const MIN_ID = 1;
-        const MAX_ID = 71;
+        const MAX_CHECK = 200;
         const BATCH_SIZE = 15;
-        
         const gallery = document.getElementById('gallery-container');
         const statsCount = document.getElementById('stats-count');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.getElementById('close-btn');
-        const settingsOverlay = document.getElementById('settings-overlay');
-        const editKeyModal = document.getElementById('edit-key-modal');
 
-        let keyDataMap = {};
         let validItems = [];
         let loadedCount = 0;
-        let isGridMode = false;
 
-        // DỮ LIỆU KEYS.JSON MẶC ĐỊNH
-        const defaultKeyJson = [
-            { id: 1, custom_name: "Giải Đấu Hoàng Gia - Mùa 1", short_name: "HG-M1" },
-            { id: 2, custom_name: "Siêu Cúp Huyền Thoại", short_name: "SCHT" }
-        ];
-
-        // ĐỌC CẤU HÌNH TỪ KEYS.JSON HOẶC LOCALSTORAGE
-        async function loadKeyConfig() {
-            const savedKeys = localStorage.getItem('ndk_keys_data');
-            if (savedKeys) {
-                mapConfigData(JSON.parse(savedKeys));
-                return;
-            }
-
-            try {
-                const response = await fetch('keys.json');
-                if (!response.ok) throw new Error("Không thể nạp file keys.json");
-                const data = await response.json();
-                mapConfigData(data);
-                localStorage.setItem('ndk_keys_data', JSON.stringify(data));
-            } catch (err) {
-                console.warn("Dùng cấu hình mặc định:", err);
-                mapConfigData(defaultKeyJson);
-                localStorage.setItem('ndk_keys_data', JSON.stringify(defaultKeyJson));
-            }
-        }
-
-        function mapConfigData(dataArray) {
-            keyDataMap = {};
-            dataArray.forEach(item => {
-                keyDataMap[item.id] = item;
-            });
-        }
-
-        // BẬT / TẮT SIDEBAR CÀI ĐẶT
-        function toggleSettings(show) {
-            settingsOverlay.classList.toggle('active', show);
-        }
-
-        // TẢI LẠI DỮ LIỆU VÀ XÓA CACHE
-        function clearAppCache() {
-            localStorage.removeItem('ndk_bxh_cache');
-            localStorage.removeItem('ndk_keys_data');
-            alert('Đã làm mới dữ liệu!');
-            location.reload();
-        }
-
-        // TẮT / BẬT CHẾ ĐỘ LƯỚI GIAO DIỆN
-        function toggleLayoutMode() {
-            isGridMode = !isGridMode;
-            const layoutText = document.getElementById('layout-mode-text');
-            gallery.classList.toggle('grid-mode', isGridMode);
-            layoutText.innerText = isGridMode ? 'Chuyển sang dạng Danh sách' : 'Chuyển sang dạng Lưới';
-        }
-
-        /* --- CÁC HÀM XỬ LÝ EDIT KEY --- */
-        function openEditKeyModal() {
-            toggleSettings(false);
-            populateIdSelect();
-            loadKeyDetailToForm();
-            editKeyModal.classList.add('active');
-        }
-
-        function closeEditKeyModal() {
-            editKeyModal.classList.remove('active');
-        }
-
-        function populateIdSelect() {
-            const select = document.getElementById('edit-id-select');
-            select.innerHTML = '';
-            for (let i = MIN_ID; i <= MAX_ID; i++) {
-                const opt = document.createElement('option');
-                opt.value = i;
-                opt.textContent = `BXH #${i} ${keyDataMap[i] ? '- ' + keyDataMap[i].custom_name : ''}`;
-                select.appendChild(opt);
-            }
-        }
-
-        function loadKeyDetailToForm() {
-            const id = document.getElementById('edit-id-select').value;
-            const item = keyDataMap[id] || { custom_name: '', short_name: '' };
-            
-            document.getElementById('edit-custom-name').value = item.custom_name || '';
-            document.getElementById('edit-short-name').value = item.short_name || '';
-        }
-
-        function saveKeyItem() {
-            const id = parseInt(document.getElementById('edit-id-select').value);
-            const custom_name = document.getElementById('edit-custom-name').value.trim();
-            const short_name = document.getElementById('edit-short-name').value.trim();
-
-            keyDataMap[id] = {
-                id: id,
-                custom_name: custom_name || `Bảng xếp hạng #${id}`,
-                short_name: short_name || `BXH #${id}`
-            };
-
-            // LƯU VÀO LOCALSTORAGE
-            const keyArray = Object.values(keyDataMap);
-            localStorage.setItem('ndk_keys_data', JSON.stringify(keyArray));
-
-            alert(`Đã lưu cấu hình Key cho #${id}!`);
-            closeEditKeyModal();
-            location.reload();
-        }
-
-        function exportKeysJson() {
-            const keyArray = Object.values(keyDataMap);
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(keyArray, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "keys.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
-        // HIỂN THỊ KHUNG SKELETON KHI DỮ LIỆU ĐANG TẢI
+        // HIỂN THỊ KHUNG SKELETON
         function showSkeletons() {
             const fragment = document.createDocumentFragment();
             for (let i = 0; i < 5; i++) {
@@ -804,7 +442,7 @@
             gallery.appendChild(fragment);
         }
 
-        // KIỂM TRA SỰ TỒN TẠI CỦA ẢNH
+        // KIỂM TRA TỒN TẠI ẢNH (1.png, 2.png...)
         function checkImageExists(id) {
             return new Promise((resolve) => {
                 const imgSrc = `${id}.png`;
@@ -815,7 +453,7 @@
             });
         }
 
-        // LẤY DANH SÁCH BẢNG XẾP HẠNG HỢP LỆ (1 ĐẾN 71)
+        // NẠP DANH SÁCH ẢNH DÙNG CACHE TRÁNH LOAD CHẬM
         async function fetchValidImages() {
             const cached = localStorage.getItem('ndk_bxh_cache');
             if (cached) {
@@ -826,12 +464,19 @@
             }
 
             const checkPromises = [];
-            for (let i = MIN_ID; i <= MAX_ID; i++) {
+            for (let i = 1; i <= MAX_CHECK; i++) {
                 checkPromises.push(checkImageExists(i));
             }
 
             const results = await Promise.all(checkPromises);
-            const valid = results.filter(res => res.exists);
+            const valid = [];
+            for (const res of results) {
+                if (res.exists) {
+                    valid.push(res);
+                } else {
+                    break;
+                }
+            }
 
             localStorage.setItem('ndk_bxh_cache', JSON.stringify({
                 timestamp: Date.now(),
@@ -841,7 +486,7 @@
             return valid;
         }
 
-        // RENDER DANH SÁCH THEO BATCH
+        // RENDER TỪNG TẬP TẬP TỆP ÁNH
         function renderNextBatch() {
             if (loadedCount >= validItems.length) return;
 
@@ -849,15 +494,9 @@
             const nextBatch = validItems.slice(loadedCount, loadedCount + BATCH_SIZE);
 
             nextBatch.forEach(({ id, src }) => {
-                const keyInfo = keyDataMap[id] || {};
-                const customName = keyInfo.custom_name || `Bảng xếp hạng #${id}`;
-                const shortName = keyInfo.short_name || `BXH #${id}`;
-
                 const item = document.createElement('div');
                 item.className = 'bxh-item';
                 item.setAttribute('data-id', id);
-                item.setAttribute('data-title', customName.toLowerCase());
-                item.setAttribute('data-short', shortName.toLowerCase());
 
                 item.innerHTML = `
                     <div class="image-container" onclick="openLightbox('${src}')">
@@ -865,9 +504,8 @@
                         <div class="image-number">#${id}</div>
                     </div>
                     <div class="bxh-info">
-                        <div class="bxh-title">${customName}</div>
-                        <div class="bxh-custom-name">Mã: ${shortName}</div>
-                        <div class="bxh-tag">ID: ${id}</div>
+                        <div class="bxh-title">BẢNG XẾP HẠNG #${id}</div>
+                        <div class="bxh-subtext">SYSTEM STATUS: ONLINE</div>
                     </div>
                 `;
                 fragment.appendChild(item);
@@ -877,14 +515,14 @@
             loadedCount += nextBatch.length;
         }
 
-        // HÀM CHÍNH KHỞI CHẠY TRANG WEB
+        // KHỞI CHẠY CHÍNH
         async function loadGalleryUltraFast() {
             showSkeletons();
-            await loadKeyConfig();
+
             validItems = await fetchValidImages();
 
             gallery.innerHTML = '';
-            statsCount.innerText = `${validItems.length} / ${MAX_ID} bảng`;
+            statsCount.innerText = `${validItems.length} / ${validItems.length} BẢNG`;
 
             renderNextBatch();
 
@@ -895,17 +533,14 @@
             }, 50);
         }
 
-        // TÌM KIẾM
+        // LỌC THEO SỐ BXH
         function filterBXH() {
-            const value = document.getElementById('search-input').value.trim().toLowerCase();
+            const value = document.getElementById('search-input').value.trim();
             const items = document.querySelectorAll('.bxh-item');
 
             items.forEach(item => {
                 const id = item.getAttribute('data-id');
-                const title = item.getAttribute('data-title');
-                const shortName = item.getAttribute('data-short');
-
-                if (value === '' || id === value || title.includes(value) || shortName.includes(value)) {
+                if (value === '' || id === value) {
                     item.style.display = 'flex';
                 } else {
                     item.style.display = 'none';
@@ -929,10 +564,8 @@
         closeBtn.onclick = closeLightbox;
         lightbox.onclick = (e) => { if (e.target !== lightboxImg) closeLightbox(); };
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (lightbox.classList.contains('active')) closeLightbox();
-                toggleSettings(false);
-                closeEditKeyModal();
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
             }
         });
 
