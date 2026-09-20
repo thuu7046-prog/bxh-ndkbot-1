@@ -244,7 +244,7 @@
             box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
         }
 
-        /* Khung thông tin BXH tích hợp Logo Custom */
+        /* Khung thông tin BXH */
         .bxh-info {
             display: flex;
             flex-direction: column;
@@ -252,22 +252,6 @@
             gap: 8px;
             overflow: hidden;
             flex-grow: 1;
-        }
-
-        .bxh-header-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .bxh-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid #00e5ff;
-            box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
-            background-color: #0f172a;
         }
 
         .bxh-title {
@@ -666,11 +650,6 @@
                 <input type="text" id="edit-short-name" placeholder="VD: HG-M1">
             </div>
 
-            <div class="edit-form-group">
-                <label>Link Logo hoặc tên file (logo):</label>
-                <input type="text" id="edit-logo" placeholder="VD: 1.png hoặc https://...">
-            </div>
-
             <div class="modal-actions">
                 <button class="action-btn save" onclick="saveKeyItem()">Lưu Key</button>
                 <button class="action-btn export" onclick="exportKeysJson()">Tải keys.json</button>
@@ -699,8 +678,8 @@
 
         // DỮ LIỆU KEYS.JSON MẶC ĐỊNH
         const defaultKeyJson = [
-            { id: 1, custom_name: "Giải Đấu Hoàng Gia - Mùa 1", short_name: "HG-M1", logo: "1.png" },
-            { id: 2, custom_name: "Siêu Cúp Huyền Thoại", short_name: "SCHT", logo: "https://i.ibb.co/fYyQBxgr/400.png" }
+            { id: 1, custom_name: "Giải Đấu Hoàng Gia - Mùa 1", short_name: "HG-M1" },
+            { id: 2, custom_name: "Siêu Cúp Huyền Thoại", short_name: "SCHT" }
         ];
 
         // ĐỌC CẤU HÌNH TỪ KEYS.JSON HOẶC LOCALSTORAGE
@@ -777,24 +756,21 @@
 
         function loadKeyDetailToForm() {
             const id = document.getElementById('edit-id-select').value;
-            const item = keyDataMap[id] || { custom_name: '', short_name: '', logo: '' };
+            const item = keyDataMap[id] || { custom_name: '', short_name: '' };
             
             document.getElementById('edit-custom-name').value = item.custom_name || '';
             document.getElementById('edit-short-name').value = item.short_name || '';
-            document.getElementById('edit-logo').value = item.logo || '';
         }
 
         function saveKeyItem() {
             const id = parseInt(document.getElementById('edit-id-select').value);
             const custom_name = document.getElementById('edit-custom-name').value.trim();
             const short_name = document.getElementById('edit-short-name').value.trim();
-            const logo = document.getElementById('edit-logo').value.trim();
 
             keyDataMap[id] = {
                 id: id,
                 custom_name: custom_name || `Bảng xếp hạng #${id}`,
-                short_name: short_name || `BXH #${id}`,
-                logo: logo || `${id}.png`
+                short_name: short_name || `BXH #${id}`
             };
 
             // LƯU VÀO LOCALSTORAGE
@@ -876,7 +852,6 @@
                 const keyInfo = keyDataMap[id] || {};
                 const customName = keyInfo.custom_name || `Bảng xếp hạng #${id}`;
                 const shortName = keyInfo.short_name || `BXH #${id}`;
-                const logoSrc = keyInfo.logo || `${id}.png`;
 
                 const item = document.createElement('div');
                 item.className = 'bxh-item';
@@ -890,10 +865,7 @@
                         <div class="image-number">#${id}</div>
                     </div>
                     <div class="bxh-info">
-                        <div class="bxh-header-row">
-                            <img class="bxh-logo" src="${logoSrc}" onerror="this.src='1.png'" alt="Logo">
-                            <div class="bxh-title">${customName}</div>
-                        </div>
+                        <div class="bxh-title">${customName}</div>
                         <div class="bxh-custom-name">Mã: ${shortName}</div>
                         <div class="bxh-tag">ID: ${id}</div>
                     </div>
