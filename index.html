@@ -315,6 +315,58 @@
             letter-spacing: 1px;
         }
 
+        /* --- THẺ LỜI CHÚC CỦA NDKBOT (HIỆU ỨNG NĂM MỚI TẾT VIP) --- */
+        .thanks-footer-card {
+            margin-top: 15px;
+            padding: 22px 20px;
+            background: linear-gradient(135deg, rgba(40, 10, 15, 0.9), rgba(15, 5, 20, 0.95));
+            border: 2px solid #ffd700;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(255, 0, 80, 0.2);
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+        }
+
+        .thanks-footer-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 60%);
+            animation: pulseEye 2.5s infinite alternate;
+        }
+
+        .thanks-text {
+            font-family: 'Arial Black', -apple-system, sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff4500, #ffd700, #ff007f, #ffd700, #ff4500);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveGradient 3s linear infinite;
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+            position: relative;
+            z-index: 2;
+        }
+
+        .thanks-subtext {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #ffda79;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 10px rgba(255, 218, 121, 0.5);
+        }
+
         /* ANIMATION HIỆU ỨNG ROBOT */
         @keyframes moveGradient {
             0% { background-position: 0% 50%; }
@@ -391,7 +443,7 @@
 </head>
 <body>
 
-    <!-- Header Robot VIP (Đã xóa 3 gạch) -->
+    <!-- Header Robot VIP -->
     <div class="vip-header">
         <div class="stats-badge" id="stats-count">0 / 0 BẢNG</div>
         <div class="brand-title">NDKBOT STUDIO</div>
@@ -453,7 +505,7 @@
             });
         }
 
-        // NẠP DANH SÁCH ẢNH DÙNG CACHE TRÁNH LOAD CHẬM
+        // NẠP DANH SÁCH ẢNH DÙNG CACHE
         async function fetchValidImages() {
             const cached = localStorage.getItem('ndk_bxh_cache');
             if (cached) {
@@ -486,7 +538,7 @@
             return valid;
         }
 
-        // RENDER TỪNG TẬP TẬP TỆP ÁNH
+        // RENDER TỪNG TẬP TỆP ÁNH
         function renderNextBatch() {
             if (loadedCount >= validItems.length) return;
 
@@ -500,7 +552,7 @@
 
                 item.innerHTML = `
                     <div class="image-container" onclick="openLightbox('${src}')">
-                        <img src="${src}" loading="lazy" decoding="async" alt="BXH #${id}">
+                        <img src="${src}" loading="lazy" decoding="async" alt="BẢNG XẾP HẠNG #${id}">
                         <div class="image-number">#${id}</div>
                     </div>
                     <div class="bxh-info">
@@ -513,6 +565,23 @@
 
             gallery.appendChild(fragment);
             loadedCount += nextBatch.length;
+
+            // Khi nạp xong toàn bộ BXH thì hiển thị thẻ Chúc Mừng Năm Mới ở dưới cùng
+            if (loadedCount >= validItems.length && !document.getElementById('thanks-card')) {
+                renderThanksFooter();
+            }
+        }
+
+        // THẺ LỜI CHÚC TẾT / NĂM MỚI Ở CUỐI TRANG
+        function renderThanksFooter() {
+            const footerCard = document.createElement('div');
+            footerCard.id = 'thanks-card';
+            footerCard.className = 'thanks-footer-card';
+            footerCard.innerHTML = `
+                <div class="thanks-text">🧧 NDKBOT THANKS CHÚC AE VUI VẺ! 🧧</div>
+                <div class="thanks-subtext">✨ AN KHANG THỊNH VƯỢNG - VẠN SỰ NHƯ Ý ✨</div>
+            `;
+            gallery.appendChild(footerCard);
         }
 
         // KHỞI CHẠY CHÍNH
@@ -537,6 +606,7 @@
         function filterBXH() {
             const value = document.getElementById('search-input').value.trim();
             const items = document.querySelectorAll('.bxh-item');
+            const thanksCard = document.getElementById('thanks-card');
 
             items.forEach(item => {
                 const id = item.getAttribute('data-id');
@@ -546,6 +616,11 @@
                     item.style.display = 'none';
                 }
             });
+
+            // Ẩn/Hiện thẻ chúc mừng khi tìm kiếm
+            if (thanksCard) {
+                thanksCard.style.display = value === '' ? 'block' : 'none';
+            }
         }
 
         // LIGHTBOX
