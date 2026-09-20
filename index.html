@@ -61,31 +61,44 @@
             text-align: center;
         }
 
-        /* Logo Viền Tròn Glowing 3D */
-        .header-logo-container {
+        /* NÚT TÙY CHỌN 3 GẠCH (SETTINGS MENU) */
+        .menu-btn-container {
             position: relative;
-            padding: 3px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00e5ff, #38bdf8, #0055ff);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #101a26, #0d1520);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: pulse-glow 3s infinite alternate;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 15px rgba(0, 229, 255, 0.5); }
-            100% { box-shadow: 0 0 25px rgba(0, 229, 255, 0.9), 0 0 10px rgba(56, 189, 248, 0.8); }
+        .menu-btn-container:hover {
+            border-color: #00e5ff;
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.5);
+            transform: scale(1.05);
         }
 
-        .header-logo-container img {
-            width: 46px;
-            height: 46px;
-            object-fit: cover;
-            border-radius: 50%;
+        .hamburger-icon {
+            width: 20px;
+            height: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger-icon span {
             display: block;
-            background-color: #0b0e14;
+            width: 100%;
+            height: 2px;
+            background: #00e5ff;
+            border-radius: 2px;
+            box-shadow: 0 0 5px rgba(0, 229, 255, 0.8);
+            transition: all 0.3s ease;
         }
 
         /* Tiêu đề & Thanh tìm kiếm */
@@ -154,6 +167,14 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            min-height: 200px;
+        }
+
+        /* Hỗ trợ chế độ Grid nếu bật trong cài đặt */
+        .gallery.grid-mode {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
         }
 
         .bxh-item {
@@ -170,7 +191,6 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
-        /* Viền sáng dạ quang chạy dọc khung item */
         .bxh-item::before {
             content: '';
             position: absolute;
@@ -190,7 +210,7 @@
             background: linear-gradient(135deg, rgba(20, 30, 50, 0.8), rgba(13, 18, 30, 0.95));
         }
 
-        /* Khung hiển thị ảnh viền Game/Cyberpunk */
+        /* Khung hiển thị ảnh */
         .image-container {
             position: relative;
             width: 210px;
@@ -217,7 +237,6 @@
             transform: scale(1.08);
         }
 
-        /* Badge số thứ tự VIP */
         .image-number {
             position: absolute;
             top: 8px;
@@ -233,7 +252,6 @@
             box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
         }
 
-        /* Thông tin chi tiết bên phải ảnh */
         .bxh-info {
             display: flex;
             flex-direction: column;
@@ -246,6 +264,128 @@
             font-size: 15px;
             font-weight: 700;
             letter-spacing: 0.5px;
+        }
+
+        /* --- SKELETON LOADER --- */
+        .skeleton {
+            background: linear-gradient(90deg, #0f172a 25%, #1e293b 50%, #0f172a 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 10px;
+        }
+
+        .skeleton-item {
+            height: 144px;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            border-radius: 14px;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* --- SIDEBAR CÀI ĐẶT (SETTINGS DRAWER) --- */
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .settings-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .settings-drawer {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: #0b0f19;
+            border-left: 1px solid rgba(0, 229, 255, 0.3);
+            box-shadow: -5px 0 25px rgba(0, 229, 255, 0.15);
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 1002;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .settings-overlay.active .settings-drawer {
+            right: 0;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .drawer-title {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .close-drawer {
+            color: #9ba1b0;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-drawer:hover {
+            color: #00e5ff;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .setting-label {
+            color: #8c9ba5;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .setting-btn {
+            background: #10172a;
+            color: #ffffff;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+
+        .setting-btn:hover {
+            border-color: #00e5ff;
+            background: #162238;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
         }
 
         /* --- LIGHTBOX (XEM ẢNH PHÓNG TO) --- */
@@ -287,12 +427,16 @@
 </head>
 <body>
 
-    <!-- Header VIP: Đếm số lượng bên trái | Chữ NDKBOT STUDIO ở giữa | Logo VIP bên phải -->
+    <!-- Header VIP: Stats bên trái | Tên Studio ở giữa | Nút 3 gạch bên phải -->
     <div class="vip-header">
         <div class="stats-badge" id="stats-count">0 / 0 bảng</div>
         <div class="brand-title">NDKBOT STUDIO</div>
-        <div class="header-logo-container">
-            <img src="https://i.ibb.co/fYyQBxgr/400.png" alt="NDKBOT STUDIO Logo">
+        <div class="menu-btn-container" id="open-menu-btn" onclick="toggleSettings(true)" title="Cài đặt VIP">
+            <div class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </div>
 
@@ -313,65 +457,183 @@
     <!-- Danh sách các BXH -->
     <div class="gallery" id="gallery-container"></div>
 
-    <!-- Xem ảnh lớn -->
+    <!-- Lightbox Xem ảnh lớn -->
     <div class="lightbox-overlay" id="lightbox">
         <span class="close-lightbox" id="close-btn">&times;</span>
         <img src="" alt="BXH Chi Tiết" class="lightbox-image" id="lightbox-img">
     </div>
 
+    <!-- Panel Cài Đặt (Drawer) -->
+    <div class="settings-overlay" id="settings-overlay" onclick="toggleSettings(false)">
+        <div class="settings-drawer" onclick="event.stopPropagation()">
+            <div class="drawer-header">
+                <div class="drawer-title">CÀI ĐẶT VIP</div>
+                <div class="close-drawer" onclick="toggleSettings(false)">&times;</div>
+            </div>
+
+            <div class="setting-group">
+                <div class="setting-label">Dữ liệu & Bộ nhớ</div>
+                <button class="setting-btn" onclick="clearAppCache()">
+                    <span>Làm mới bộ nhớ đệm</span>
+                    <span style="color: #00e5ff;">🔄</span>
+                </button>
+            </div>
+
+            <div class="setting-group">
+                <div class="setting-label">Chế độ hiển thị</div>
+                <button class="setting-btn" onclick="toggleLayoutMode()">
+                    <span id="layout-mode-text">Chuyển sang dạng Lưới</span>
+                    <span style="color: #00e5ff;">📱</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const MAX_CHECK = 200;
+        const BATCH_SIZE = 15;
         const gallery = document.getElementById('gallery-container');
         const statsCount = document.getElementById('stats-count');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.getElementById('close-btn');
+        const settingsOverlay = document.getElementById('settings-overlay');
 
-        let validImageCount = 0;
+        let validItems = [];
+        let loadedCount = 0;
+        let isGridMode = false;
 
-        function checkImageExists(src) {
+        // BẬT / TẮT DRAWER CÀI ĐẶT
+        function toggleSettings(show) {
+            if (show) {
+                settingsOverlay.classList.add('active');
+            } else {
+                settingsOverlay.classList.remove('active');
+            }
+        }
+
+        // XÓA BỘ NHỚ CACHE ĐỂ NẠP LẠI MỚI DỮ LIỆU
+        function clearAppCache() {
+            localStorage.removeItem('ndk_bxh_cache');
+            alert('Đã xóa bộ nhớ đệm! Trang sẽ được nạp lại.');
+            location.reload();
+        }
+
+        // CHUYỂN ĐỔI GIAO DIỆN DANH SÁCH / LƯỚI
+        function toggleLayoutMode() {
+            isGridMode = !isGridMode;
+            const layoutText = document.getElementById('layout-mode-text');
+            if (isGridMode) {
+                gallery.classList.add('grid-mode');
+                layoutText.innerText = 'Chuyển sang dạng Danh sách';
+            } else {
+                gallery.classList.remove('grid-mode');
+                layoutText.innerText = 'Chuyển sang dạng Lưới';
+            }
+        }
+
+        // TẠO KHUNG SKELETON LOADER
+        function showSkeletons() {
+            const fragment = document.createDocumentFragment();
+            for (let i = 0; i < 5; i++) {
+                const skel = document.createElement('div');
+                skel.className = 'skeleton skeleton-item';
+                fragment.appendChild(skel);
+            }
+            gallery.appendChild(fragment);
+        }
+
+        // KIỂM TRA SỰ TỒN TẠI CỦA ÁNH SONG SONG
+        function checkImageExists(id) {
             return new Promise((resolve) => {
+                const imgSrc = `${id}.png`;
                 const img = new Image();
-                img.onload = () => resolve(true);
-                img.onerror = () => resolve(false);
-                img.src = src;
+                img.onload = () => resolve({ id, src: imgSrc, exists: true });
+                img.onerror = () => resolve({ id, src: imgSrc, exists: false });
+                img.src = imgSrc;
             });
         }
 
-        async function loadGallery() {
-            const fragment = document.createDocumentFragment();
-
-            for (let i = 1; i <= MAX_CHECK; i++) {
-                const imgSrc = i + '.png';
-                const exists = await checkImageExists(imgSrc);
-
-                if (exists) {
-                    validImageCount++;
-
-                    const item = document.createElement('div');
-                    item.className = 'bxh-item';
-                    item.setAttribute('data-id', i);
-
-                    item.innerHTML = `
-                        <div class="image-container" onclick="openLightbox('${imgSrc}')">
-                            <img src="${imgSrc}" loading="lazy" decoding="async" alt="BXH #${i}">
-                            <div class="image-number">#${i}</div>
-                        </div>
-                        <div class="bxh-info">
-                            <div class="bxh-title">BXH #${i}</div>
-                        </div>
-                    `;
-
-                    fragment.appendChild(item);
-                } else {
-                    break; 
+        // LẤY DANH SÁCH ÁNH HỢP LỆ (CACHE + PARALLEL PROBING)
+        async function fetchValidImages() {
+            const cached = localStorage.getItem('ndk_bxh_cache');
+            if (cached) {
+                const cacheData = JSON.parse(cached);
+                if (Date.now() - cacheData.timestamp < 300000) { // Cache trong 5 phút
+                    return cacheData.items;
                 }
             }
 
-            gallery.appendChild(fragment);
-            statsCount.innerText = `${validImageCount} / ${validImageCount} bảng`;
+            const checkPromises = [];
+            for (let i = 1; i <= MAX_CHECK; i++) {
+                checkPromises.push(checkImageExists(i));
+            }
+
+            const results = await Promise.all(checkPromises);
+            const valid = [];
+            for (const res of results) {
+                if (res.exists) {
+                    valid.push(res);
+                } else {
+                    break;
+                }
+            }
+
+            localStorage.setItem('ndk_bxh_cache', JSON.stringify({
+                timestamp: Date.now(),
+                items: valid
+            }));
+
+            return valid;
         }
 
+        // RENDER THEO BATCH
+        function renderNextBatch() {
+            if (loadedCount >= validItems.length) return;
+
+            const fragment = document.createDocumentFragment();
+            const nextBatch = validItems.slice(loadedCount, loadedCount + BATCH_SIZE);
+
+            nextBatch.forEach(({ id, src }) => {
+                const item = document.createElement('div');
+                item.className = 'bxh-item';
+                item.setAttribute('data-id', id);
+
+                item.innerHTML = `
+                    <div class="image-container" onclick="openLightbox('${src}')">
+                        <img src="${src}" loading="lazy" decoding="async" alt="BXH #${id}">
+                        <div class="image-number">#${id}</div>
+                    </div>
+                    <div class="bxh-info">
+                        <div class="bxh-title">BXH #${id}</div>
+                    </div>
+                `;
+                fragment.appendChild(item);
+            });
+
+            gallery.appendChild(fragment);
+            loadedCount += nextBatch.length;
+        }
+
+        // HÀM KHỞI CHẠY CHÍNH
+        async function loadGalleryUltraFast() {
+            showSkeletons();
+
+            validItems = await fetchValidImages();
+
+            gallery.innerHTML = '';
+            statsCount.innerText = `${validItems.length} / ${validItems.length} bảng`;
+
+            renderNextBatch();
+
+            setTimeout(() => {
+                while (loadedCount < validItems.length) {
+                    renderNextBatch();
+                }
+            }, 50);
+        }
+
+        // TÌM KIẾM
         function filterBXH() {
             const value = document.getElementById('search-input').value.trim();
             const items = document.querySelectorAll('.bxh-item');
@@ -386,6 +648,7 @@
             });
         }
 
+        // LIGHTBOX
         function openLightbox(src) {
             lightboxImg.src = src;
             lightbox.classList.add('active');
@@ -401,10 +664,13 @@
         closeBtn.onclick = closeLightbox;
         lightbox.onclick = (e) => { if (e.target !== lightboxImg) closeLightbox(); };
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+            if (e.key === 'Escape') {
+                if (lightbox.classList.contains('active')) closeLightbox();
+                toggleSettings(false);
+            }
         });
 
-        loadGallery();
+        loadGalleryUltraFast();
     </script>
 </body>
 </html>
