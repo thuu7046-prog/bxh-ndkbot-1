@@ -52,6 +52,797 @@
             animation: moveGradient 3s linear infinite;
         }
 
+        .stats-badge {
+            background: rgba(0, 229, 255, 0.1);
+            color: #00e5ff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 800;
+            border: 1px solid rgba(0, 229, 255, 0.6);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .brand-title {
+            font-family: 'Arial Black', -apple-system, sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff 0%, #00e5ff 40%, #ff007f 80%, #ffffff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveGradient 4s linear infinite;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.8);
+            text-align: center;
+        }
+
+        .title {
+            color: #00e5ff;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #ff007f;
+            box-shadow: 0 0 10px #ff007f;
+            border-radius: 50%;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-input-wrapper input {
+            width: 100%;
+            background-color: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px 12px 10px 36px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-wrapper input:focus {
+            border-color: #00e5ff;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.5), inset 0 0 8px rgba(0, 229, 255, 0.2);
+        }
+
+        .search-input-wrapper input::placeholder {
+            color: #475569;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            opacity: 0.8;
+            stroke: #00e5ff;
+        }
+
+        /* --- DANH SÁCH BẢNG XẾP HẠNG --- */
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-height: 200px;
+        }
+
+        .bxh-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(12, 18, 32, 0.95), rgba(6, 10, 18, 0.98));
+            border-radius: 10px;
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+        }
+
+        .bxh-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #00e5ff, #ff007f);
+            box-shadow: 0 0 12px #00e5ff;
+        }
+
+        .bxh-item::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(135deg, transparent 45%, rgba(0, 229, 255, 0.15) 50%, rgba(255, 0, 128, 0.2) 52%, transparent 57%);
+            transition: all 0.6s ease;
+            pointer-events: none;
+        }
+
+        .bxh-item:hover::after {
+            top: 100%;
+            left: 100%;
+        }
+
+        .bxh-item:hover {
+            transform: translateY(-4px) scale(1.008);
+            border-color: #00e5ff;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.35), 0 0 10px rgba(255, 0, 128, 0.2);
+        }
+
+        .image-container {
+            position: relative;
+            width: 210px;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            cursor: pointer;
+            padding: 2px;
+            background: linear-gradient(135deg, #00e5ff, rgba(15, 23, 42, 0.8), #ff007f);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 6px;
+            height: 6px;
+            background: #ff007f;
+            box-shadow: 0 0 8px #ff007f;
+            z-index: 2;
+            border-radius: 50%;
+            animation: pulseEye 1.5s infinite alternate;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 6px;
+            transition: transform 0.4s ease, filter 0.3s ease;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.08);
+            filter: brightness(1.1) contrast(1.05);
+        }
+
+        .image-number {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(3, 6, 10, 0.9);
+            color: #00e5ff;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 900;
+            border: 1px solid rgba(0, 229, 255, 0.6);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        .bxh-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .bxh-title {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .bxh-subtext {
+            font-size: 11px;
+            color: #00e5ff;
+            background: rgba(0, 229, 255, 0.08);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        .thanks-footer-card {
+            margin-top: 15px;
+            padding: 22px 20px;
+            background: linear-gradient(135deg, rgba(40, 10, 15, 0.9), rgba(15, 5, 20, 0.95));
+            border: 2px solid #ffd700;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(255, 0, 80, 0.2);
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+        }
+
+        .thanks-text {
+            font-family: 'Arial Black', -apple-system, sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff4500, #ffd700, #ff007f, #ffd700, #ff4500);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveGradient 3s linear infinite;
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+            position: relative;
+            z-index: 2;
+        }
+
+        .thanks-subtext {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #ffda79;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- CHATBOT UI --- */
+        .robot-ai-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00e5ff, #ff007f);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .robot-ai-btn:hover {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 0 30px rgba(255, 0, 128, 0.8);
+        }
+
+        .robot-ai-btn svg {
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
+        }
+
+        .robot-chat-window {
+            position: fixed;
+            bottom: 95px;
+            right: 24px;
+            width: 350px;
+            height: 480px;
+            background: rgba(8, 14, 26, 0.95);
+            border: 1px solid #00e5ff;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
+            backdrop-filter: blur(12px);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 999;
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+        }
+
+        .robot-chat-window.active {
+            display: flex;
+        }
+
+        .robot-chat-header {
+            background: rgba(0, 229, 255, 0.1);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+        }
+
+        .robot-chat-title {
+            color: #00e5ff;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .robot-chat-close {
+            color: #ff007f;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .robot-chat-messages {
+            flex: 1;
+            padding: 14px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .chat-msg {
+            max-width: 88%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .chat-msg.bot {
+            background: rgba(0, 229, 255, 0.15);
+            color: #e2e8f0;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            align-self: flex-start;
+            border-top-left-radius: 0;
+        }
+
+        .chat-msg.user {
+            background: rgba(255, 0, 128, 0.25);
+            color: #ffffff;
+            border: 1px solid rgba(255, 0, 128, 0.5);
+            align-self: flex-end;
+            border-top-right-radius: 0;
+        }
+
+        .robot-chat-input-area {
+            display: flex;
+            padding: 10px;
+            gap: 8px;
+            background: rgba(3, 6, 10, 0.8);
+            border-top: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .robot-chat-input-area input {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 6px;
+            padding: 10px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .robot-chat-input-area button {
+            background: linear-gradient(135deg, #00e5ff, #ff007f);
+            color: #ffffff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @keyframes pulseEye {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #090e17 25%, #141e30 50%, #090e17 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 10px;
+        }
+
+        .skeleton-item {
+            height: 144px;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            border-radius: 10px;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(3, 6, 10, 0.94);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+        }
+
+        .lightbox-image {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            border: 2px solid #00e5ff;
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.4);
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #00e5ff;
+            font-size: 36px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vip-header">
+        <div class="stats-badge" id="stats-count">0 / 0 BẢNG</div>
+        <div class="brand-title">NDKBOT STUDIO</div>
+    </div>
+
+    <div class="title">LỊCH SỬ BẢNG XẾP HẠNG</div>
+
+    <div class="search-container">
+        <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="search-input" placeholder="Nhập số BẢNG (VD: 1, 2, 3...)" oninput="filterBXH()">
+        </div>
+    </div>
+
+    <div class="gallery" id="gallery-container"></div>
+
+    <div class="lightbox-overlay" id="lightbox">
+        <span class="close-lightbox" id="close-btn">&times;</span>
+        <img src="" alt="Chi Tiết" class="lightbox-image" id="lightbox-img">
+    </div>
+
+    <!-- BOT CHATBOT UI -->
+    <div class="robot-ai-btn" id="robot-ai-toggle" onclick="toggleRobotChat()">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2a2 2 0 0 1 2 2v1h2a3 3 0 0 1 3 3v2h1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-1v3a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-3H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h1V8a3 3 0 0 1 3-3h2V4a2 2 0 0 1 2-2zm-3 8a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm6 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-6 6v1h6v-1H9z"/>
+        </svg>
+    </div>
+
+    <div class="robot-chat-window" id="robot-chat-window">
+        <div class="robot-chat-header">
+            <div class="robot-chat-title">
+                🤖 NDK-BOT AI ASSISTANT
+            </div>
+            <div class="robot-chat-close" onclick="toggleRobotChat()">&times;</div>
+        </div>
+        <div class="robot-chat-messages" id="chat-messages">
+            <div class="chat-msg bot">NDKBOT XIN CHÀO BẠN CẦN TÔI HỖ TRỢ GÌ!</div>
+        </div>
+        <div class="robot-chat-input-area">
+            <input type="text" id="chat-input" placeholder="Nhập câu hỏi hoặc số bảng..." onkeypress="handleChatKeyPress(event)">
+            <button onclick="sendChatMessage()">GỬI</button>
+        </div>
+    </div>
+
+    <script>
+        const MAX_CHECK = 200;
+        const BATCH_SIZE = 15;
+        const gallery = document.getElementById('gallery-container');
+        const statsCount = document.getElementById('stats-count');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('close-btn');
+
+        let validItems = [];
+        let loadedCount = 0;
+
+        function showSkeletons() {
+            const fragment = document.createDocumentFragment();
+            for (let i = 0; i < 5; i++) {
+                const skel = document.createElement('div');
+                skel.className = 'skeleton skeleton-item';
+                fragment.appendChild(skel);
+            }
+            gallery.appendChild(fragment);
+        }
+
+        function checkImageExists(id) {
+            return new Promise((resolve) => {
+                const imgSrc = `${id}.png`;
+                const img = new Image();
+                img.onload = () => resolve({ id, src: imgSrc, exists: true });
+                img.onerror = () => resolve({ id, src: imgSrc, exists: false });
+                img.src = imgSrc;
+            });
+        }
+
+        async function fetchValidImages() {
+            const cached = localStorage.getItem('ndk_bxh_cache');
+            if (cached) {
+                const cacheData = JSON.parse(cached);
+                if (Date.now() - cacheData.timestamp < 300000) {
+                    return cacheData.items;
+                }
+            }
+
+            const checkPromises = [];
+            for (let i = 1; i <= MAX_CHECK; i++) {
+                checkPromises.push(checkImageExists(i));
+            }
+
+            const results = await Promise.all(checkPromises);
+            const valid = [];
+            for (const res of results) {
+                if (res.exists) {
+                    valid.push(res);
+                } else {
+                    break;
+                }
+            }
+
+            localStorage.setItem('ndk_bxh_cache', JSON.stringify({
+                timestamp: Date.now(),
+                items: valid
+            }));
+
+            return valid;
+        }
+
+        function renderNextBatch() {
+            if (loadedCount >= validItems.length) return;
+
+            const fragment = document.createDocumentFragment();
+            const nextBatch = validItems.slice(loadedCount, loadedCount + BATCH_SIZE);
+
+            nextBatch.forEach(({ id, src }) => {
+                const item = document.createElement('div');
+                item.className = 'bxh-item';
+                item.setAttribute('data-id', id);
+
+                item.innerHTML = `
+                    <div class="image-container" onclick="openLightbox('${src}')">
+                        <img src="${src}" loading="lazy" decoding="async" alt="#${id}">
+                        <div class="image-number">#${id}</div>
+                    </div>
+                    <div class="bxh-info">
+                        <div class="bxh-title">#${id}</div>
+                        <div class="bxh-subtext">SYSTEM STATUS: ONLINE</div>
+                    </div>
+                `;
+                fragment.appendChild(item);
+            });
+
+            gallery.appendChild(fragment);
+            loadedCount += nextBatch.length;
+
+            if (loadedCount >= validItems.length && !document.getElementById('thanks-card')) {
+                renderThanksFooter();
+            }
+        }
+
+        function renderThanksFooter() {
+            const footerCard = document.createElement('div');
+            footerCard.id = 'thanks-card';
+            footerCard.className = 'thanks-footer-card';
+            footerCard.innerHTML = `
+                <div class="thanks-text">🧧 NDKBOT THANKS CHÚC AE VUI VẺ! 🧧</div>
+                <div class="thanks-subtext">✨ AN KHANG THỊNH VƯỢNG - VẠN SỰ NHƯ Ý ✨</div>
+            `;
+            gallery.appendChild(footerCard);
+        }
+
+        async function loadGalleryUltraFast() {
+            showSkeletons();
+            validItems = await fetchValidImages();
+            gallery.innerHTML = '';
+            statsCount.innerText = `${validItems.length} / ${validItems.length} BẢNG`;
+
+            renderNextBatch();
+
+            setTimeout(() => {
+                while (loadedCount < validItems.length) {
+                    renderNextBatch();
+                }
+            }, 50);
+        }
+
+        function filterBXH() {
+            const value = document.getElementById('search-input').value.trim();
+            const items = document.querySelectorAll('.bxh-item');
+            const thanksCard = document.getElementById('thanks-card');
+
+            items.forEach(item => {
+                const id = item.getAttribute('data-id');
+                if (value === '' || id === value) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if (thanksCard) {
+                thanksCard.style.display = value === '' ? 'block' : 'none';
+            }
+        }
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+            lightboxImg.src = '';
+        }
+
+        closeBtn.onclick = closeLightbox;
+        lightbox.onclick = (e) => { if (e.target !== lightboxImg) closeLightbox(); };
+
+        // --- BỘ MÁY CHATBOT THÔNG MINH OFF-LINE (KHÔNG CẦN API) ---
+        function toggleRobotChat() {
+            const chatWin = document.getElementById('robot-chat-window');
+            chatWin.classList.toggle('active');
+        }
+
+        function generateSmartResponse(input) {
+            const text = input.toLowerCase().trim();
+
+            // 1. Nhóm từ khóa chào hỏi
+            const greetings = ["hi", "hai", "hello", "chào", "xin chào", "helo", "hế lô", "chao", "alo"];
+            if (greetings.includes(text)) {
+                return "NDKBOT XIN CHÀO BẠN CẦN TÔI HỖ TRỢ GÌ!";
+            }
+
+            // 2. Tìm kiếm Bảng xếp hạng trực tiếp qua Chatbot (VD: nhập "bảng 5", "10", "xem bxh 2")
+            const numMatch = text.match(/\d+/);
+            if (numMatch && (text.includes("bảng") || text.includes("bxh") || text.includes("xem") || text.length <= 3)) {
+                const bxhNum = numMatch[0];
+                document.getElementById('search-input').value = bxhNum;
+                filterBXH();
+                return `🤖 Đã lọc cho bạn BẢNG XẾP HẠNG #${bxhNum} trên màn hình!`;
+            }
+
+            // 3. Tra cứu thông tin hệ thống NDKBOT
+            if (text.includes("ai") || text.includes("tên") || text.includes("bạn là") || text.includes("bot")) {
+                return "Tôi là NDKBOT AI - Trợ lý Robot thông minh trực tuyến 24/7 của NDKBOT STUDIO!";
+            }
+
+            if (text.includes("bảng xếp hạng") || text.includes("có bao nhiêu") || text.includes("tổng")) {
+                return `Hiện tại hệ thống đã ghi nhận tổng cộng ${validItems.length} Bảng Xếp Hạng trực tuyến!`;
+            }
+
+            if (text.includes("xem ảnh") || text.includes("mở ảnh") || text.includes("phóng to")) {
+                return "Bạn chỉ cần nhấn trực tiếp vào hình ảnh của Bảng Xếp Hạng bất kỳ để xem ở chế độ full HD phóng to!";
+            }
+
+            if (text.includes("làm sao") || text.includes("hướng dẫn") || text.includes("tìm")) {
+                return "Bạn hãy gõ số BẢNG (Ví dụ: 1, 2, 3) vào ô tìm kiếm hoặc gõ trực tiếp vào ô chat này để tìm nhanh nhé!";
+            }
+
+            if (text.includes("cảm ơn") || text.includes("thanks") || text.includes("tk")) {
+                return "Rất hân hạnh được hỗ trợ bạn! Chúc bạn có trải nghiệm tuyệt vời cùng NDKBOT STUDIO! 🧧";
+            }
+
+            // Câu trả lời mặc định chuẩn khi không nhận diện được lệnh đặc biệt
+            return "NDKBOT XIN CHÀO BẠN CẦN TÔI HỖ TRỢ GÌ!";
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            appendChatMsg(msg, 'user');
+            input.value = '';
+
+            // Phản hồi tức thì với tốc độ siêu mượt
+            setTimeout(() => {
+                const reply = generateSmartResponse(msg);
+                appendChatMsg(reply, 'bot');
+            }, 250);
+        }
+
+        function appendChatMsg(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-msg ${sender}`;
+            msgDiv.innerText = text;
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        loadGalleryUltraFast();
+    </script>
+</body>
+</html>
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.2), inset 0 0 15px rgba(0, 229, 255, 0.1);
+            backdrop-filter: blur(12px);
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+        }
+
+        .vip-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #00e5ff, #ff007f, #00e5ff);
+            background-size: 200% 100%;
+            animation: moveGradient 3s linear infinite;
+        }
+
         /* Stats Badge Robot VIP */
         .stats-badge {
             background: rgba(0, 229, 255, 0.1);
