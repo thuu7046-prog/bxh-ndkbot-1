@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LSBXH-NDKBOT</title>
+    </title>LSBXH-NDKBOT</title>
     <style>
         /* ========================================== */
         /* --- CORE CYBERPUNK PALETTE & VARIABLES --- */
@@ -14,8 +14,8 @@
             --neon-gold: #ffd700;
             --neon-purple: #a855f7;
             --bg-dark: #030712;
-            --panel-bg: rgba(11, 19, 38, 0.85);
-            --border-glow: rgba(0, 243, 255, 0.5);
+            --panel-bg: rgba(11, 19, 38, 0.88);
+            --border-glow: rgba(0, 243, 255, 0.6);
         }
 
         * {
@@ -272,6 +272,25 @@
             text-align: center;
         }
 
+        .sound-toggle-btn {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .sound-toggle-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
         /* TIÊU ĐỀ YÊU CẦU */
         .title {
             color: var(--neon-cyan);
@@ -340,7 +359,7 @@
         }
 
         /* ========================================== */
-        /* --- DANH SÁCH BẢNG XẾP HẠNG --- */
+        /* --- DANH SÁCH BẢNG XẾP HẠNG (NÂNG CẤP KHUNG VIỀN NÉT CĂNG) --- */
         /* ========================================== */
         .gallery {
             display: flex;
@@ -354,31 +373,40 @@
             align-items: center;
             gap: 22px;
             padding: 18px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(3, 7, 18, 0.96));
-            border: 1px solid rgba(0, 243, 255, 0.35);
-            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(3, 7, 18, 0.98));
+            border: 1.5px solid rgba(0, 243, 255, 0.4);
+            border-radius: 16px;
             position: relative;
             overflow: hidden;
             transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85), 0 0 15px rgba(0, 243, 255, 0.15);
             clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             will-change: transform;
         }
 
+        /* Viền sáng mép Mecha 3D */
         .bxh-item::before {
             content: '';
             position: absolute;
             top: 0; left: 0;
             width: 6px; height: 100%;
             background: linear-gradient(180deg, var(--neon-cyan), var(--neon-magenta));
-            box-shadow: 0 0 18px var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .bxh-item::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; width: 30px; height: 2px;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 12px var(--neon-cyan);
         }
 
         .bxh-item:hover {
             transform: translateY(-6px) scale(1.015);
             border-color: var(--neon-cyan);
-            box-shadow: 0 0 35px rgba(0, 243, 255, 0.5), 0 0 20px rgba(255, 0, 85, 0.35);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.6), 0 0 25px rgba(255, 0, 85, 0.4);
         }
 
         /* KHUNG HIỂN THỊ THUMBNAIL */
@@ -386,13 +414,13 @@
             position: relative;
             width: 230px;
             height: 130px;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             flex-shrink: 0;
             cursor: pointer;
             padding: 2px;
-            background: linear-gradient(135deg, var(--neon-cyan), rgba(15, 23, 42, 0.8), var(--neon-magenta));
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+            background: linear-gradient(135deg, var(--neon-cyan), rgba(15, 23, 42, 0.9), var(--neon-magenta));
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.4);
             transition: all 0.3s ease;
         }
 
@@ -401,13 +429,13 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: transform 0.5s cubic-bezier(0.2, 1, 0.2, 1), filter 0.3s ease;
         }
 
         .image-container:hover img {
             transform: scale(1.12);
-            filter: brightness(1.2) contrast(1.1);
+            filter: brightness(1.25) contrast(1.1);
         }
 
         .image-number {
@@ -506,13 +534,13 @@
         }
 
         /* ==================================================== */
-        /* 🔥 LIGHTBOX HD MECHA SCAN 3D ULTRA - SIÊU ĐẸP MẮT 🔥 */
+        /* 🔥 LIGHTBOX HD MECHA SCAN 3D ULTRA - HIỆU ỨNG 1 LẦN 🔥 */
         /* ==================================================== */
         .lightbox-overlay {
             position: fixed;
             top: 0; left: 0; 
             width: 100%; height: 100%;
-            background-color: rgba(3, 7, 18, 0.94);
+            background-color: rgba(3, 7, 18, 0.95);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -521,7 +549,7 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
         }
 
         .lightbox-overlay.active {
@@ -538,16 +566,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 6px;
             background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta), var(--neon-gold));
             box-shadow: 
-                0 0 80px rgba(0, 243, 255, 0.5), 
-                0 0 40px rgba(255, 0, 85, 0.4),
-                inset 0 0 20px rgba(255, 215, 0, 0.5);
-            transform: scale(0.6) rotateX(15deg);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                0 0 90px rgba(0, 243, 255, 0.6), 
+                0 0 50px rgba(255, 0, 85, 0.45),
+                inset 0 0 25px rgba(255, 215, 0, 0.6);
+            transform: scale(0.65) rotateX(12deg);
+            transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+            overflow: hidden;
         }
 
         .lightbox-overlay.active .lightbox-wrapper {
@@ -558,7 +587,7 @@
         .lightbox-image {
             max-width: 88vw;
             max-height: 80vh;
-            border-radius: 12px;
+            border-radius: 14px;
             display: block;
             object-fit: contain;
             background: #030712;
@@ -567,30 +596,30 @@
         }
 
         .lightbox-image.zoomed {
-            transform: scale(1.4);
+            transform: scale(1.45);
             cursor: zoom-out;
         }
 
-        /* Hiệu ứng tia Laser Cyber Scan mặt ảnh */
+        /* HIỆU ỨNG TIA LASER HOLOGRAM CHẠY 1 LẦN DUY NHẤT KHI MỞ / CHUYỂN ẤN */
         .lightbox-wrapper::before {
             content: '';
             position: absolute;
             top: -100%; left: 0; 
             width: 100%; height: 100%;
-            background: linear-gradient(180deg, transparent 0%, rgba(0, 243, 255, 0.4) 50%, var(--neon-cyan) 51%, transparent 100%);
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 243, 255, 0.5) 48%, var(--neon-cyan) 50%, transparent 100%);
             z-index: 5;
             pointer-events: none;
             opacity: 0;
         }
 
-        .lightbox-overlay.active .lightbox-wrapper::before {
-            animation: holoLaserScan 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            opacity: 1;
+        /* Class kích hoạt chạy Laser 1 LẦN */
+        .lightbox-wrapper.trigger-scan::before {
+            animation: holoLaserScanOnce 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        @keyframes holoLaserScan {
-            0% { top: -100%; }
-            100% { top: 100%; }
+        @keyframes holoLaserScanOnce {
+            0% { top: -100%; opacity: 1; }
+            100% { top: 100%; opacity: 0; }
         }
 
         /* Nhãn Tiêu Đề BXH Trên Cùng Lightbox */
@@ -599,15 +628,15 @@
             top: -45px; left: 50%;
             transform: translateX(-50%);
             background: rgba(15, 23, 42, 0.95);
-            border: 1px solid var(--neon-cyan);
+            border: 1.5px solid var(--neon-cyan);
             color: var(--neon-gold);
-            padding: 8px 24px;
+            padding: 8px 26px;
             border-radius: 8px;
             font-size: 16px;
             font-weight: 900;
             letter-spacing: 3px;
             text-transform: uppercase;
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.7);
             backdrop-filter: blur(10px);
             white-space: nowrap;
         }
@@ -644,7 +673,7 @@
             top: 50%;
             transform: translateY(-50%);
             width: 50px; height: 50px;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.88);
             border: 1.5px solid var(--neon-cyan);
             color: var(--neon-cyan);
             font-size: 24px;
@@ -732,6 +761,7 @@
     <div class="vip-header">
         <div class="stats-badge" id="stats-count">0 / 0 BẢNG</div>
         <div class="brand-title">NDKBOT STUDIO VIP</div>
+        <button class="sound-toggle-btn" id="sound-btn" onclick="toggleSound()">🔊 SFX: ON</button>
     </div>
 
     <!-- Tiêu đề chính -->
@@ -751,7 +781,7 @@
     <!-- Danh sách BXH -->
     <div class="gallery" id="gallery-container"></div>
 
-    <!-- LIGHTBOX ULTRA CYBER 3D (HIỆU ỨNG SIÊU ĐẸP MẮT) -->
+    <!-- LIGHTBOX ULTRA CYBER 3D (HIỆU ỨNG LASER SCAN 1 LẦN) -->
     <div class="lightbox-overlay" id="lightbox">
         <div class="lightbox-wrapper" id="lightbox-wrapper">
             <div class="lightbox-header-tag" id="lightbox-tag">BẢNG XẾP HẠNG #1</div>
@@ -766,9 +796,16 @@
         // ==========================================
         // --- WEB AUDIO API CYBER SOUND EFFECTS ---
         // ==========================================
+        let soundEnabled = true;
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('sound-btn').innerText = soundEnabled ? '🔊 SFX: ON' : '🔇 SFX: OFF';
+        }
         
         function playCyberSound(type) {
+            if (!soundEnabled) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
@@ -779,29 +816,29 @@
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(800, audioCtx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
                 gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.08);
             } else if (type === 'open') {
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                osc.frequency.linearRampToValueAtTime(1200, audioCtx.currentTime + 0.25);
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.25);
+                osc.frequency.linearRampToValueAtTime(1200, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.2);
             } else if (type === 'scan') {
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-                osc.frequency.linearRampToValueAtTime(1200, audioCtx.currentTime + 0.3);
+                osc.frequency.linearRampToValueAtTime(1100, audioCtx.currentTime + 0.25);
                 gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.25);
             } else if (type === 'error') {
                 osc.type = 'square';
                 osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.18);
             }
         }
 
@@ -861,6 +898,7 @@
         const gallery = document.getElementById('gallery-container');
         const statsCount = document.getElementById('stats-count');
         const lightbox = document.getElementById('lightbox');
+        const lightboxWrapper = document.getElementById('lightbox-wrapper');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxTag = document.getElementById('lightbox-tag');
         const closeBtn = document.getElementById('close-btn');
@@ -1040,8 +1078,15 @@
         }
 
         // ==========================================
-        // --- LIGHTBOX 3D ULTRA NAVIGATION LOGIC ---
+        // --- LIGHTBOX NAVIGATION & LASER ONCE LOGIC ---
         // ==========================================
+        function triggerScanEffect() {
+            lightboxWrapper.classList.remove('trigger-scan');
+            // Force Reflow để kích hoạt lại Animation đúng 1 lần
+            void lightboxWrapper.offsetWidth;
+            lightboxWrapper.classList.add('trigger-scan');
+        }
+
         function openLightbox(index) {
             if (index < 0 || index >= validItems.length) return;
             currentImageIndex = index;
@@ -1054,6 +1099,9 @@
 
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
+
+            // Kích hoạt tia Laser Hologram quét đúng 1 lần
+            triggerScanEffect();
         }
 
         function navigateLightbox(direction) {
@@ -1072,6 +1120,7 @@
             playCyberSound('click');
             lightbox.classList.remove('active');
             lightboxImg.classList.remove('zoomed');
+            lightboxWrapper.classList.remove('trigger-scan');
             document.body.style.overflow = '';
             setTimeout(() => { lightboxImg.src = ''; }, 300);
         }
