@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </title>LSBXH-NDKBOT</title>
+    <title>LỊCH SỬ BẢNG XẾP HẠNG - NDKBOT</title>
     <style>
         /* ========================================== */
         /* --- CORE CYBERPUNK PALETTE & VARIABLES --- */
@@ -56,153 +56,6 @@
             background-size: 40px 40px;
             z-index: -1;
             pointer-events: none;
-        }
-
-        /* ========================================== */
-        /* --- CAPTCHA OVERLAY MECHA VIP --- */
-        /* ========================================== */
-        .verify-overlay {
-            position: fixed;
-            top: 0; left: 0; 
-            width: 100%; height: 100%;
-            background: rgba(3, 7, 18, 0.97);
-            backdrop-filter: blur(25px);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s ease;
-        }
-
-        .verify-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .verify-box {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(3, 7, 18, 0.98));
-            border: 2px solid var(--neon-cyan);
-            border-radius: 20px;
-            padding: 36px 28px;
-            width: 100%;
-            max-width: 440px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 0 60px rgba(0, 243, 255, 0.35), inset 0 0 25px rgba(0, 243, 255, 0.15);
-            clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
-            animation: floatBox 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes floatBox {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-8px); }
-        }
-
-        .verify-title {
-            color: #ffffff;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            text-shadow: 0 0 15px var(--neon-cyan);
-        }
-
-        .verify-desc {
-            font-size: 13px;
-            color: var(--neon-cyan);
-            margin-bottom: 20px;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-        }
-
-        .scan-line {
-            position: absolute;
-            top: 0; left: 0; 
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, transparent, var(--neon-magenta), transparent);
-            box-shadow: 0 0 20px var(--neon-magenta);
-            display: none;
-        }
-
-        .verify-box.scanning .scan-line {
-            display: block;
-            animation: scanAnim 1s infinite ease-in-out;
-        }
-
-        @keyframes scanAnim {
-            0% { top: 0%; }
-            50% { top: 100%; }
-            100% { top: 0%; }
-        }
-
-        .captcha-badge {
-            background: rgba(0, 243, 255, 0.08);
-            border: 2px dashed var(--neon-cyan);
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 10px;
-            color: var(--neon-gold);
-            margin-bottom: 18px;
-            text-shadow: 0 0 18px var(--neon-gold);
-        }
-
-        .captcha-input {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1.5px solid var(--neon-cyan);
-            border-radius: 10px;
-            padding: 14px;
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 800;
-            text-align: center;
-            letter-spacing: 6px;
-            outline: none;
-            margin-bottom: 12px;
-            box-shadow: inset 0 0 12px rgba(0, 243, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .captcha-input:focus {
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.7), inset 0 0 15px rgba(0, 243, 255, 0.4);
-            border-color: #ffffff;
-        }
-
-        .error-msg {
-            color: var(--neon-magenta);
-            font-size: 13px;
-            font-weight: 800;
-            margin-bottom: 12px;
-            display: none;
-            text-shadow: 0 0 10px var(--neon-magenta);
-        }
-
-        .verify-btn {
-            width: 100%;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
-            border: none;
-            color: #ffffff;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
-        }
-
-        .verify-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 0 40px rgba(255, 0, 85, 0.7);
-            background: linear-gradient(90deg, var(--neon-magenta), var(--neon-cyan));
         }
 
         /* ========================================== */
@@ -270,25 +123,6 @@
             animation: moveGradient 3s linear infinite;
             filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.7));
             text-align: center;
-        }
-
-        .sound-toggle-btn {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .sound-toggle-btn:hover {
-            background: var(--neon-cyan);
-            color: #000;
-            box-shadow: 0 0 20px var(--neon-cyan);
         }
 
         /* TIÊU ĐỀ YÊU CẦU */
@@ -359,7 +193,7 @@
         }
 
         /* ========================================== */
-        /* --- DANH SÁCH BẢNG XẾP HẠNG (NÂNG CẤP KHUNG VIỀN NÉT CĂNG) --- */
+        /* --- DANH SÁCH BẢNG XẾP HẠNG --- */
         /* ========================================== */
         .gallery {
             display: flex;
@@ -385,7 +219,6 @@
             will-change: transform;
         }
 
-        /* Viền sáng mép Mecha 3D */
         .bxh-item::before {
             content: '';
             position: absolute;
@@ -409,7 +242,6 @@
             box-shadow: 0 0 40px rgba(0, 243, 255, 0.6), 0 0 25px rgba(255, 0, 85, 0.4);
         }
 
-        /* KHUNG HIỂN THỊ THUMBNAIL */
         .image-container {
             position: relative;
             width: 230px;
@@ -534,7 +366,7 @@
         }
 
         /* ==================================================== */
-        /* 🔥 LIGHTBOX HD MECHA SCAN 3D ULTRA - HIỆU ỨNG 1 LẦN 🔥 */
+        /* 🔥 LIGHTBOX HD MECHA SCAN 3D ULTRA 🔥 */
         /* ==================================================== */
         .lightbox-overlay {
             position: fixed;
@@ -558,7 +390,6 @@
             pointer-events: auto;
         }
 
-        /* Khung chứa ảnh hiệu ứng Mecha Cyber */
         .lightbox-wrapper {
             position: relative;
             max-width: 90vw;
@@ -583,7 +414,6 @@
             transform: scale(1) rotateX(0deg);
         }
 
-        /* Tấm ảnh HD chính */
         .lightbox-image {
             max-width: 88vw;
             max-height: 80vh;
@@ -600,7 +430,6 @@
             cursor: zoom-out;
         }
 
-        /* HIỆU ỨNG TIA LASER HOLOGRAM CHẠY 1 LẦN DUY NHẤT KHI MỞ / CHUYỂN ẤN */
         .lightbox-wrapper::before {
             content: '';
             position: absolute;
@@ -612,7 +441,6 @@
             opacity: 0;
         }
 
-        /* Class kích hoạt chạy Laser 1 LẦN */
         .lightbox-wrapper.trigger-scan::before {
             animation: holoLaserScanOnce 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
@@ -622,7 +450,6 @@
             100% { top: 100%; opacity: 0; }
         }
 
-        /* Nhãn Tiêu Đề BXH Trên Cùng Lightbox */
         .lightbox-header-tag {
             position: absolute;
             top: -45px; left: 50%;
@@ -641,7 +468,6 @@
             white-space: nowrap;
         }
 
-        /* Nút đóng Lightbox Xịn */
         .close-lightbox {
             position: absolute;
             top: -20px; right: -20px;
@@ -667,7 +493,6 @@
             box-shadow: 0 0 40px var(--neon-magenta);
         }
 
-        /* Nút Chuyển Ảnh Trái / Phải Cyber Controls */
         .lightbox-nav-btn {
             position: absolute;
             top: 50%;
@@ -742,26 +567,10 @@
     <!-- Canvas Hạt Ánh Sáng Dynamic -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- CAPTCHA XÁC NHẬN CON NGƯỜI (NHẬP MÃ SỐ) -->
-    <div class="verify-overlay" id="verify-overlay">
-        <div class="verify-box" id="verify-box">
-            <div class="scan-line"></div>
-            <div class="verify-title">🛡️ HUMAN VERIFICATION</div>
-            <div class="verify-desc">NHẬP MÃ SỐ BÊN DƯỚI ĐỂ XÁC NHẬN CON NGƯỜI</div>
-            
-            <div class="captcha-badge" id="captcha-code">------</div>
-            <input type="text" id="user-captcha-input" class="captcha-input" placeholder="NHẬP MÃ SỐ" maxlength="6" autocomplete="off">
-            <div class="error-msg" id="error-msg">❌ MÃ SỐ KHÔNG CHÍNH XÁC! THỬ LẠI.</div>
-
-            <button class="verify-btn" onclick="verifyHuman()">XÁC NHẬN TÔI LÀ CON NGƯỜI</button>
-        </div>
-    </div>
-
     <!-- Header VIP -->
     <div class="vip-header">
         <div class="stats-badge" id="stats-count">0 / 0 BẢNG</div>
         <div class="brand-title">NDKBOT STUDIO VIP</div>
-        <button class="sound-toggle-btn" id="sound-btn" onclick="toggleSound()">🔊 SFX: ON</button>
     </div>
 
     <!-- Tiêu đề chính -->
@@ -781,7 +590,7 @@
     <!-- Danh sách BXH -->
     <div class="gallery" id="gallery-container"></div>
 
-    <!-- LIGHTBOX ULTRA CYBER 3D (HIỆU ỨNG LASER SCAN 1 LẦN) -->
+    <!-- LIGHTBOX ULTRA CYBER 3D -->
     <div class="lightbox-overlay" id="lightbox">
         <div class="lightbox-wrapper" id="lightbox-wrapper">
             <div class="lightbox-header-tag" id="lightbox-tag">BẢNG XẾP HẠNG #1</div>
@@ -793,55 +602,6 @@
     </div>
 
     <script>
-        // ==========================================
-        // --- WEB AUDIO API CYBER SOUND EFFECTS ---
-        // ==========================================
-        let soundEnabled = true;
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        function toggleSound() {
-            soundEnabled = !soundEnabled;
-            document.getElementById('sound-btn').innerText = soundEnabled ? '🔊 SFX: ON' : '🔇 SFX: OFF';
-        }
-        
-        function playCyberSound(type) {
-            if (!soundEnabled) return;
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            if (type === 'click') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.08);
-            } else if (type === 'open') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                osc.frequency.linearRampToValueAtTime(1200, audioCtx.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-            } else if (type === 'scan') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-                osc.frequency.linearRampToValueAtTime(1100, audioCtx.currentTime + 0.25);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.25);
-            } else if (type === 'error') {
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.18);
-            }
-        }
-
         // ==========================================
         // --- PARTICLE BACKGROUND SYSTEM ---
         // ==========================================
@@ -891,7 +651,7 @@
         animateParticles();
 
         // ==========================================
-        // --- BXH CORE & VERIFICATION SYSTEM ---
+        // --- BXH CORE SYSTEM ---
         // ==========================================
         const MAX_CHECK = 200;
         const BATCH_SIZE = 15;
@@ -905,56 +665,7 @@
 
         let validItems = [];
         let loadedCount = 0;
-        let generatedCaptcha = "";
         let currentImageIndex = 0;
-
-        function generateCaptchaCode() {
-            generatedCaptcha = Math.floor(100000 + Math.random() * 900000).toString();
-            document.getElementById('captcha-code').innerText = generatedCaptcha;
-        }
-
-        function verifyHuman() {
-            const userInput = document.getElementById('user-captcha-input').value.trim();
-            const errorMsg = document.getElementById('error-msg');
-            const verifyBox = document.getElementById('verify-box');
-            const overlay = document.getElementById('verify-overlay');
-
-            if (userInput !== generatedCaptcha) {
-                playCyberSound('error');
-                errorMsg.style.display = "block";
-                document.getElementById('user-captcha-input').value = "";
-                document.getElementById('user-captcha-input').focus();
-                generateCaptchaCode();
-                return;
-            }
-
-            playCyberSound('scan');
-            errorMsg.style.display = "none";
-            verifyBox.classList.add('scanning');
-            const btn = verifyBox.querySelector('.verify-btn');
-            btn.innerText = "ĐANG QUÉT SINH TRẮC...";
-            btn.style.pointerEvents = "none";
-
-            setTimeout(() => {
-                sessionStorage.setItem('is_human_verified', 'true');
-                overlay.classList.add('hidden');
-                loadGalleryUltraFast();
-            }, 1000);
-        }
-
-        function checkVerification() {
-            const isVerified = sessionStorage.getItem('is_human_verified');
-            if (isVerified === 'true') {
-                document.getElementById('verify-overlay').classList.add('hidden');
-                loadGalleryUltraFast();
-            } else {
-                generateCaptchaCode();
-            }
-        }
-
-        document.getElementById('user-captcha-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') verifyHuman();
-        });
 
         function showSkeletons() {
             const fragment = document.createDocumentFragment();
@@ -1064,7 +775,6 @@
         }
 
         function filterBXH() {
-            playCyberSound('click');
             const value = document.getElementById('search-input').value.trim();
             const items = document.querySelectorAll('.bxh-item');
             const thanksCard = document.getElementById('thanks-card');
@@ -1078,11 +788,10 @@
         }
 
         // ==========================================
-        // --- LIGHTBOX NAVIGATION & LASER ONCE LOGIC ---
+        // --- LIGHTBOX NAVIGATION LOGIC ---
         // ==========================================
         function triggerScanEffect() {
             lightboxWrapper.classList.remove('trigger-scan');
-            // Force Reflow để kích hoạt lại Animation đúng 1 lần
             void lightboxWrapper.offsetWidth;
             lightboxWrapper.classList.add('trigger-scan');
         }
@@ -1090,7 +799,6 @@
         function openLightbox(index) {
             if (index < 0 || index >= validItems.length) return;
             currentImageIndex = index;
-            playCyberSound('open');
 
             const item = validItems[currentImageIndex];
             lightboxImg.src = item.src;
@@ -1100,7 +808,6 @@
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
 
-            // Kích hoạt tia Laser Hologram quét đúng 1 lần
             triggerScanEffect();
         }
 
@@ -1112,12 +819,10 @@
         }
 
         function toggleZoomImage() {
-            playCyberSound('click');
             lightboxImg.classList.toggle('zoomed');
         }
 
         function closeLightbox() {
-            playCyberSound('click');
             lightbox.classList.remove('active');
             lightboxImg.classList.remove('zoomed');
             lightboxWrapper.classList.remove('trigger-scan');
@@ -1130,7 +835,7 @@
             if (e.target === lightbox) closeLightbox(); 
         };
 
-        /* PHÍM TẮT BÀN PHÍM (ĐIỀU HƯỚNG TRÁI / PHẢI & ESCAPE) */
+        /* PHÍM TẮT BÀN PHÍM */
         document.addEventListener('keydown', (e) => {
             if (!lightbox.classList.contains('active')) return;
             if (e.key === 'Escape') closeLightbox();
@@ -1138,8 +843,8 @@
             if (e.key === 'ArrowRight') navigateLightbox(1);
         });
 
-        // Khởi chạy hệ thống
-        checkVerification();
+        // Tải danh sách ngay lập tức khi vào trang
+        loadGalleryUltraFast();
     </script>
 </body>
 </html>
