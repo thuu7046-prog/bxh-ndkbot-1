@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BẢNG XẾP HẠNG NDK BOT</title>
-    <!-- Font chữ Sci-Fi Cyberpunk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
@@ -16,7 +15,6 @@
             --border-color: #122035;
             --border-cyan: rgba(0, 240, 255, 0.3);
             --primary-cyan: #00f0ff;
-            --btn-blue: #0077ff;
             --text-main: #d0dbe7;
             --text-dim: #5a6e85;
         }
@@ -37,13 +35,11 @@
             -webkit-user-select: none;
         }
 
-        /* Container tổng */
         .app-container {
             max-width: 800px;
             margin: 0 auto;
         }
 
-        /* Bộ đếm góc trên */
         .counter-header {
             display: flex;
             justify-content: flex-end;
@@ -62,7 +58,6 @@
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
         }
 
-        /* Thanh tiêu đề & Ô tìm kiếm */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -112,7 +107,6 @@
             opacity: 0.6;
         }
 
-        /* Danh sách BXH */
         .gallery {
             display: flex;
             flex-direction: column;
@@ -205,7 +199,6 @@
             border-radius: 4px;
         }
 
-        /* Khung NDKBOT THANK YOU ở cuối danh sách */
         .footer-thankyou {
             margin: 40px auto 30px auto;
             padding: 18px;
@@ -221,7 +214,6 @@
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
         }
 
-        /* Lightbox phóng to ảnh */
         .lightbox-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -254,34 +246,15 @@
             font-size: 36px;
             cursor: pointer;
         }
-
-        #devtools-warning {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #02040a;
-            color: var(--primary-cyan);
-            z-index: 999999;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
-        }
     </style>
 </head>
 <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
 
-    <div id="devtools-warning">
-        <p>⚠️ ACCESS DENIED / DEVTOOLS DETECTED</p>
-    </div>
-
     <div class="app-container">
-        <!-- Khối hiển thị số lượng góc trên -->
         <div class="counter-header">
-            <div class="counter-badge" id="counter">Đang kiểm tra...</div>
+            <div class="counter-badge" id="counter">Đang tải...</div>
         </div>
 
-        <!-- Thanh Tiêu đề & Ô Tìm kiếm -->
         <div class="top-bar">
             <div class="header-title">LỊCH SỬ BẢNG XẾP HẠNG</div>
             <div class="search-box">
@@ -289,23 +262,20 @@
             </div>
         </div>
 
-        <!-- Danh sách chứa các BXH -->
         <div class="gallery" id="gallery-container"></div>
 
-        <!-- Khối thông điệp NDKBOT THANK YOU ở cuối -->
         <div class="footer-thankyou" id="thankyou-block" style="display: none;">
             NDKBOT THANK YOU
         </div>
     </div>
 
-    <!-- Lightbox Xem Ảnh Phóng To -->
     <div class="lightbox-overlay" id="lightbox">
         <span class="close-lightbox" id="close-btn">&times;</span>
         <img src="" alt="BXH Chi Tiết" class="lightbox-image" id="lightbox-img">
     </div>
 
     <script>
-        const BATCH_SIZE = 10; // Quét 10 ảnh cùng lúc để tối ưu tốc độ
+        const BATCH_SIZE = 15; // Tăng kích thước batch quét song song lên 15 ảnh/lần
         const gallery = document.getElementById('gallery-container');
         const counterEl = document.getElementById('counter');
         const thankyouBlock = document.getElementById('thankyou-block');
@@ -315,36 +285,45 @@
 
         let totalLoaded = 0;
 
-        // Thử nghiệm kiểm tra định dạng .png hoặc .jpg cho từng ảnh
-        function testImageSrc(index) {
+        // Kiểm tra nhanh file tồn tại bằng Image Preload song song
+        function checkImageExists(index) {
             return new Promise((resolve) => {
-                const pngSrc = `${index}.png`;
-                const jpgSrc = `${index}.jpg`;
+                const formats = [`${index}.png`, `${index}.jpg`, `${index}.jpeg`, `${index}.webp`];
+                let checkedCount = 0;
+                let foundSrc = null;
 
-                const imgPng = new Image();
-                imgPng.onload = () => resolve(pngSrc);
-                imgPng.onerror = () => {
-                    const imgJpg = new Image();
-                    imgJpg.onload = () => resolve(jpgSrc);
-                    imgJpg.onerror = () => resolve(null);
-                    imgJpg.src = jpgSrc;
-                };
-                imgPng.src = pngSrc;
+                formats.forEach(src => {
+                    const img = new Image();
+                    img.onload = () => {
+                        if (!foundSrc) {
+                            foundSrc = src;
+                            resolve(foundSrc);
+                        }
+                    };
+                    img.onerror = () => {
+                        checkedCount++;
+                        if (checkedCount === formats.length && !foundSrc) {
+                            resolve(null);
+                        }
+                    };
+                    img.src = src;
+                });
             });
         }
 
-        // Tải động KHÔNG GIỚI HẠN - Quét liên tục đến khi hết ảnh trong thư mục
-        async function loadAllImagesDynamically() {
+        async function loadFastUnlimitedImages() {
             let currentIndex = 1;
             let keepScanning = true;
 
             while (keepScanning) {
                 const batchPromises = [];
                 for (let i = 0; i < BATCH_SIZE; i++) {
-                    batchPromises.push(testImageSrc(currentIndex + i));
+                    batchPromises.push(checkImageExists(currentIndex + i));
                 }
 
                 const results = await Promise.all(batchPromises);
+                const fragment = document.createDocumentFragment();
+                let addedInBatch = 0;
 
                 for (let i = 0; i < results.length; i++) {
                     const validSrc = results[i];
@@ -352,6 +331,8 @@
 
                     if (validSrc) {
                         totalLoaded++;
+                        addedInBatch++;
+
                         const div = document.createElement('div');
                         div.className = 'image-container';
                         div.setAttribute('data-index', itemIndex);
@@ -360,7 +341,7 @@
                             <div class="item-left">
                                 <span class="file-prefix">»</span>
                                 <div class="img-wrapper" onclick="openLightbox('${validSrc}')">
-                                    <img src="${validSrc}" alt="BXH #${itemIndex}" loading="lazy">
+                                    <img src="${validSrc}" alt="BXH #${itemIndex}" loading="lazy" decoding="async">
                                     <span class="image-number">${itemIndex}</span>
                                 </div>
                             </div>
@@ -369,19 +350,23 @@
                                 <span class="item-tag">BXH #${itemIndex}</span>
                             </div>
                         `;
-                        gallery.appendChild(div);
+                        fragment.appendChild(div);
                     } else {
-                        // Phát hiện hết ảnh trong thư mục -> Dừng quét
                         keepScanning = false;
                         break;
                     }
                 }
 
-                currentIndex += BATCH_SIZE;
+                gallery.appendChild(fragment);
                 updateCounter(totalLoaded, totalLoaded);
+
+                if (addedInBatch < BATCH_SIZE) {
+                    break;
+                }
+
+                currentIndex += BATCH_SIZE;
             }
 
-            // Hiện khối NDKBOT THANK YOU ở cuối danh sách sau khi đã quét xong
             if (totalLoaded > 0) {
                 thankyouBlock.style.display = 'block';
             } else {
@@ -393,7 +378,6 @@
             counterEl.innerText = `${visible} / ${total} bảng`;
         }
 
-        // Lọc hiển thị khi nhập số trong ô tìm kiếm
         function filterBXH() {
             const input = document.getElementById('search-input').value.trim();
             const items = document.querySelectorAll('.image-container');
@@ -426,8 +410,7 @@
         closeBtn.onclick = closeLightbox;
         lightbox.onclick = (e) => { if (e.target !== lightboxImg) closeLightbox(); };
 
-        // Tự động khởi chạy
-        loadAllImagesDynamically();
+        loadFastUnlimitedImages();
     </script>
 </body>
 </html>
