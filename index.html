@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LỊCH SỬ BẢNG XẾP HẠNG - NDKBOT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;900&display=swap" rel="stylesheet">
     <style>
         /* ========================================== */
         /* --- CORE CYBERPUNK PALETTE & VARIABLES --- */
@@ -35,7 +36,6 @@
             position: relative;
         }
 
-        /* Canvas hiệu ứng hạt Background */
         #particle-canvas {
             position: fixed;
             top: 0; left: 0; 
@@ -44,7 +44,6 @@
             pointer-events: none;
         }
 
-        /* Lưới Cyber Grid Nền 3D */
         body::before {
             content: '';
             position: fixed;
@@ -59,6 +58,124 @@
         }
 
         /* ========================================== */
+        /* --- SIDEBAR & OVERLAY (GIỐNG ANH MAU) --- */
+        /* ========================================== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 300px;
+            height: 100%;
+            background: #0f172a;
+            border-right: 1px solid var(--neon-cyan);
+            box-shadow: 5px 0 25px rgba(0, 243, 255, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 16px;
+            overflow-y: auto;
+        }
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 900;
+            color: #fff;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-brand .logo-box {
+            width: 36px; height: 36px;
+            background: var(--neon-magenta);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 900;
+            box-shadow: 0 0 10px var(--neon-magenta);
+        }
+
+        .menu-section {
+            margin-bottom: 24px;
+        }
+        .menu-section-title {
+            font-size: 11px;
+            font-weight: 900;
+            color: #64748b;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            padding-left: 10px;
+        }
+        .menu-list {
+            list-style: none;
+        }
+        .menu-list li {
+            margin-bottom: 6px;
+        }
+        .menu-list a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .menu-list a:hover {
+            color: #fff;
+            background: rgba(0, 243, 255, 0.1);
+        }
+        .menu-list li.active a {
+            background: var(--neon-magenta);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+        }
+
+        /* Nút toggle menu hamburger */
+        .menu-toggle-btn {
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+            transition: all 0.2s;
+        }
+        .menu-toggle-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+        }
+
+        /* ========================================== */
         /* --- HEADER VIP MECHA --- */
         /* ========================================== */
         .vip-header {
@@ -68,7 +185,7 @@
             background: var(--panel-bg);
             border: 1px solid var(--neon-cyan);
             border-radius: 14px;
-            padding: 18px 28px;
+            padding: 14px 20px;
             margin-bottom: 28px;
             box-shadow: 0 0 35px rgba(0, 243, 255, 0.25), inset 0 0 20px rgba(0, 243, 255, 0.1);
             backdrop-filter: blur(18px);
@@ -76,45 +193,16 @@
             clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
         }
 
-        .vip-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta), var(--neon-gold), var(--neon-cyan));
-            background-size: 300% 100%;
-            animation: moveGradient 3s linear infinite;
-        }
-
-        .stats-badge {
-            background: rgba(0, 243, 255, 0.12);
-            color: var(--neon-cyan);
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 900;
-            border: 1px solid var(--neon-cyan);
-            box-shadow: 0 0 18px rgba(0, 243, 255, 0.4);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .stats-badge::before {
-            content: '';
-            width: 8px; height: 8px;
-            background: var(--neon-cyan);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--neon-cyan);
-            animation: pulseEye 1s infinite alternate;
+            gap: 16px;
         }
 
         .brand-title {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 900;
-            letter-spacing: 4px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             background: linear-gradient(90deg, #ffffff, var(--neon-cyan), var(--neon-magenta), #ffffff);
             background-size: 200% auto;
@@ -122,10 +210,24 @@
             -webkit-text-fill-color: transparent;
             animation: moveGradient 3s linear infinite;
             filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.7));
-            text-align: center;
         }
 
-        /* TIÊU ĐỀ YÊU CẦU */
+        .auth-btn-trigger {
+            background: linear-gradient(135deg, var(--neon-magenta), var(--neon-purple));
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 900;
+            cursor: pointer;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
+            transition: transform 0.2s;
+        }
+        .auth-btn-trigger:hover {
+            transform: scale(1.05);
+        }
+
         .title {
             color: var(--neon-cyan);
             font-size: 16px;
@@ -137,7 +239,6 @@
             align-items: center;
             gap: 12px;
         }
-
         .title::before {
             content: '';
             width: 12px; height: 12px;
@@ -146,19 +247,16 @@
             transform: rotate(45deg);
         }
 
-        /* SEARCH CONTAINER */
         .search-container {
             display: flex;
             gap: 12px;
             margin-bottom: 30px;
         }
-
         .search-input-wrapper {
             position: relative;
             flex: 1;
             max-width: 380px;
         }
-
         .search-input-wrapper input {
             width: 100%;
             background: rgba(15, 23, 42, 0.9);
@@ -169,27 +267,14 @@
             font-size: 15px;
             font-weight: 700;
             outline: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+            transition: all 0.3s ease;
         }
-
-        .search-input-wrapper input:focus {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.6), inset 0 0 12px rgba(0, 243, 255, 0.3);
-            background: rgba(15, 23, 42, 0.98);
-        }
-
-        .search-input-wrapper input::placeholder {
-            color: #64748b;
-        }
-
         .search-icon {
             position: absolute;
             left: 16px; top: 50%;
             transform: translateY(-50%);
             width: 18px; height: 18px;
             stroke: var(--neon-cyan);
-            filter: drop-shadow(0 0 6px var(--neon-cyan));
         }
 
         /* ========================================== */
@@ -201,7 +286,6 @@
             gap: 22px;
             min-height: 200px;
         }
-
         .bxh-item {
             display: flex;
             align-items: center;
@@ -212,64 +296,19 @@
             border-radius: 16px;
             position: relative;
             overflow: hidden;
-            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85), 0 0 15px rgba(0, 243, 255, 0.15);
-            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-            backdrop-filter: blur(16px);
-            will-change: transform;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85);
         }
-
-        .bxh-item::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 6px; height: 100%;
-            background: linear-gradient(180deg, var(--neon-cyan), var(--neon-magenta));
-            box-shadow: 0 0 20px var(--neon-cyan);
-        }
-
-        .bxh-item::after {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; width: 30px; height: 2px;
-            background: var(--neon-cyan);
-            box-shadow: 0 0 12px var(--neon-cyan);
-        }
-
-        .bxh-item:hover {
-            transform: translateY(-6px) scale(1.015);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 40px rgba(0, 243, 255, 0.6), 0 0 25px rgba(255, 0, 85, 0.4);
-        }
-
         .image-container {
             position: relative;
-            width: 230px;
-            height: 130px;
+            width: 230px; height: 130px;
             border-radius: 12px;
             overflow: hidden;
             flex-shrink: 0;
             cursor: pointer;
-            padding: 2px;
-            background: linear-gradient(135deg, var(--neon-cyan), rgba(15, 23, 42, 0.9), var(--neon-magenta));
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.4);
-            transition: all 0.3s ease;
         }
-
         .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            border-radius: 10px;
-            transition: transform 0.5s cubic-bezier(0.2, 1, 0.2, 1), filter 0.3s ease;
+            width: 100%; height: 100%; object-fit: cover;
         }
-
-        .image-container:hover img {
-            transform: scale(1.12);
-            filter: brightness(1.25) contrast(1.1);
-        }
-
         .image-number {
             position: absolute;
             top: 10px; left: 10px;
@@ -277,306 +316,175 @@
             color: var(--neon-cyan);
             padding: 5px 14px;
             border-radius: 6px;
-            font-size: 13px;
-            font-weight: 900;
+            font-size: 13px; font-weight: 900;
             border: 1px solid var(--neon-cyan);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.6);
-            letter-spacing: 2px;
-            z-index: 2;
         }
-
         .bxh-info {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
             gap: 12px;
-            overflow: hidden;
-            flex-grow: 1;
         }
-
         .bxh-title {
             color: #ffffff;
-            font-size: 20px;
-            font-weight: 900;
+            font-size: 20px; font-weight: 900;
             letter-spacing: 2px;
-            text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
         }
 
-        .bxh-subtext {
-            font-size: 12px;
-            color: #00ff66;
-            background: rgba(0, 255, 102, 0.1);
-            padding: 6px 14px;
-            border-radius: 6px;
-            border: 1px solid rgba(0, 255, 102, 0.4);
-            font-family: monospace;
-            font-weight: 800;
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
-        }
-
-        .bxh-subtext::before {
-            content: '';
-            width: 7px; height: 7px;
-            background: #00ff66;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #00ff66;
-            animation: pulseEye 0.8s infinite alternate;
-        }
-
-        /* CARD FOOTER THANKS */
-        .thanks-footer-card {
-            margin-top: 30px;
-            padding: 32px 24px;
-            background: linear-gradient(135deg, rgba(40, 10, 25, 0.95), rgba(15, 5, 30, 0.98));
-            border: 2px solid var(--neon-gold);
-            border-radius: 16px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.4), inset 0 0 30px rgba(255, 0, 85, 0.3);
-            clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
-        }
-
-        .thanks-text {
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #ff4500, var(--neon-gold), #ff007f, var(--neon-gold), #ff4500);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: moveGradient 3s linear infinite;
-            filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.9));
-        }
-
-        .thanks-subtext {
-            margin-top: 10px;
-            font-size: 15px;
-            color: #ffeaa7;
-            font-weight: 800;
-            letter-spacing: 2.5px;
-            text-shadow: 0 0 14px rgba(255, 234, 167, 0.7);
-        }
-
-        /* ==================================================== */
-        /* 🔥 LIGHTBOX HD MECHA SCAN 3D ULTRA 🔥 */
-        /* ==================================================== */
-        .lightbox-overlay {
+        /* ========================================== */
+        /* --- MODAL ĐĂNG NHẬP / ĐĂNG KÝ / OTP --- */
+        /* ========================================== */
+        .auth-modal {
             position: fixed;
-            top: 0; left: 0; 
-            width: 100%; height: 100%;
-            background-color: rgba(3, 7, 18, 0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            backdrop-filter: blur(25px);
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
-        }
-
-        .lightbox-overlay.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
-
-        .lightbox-wrapper {
-            position: relative;
-            max-width: 90vw;
-            max-height: 85vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 18px;
-            padding: 6px;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta), var(--neon-gold));
-            box-shadow: 
-                0 0 90px rgba(0, 243, 255, 0.6), 
-                0 0 50px rgba(255, 0, 85, 0.45),
-                inset 0 0 25px rgba(255, 215, 0, 0.6);
-            transform: scale(0.65) rotateX(12deg);
-            transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
-            overflow: hidden;
-        }
-
-        .lightbox-overlay.active .lightbox-wrapper {
-            transform: scale(1) rotateX(0deg);
-        }
-
-        .lightbox-image {
-            max-width: 88vw;
-            max-height: 80vh;
-            border-radius: 14px;
-            display: block;
-            object-fit: contain;
-            background: #030712;
-            cursor: zoom-in;
-            transition: transform 0.3s ease;
-        }
-
-        .lightbox-image.zoomed {
-            transform: scale(1.45);
-            cursor: zoom-out;
-        }
-
-        .lightbox-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -100%; left: 0; 
-            width: 100%; height: 100%;
-            background: linear-gradient(180deg, transparent 0%, rgba(0, 243, 255, 0.5) 48%, var(--neon-cyan) 50%, transparent 100%);
-            z-index: 5;
-            pointer-events: none;
-            opacity: 0;
-        }
-
-        .lightbox-wrapper.trigger-scan::before {
-            animation: holoLaserScanOnce 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes holoLaserScanOnce {
-            0% { top: -100%; opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        .lightbox-header-tag {
-            position: absolute;
-            top: -45px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
-            border: 1.5px solid var(--neon-cyan);
-            color: var(--neon-gold);
-            padding: 8px 26px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.7);
-            backdrop-filter: blur(10px);
-            white-space: nowrap;
-        }
-
-        .close-lightbox {
-            position: absolute;
-            top: -20px; right: -20px;
-            width: 46px; height: 46px;
-            background: var(--bg-dark);
-            border: 2px solid var(--neon-magenta);
-            color: #ffffff;
-            font-size: 26px;
-            font-weight: 900;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 0 25px var(--neon-magenta);
-            z-index: 10;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .close-lightbox:hover {
-            transform: scale(1.25) rotate(90deg);
-            background: var(--neon-magenta);
-            box-shadow: 0 0 40px var(--neon-magenta);
-        }
-
-        .lightbox-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px; height: 50px;
-            background: rgba(15, 23, 42, 0.88);
-            border: 1.5px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            font-size: 24px;
-            font-weight: 900;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
-            z-index: 8;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
             transition: all 0.3s ease;
         }
-
-        .lightbox-nav-btn:hover {
-            background: var(--neon-cyan);
-            color: #000;
-            box-shadow: 0 0 35px var(--neon-cyan);
-            transform: translateY(-50%) scale(1.15);
+        .auth-modal.active {
+            opacity: 1; visibility: visible;
+        }
+        .auth-box {
+            width: 100%; max-width: 400px;
+            background: #0f172a;
+            border: 1.5px solid var(--neon-cyan);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.3);
+            position: relative;
+        }
+        .auth-close {
+            position: absolute;
+            top: 15px; right: 15px;
+            color: #64748b; font-size: 22px;
+            cursor: pointer;
+        }
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        .auth-tab {
+            flex: 1; text-align: center;
+            padding: 10px; font-weight: 900;
+            color: #64748b; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .auth-tab.active {
+            color: var(--neon-cyan);
+            border-bottom: 2px solid var(--neon-cyan);
+        }
+        .auth-form {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .auth-form.active {
+            display: flex;
+        }
+        .form-group {
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .form-group label {
+            font-size: 13px; font-weight: 700; color: #94a3b8;
+        }
+        .form-group input {
+            background: rgba(3, 7, 18, 0.8);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 8px;
+            padding: 12px; color: #fff;
+            outline: none; font-size: 14px;
+        }
+        .form-group input:focus {
+            border-color: var(--neon-cyan);
+        }
+        .otp-group {
+            display: flex; gap: 8px;
+        }
+        .send-otp-btn {
+            background: var(--neon-cyan); color: #000;
+            border: none; padding: 0 14px; border-radius: 8px;
+            font-weight: 900; cursor: pointer; white-space: nowrap;
+        }
+        .submit-btn {
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+            color: #fff; border: none; padding: 12px;
+            border-radius: 8px; font-weight: 900; cursor: pointer;
+            letter-spacing: 1px; margin-top: 10px;
         }
 
-        .lightbox-prev { left: -65px; }
-        .lightbox-next { right: -65px; }
-
-        @media (max-width: 768px) {
-            .lightbox-prev { left: 10px; }
-            .lightbox-next { right: 10px; }
-            .close-lightbox { top: -45px; right: 0; }
+        /* Lightbox CSS cũ */
+        .lightbox-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(3, 7, 18, 0.95);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; backdrop-filter: blur(25px);
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 0.35s;
         }
-
-        /* ANIMATIONS MAIN */
-        @keyframes moveGradient {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 300% 50%; }
+        .lightbox-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .lightbox-wrapper {
+            position: relative; max-width: 90vw; max-height: 85vh;
+            border-radius: 18px; padding: 6px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
         }
-
-        @keyframes pulseEye {
-            0% { opacity: 0.3; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* SKELETON LOADER */
-        .skeleton {
-            background: linear-gradient(90deg, #0f172a 25%, #1e293b 50%, #0f172a 75%);
-            background-size: 200% 100%;
-            animation: skeleton-loading 1.2s infinite;
-            border-radius: 14px;
-        }
-
-        .skeleton-item {
-            height: 150px;
-            border: 1px solid rgba(0, 243, 255, 0.2);
-            border-radius: 14px;
-        }
-
-        @keyframes skeleton-loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+        .lightbox-image { max-width: 88vw; max-height: 80vh; border-radius: 14px; display: block; }
+        .close-lightbox { position: absolute; top: -20px; right: -20px; width: 40px; height: 40px; background: #000; border: 1px solid var(--neon-magenta); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Canvas Hạt Ánh Sáng Dynamic -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Header VIP -->
-    <div class="vip-header">
-        <div class="stats-badge" id="stats-count">0 / 0 BẢNG</div>
-        <div class="brand-title">NDKBOT STUDIO VIP</div>
+    <!-- SIDEBAR MENU TRƯỢT (DRAWER MENU) -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="logo-box">N</div>
+            <span>NDKBOT STUDIO</span>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title">DỊCH VỤ</div>
+            <ul class="menu-list">
+                <li><a href="#">❖ Tổng quan</a></li>
+                <li class="active"><a href="#">🏆 Bảng xếp hạng</a></li>
+                <li><a href="#">👤 Lineup</a></li>
+                <li><a href="#">❇ Banner Custom</a></li>
+                <li><a href="#">▪ Mã QR</a></li>
+                <li><a href="#">🚩 Hồ sơ FF</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title">TÀI KHOẢN</div>
+            <ul class="menu-list">
+                <li><a href="#" onclick="openAuthModal('login')">⚙ Hồ sơ cá nhân</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-section" style="margin-top: auto;">
+            <div class="menu-section-title">TIỆN ÍCH</div>
+            <ul class="menu-list">
+                <li><a href="#" style="color: var(--neon-magenta);" onclick="openAuthModal('login')">↗ Đăng xuất / Đăng nhập</a></li>
+            </ul>
+        </div>
     </div>
 
-    <!-- Tiêu đề chính -->
+    <!-- HEADER -->
+    <div class="vip-header">
+        <div class="header-left">
+            <button class="menu-toggle-btn" onclick="toggleSidebar()">☰</button>
+            <div class="brand-title">NDKBOT STUDIO</div>
+        </div>
+        <button class="auth-btn-trigger" onclick="openAuthModal('login')">ĐẮNG NHẬP / ĐĂNG KÝ</button>
+    </div>
+
     <div class="title">LỊCH SỬ BẢNG XẾP HẠNG NDKBOT</div>
 
-    <!-- Thanh tìm kiếm -->
     <div class="search-container">
         <div class="search-input-wrapper">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -587,32 +495,125 @@
         </div>
     </div>
 
-    <!-- Danh sách BXH -->
+    <!-- DANH SÁCH BẢNG XẾP HẠNG -->
     <div class="gallery" id="gallery-container"></div>
 
-    <!-- LIGHTBOX ULTRA CYBER 3D -->
+    <!-- MODAL ĐĂNG NHẬP / ĐĂNG KÝ / XÁC THỰC SĐT -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="auth-box">
+            <span class="auth-close" onclick="closeAuthModal()">&times;</span>
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">ĐĂNG NHẬP</div>
+                <div class="auth-tab" id="tab-register" onclick="switchTab('register')">ĐĂNG KÝ</div>
+            </div>
+
+            <!-- FORM ĐĂNG NHẬP -->
+            <form class="auth-form active" id="form-login" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Tài khoản hoặc Số điện thoại</label>
+                    <input type="text" required placeholder="Nhập tài khoản/SĐT">
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" required placeholder="Nhập mật khẩu">
+                </div>
+                <button type="submit" class="submit-btn">XÁC NHẬN ĐĂNG NHẬP</button>
+            </form>
+
+            <!-- FORM ĐĂNG KÝ CÓ XÁC THỰC OTP -->
+            <form class="auth-form" id="form-register" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Tên tài khoản</label>
+                    <input type="text" required placeholder="Tạo tên tài khoản">
+                </div>
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <div class="otp-group">
+                        <input type="tel" id="phone-number" required placeholder="Nhập SĐT xác thực">
+                        <button type="button" class="send-otp-btn" onclick="sendOTP()">GỬI OTP</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Mã OTP xác thực</label>
+                    <input type="text" required placeholder="Nhập mã 6 chữ số">
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" required placeholder="Tạo mật khẩu">
+                </div>
+                <button type="submit" class="submit-btn">HOÀN TẤT ĐĂNG KÝ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
     <div class="lightbox-overlay" id="lightbox">
-        <div class="lightbox-wrapper" id="lightbox-wrapper">
-            <div class="lightbox-header-tag" id="lightbox-tag">BẢNG XẾP HẠNG #1</div>
-            <span class="close-lightbox" id="close-btn">&times;</span>
-            <div class="lightbox-nav-btn lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</div>
-            <img src="" alt="Chi Tiết BXH" class="lightbox-image" id="lightbox-img" onclick="toggleZoomImage()">
-            <div class="lightbox-nav-btn lightbox-next" onclick="navigateLightbox(1)">&#10095;</div>
+        <div class="lightbox-wrapper">
+            <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+            <img src="" class="lightbox-image" id="lightbox-img">
         </div>
     </div>
 
     <script>
         // ==========================================
-        // --- PARTICLE BACKGROUND SYSTEM ---
+        // --- SIDEBAR SLIDE TOGGLE ---
+        // ==========================================
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebar-overlay').classList.toggle('active');
+        }
+
+        // ==========================================
+        // --- AUTH MODAL & FORM SWITCHING ---
+        // ==========================================
+        function openAuthModal(tab = 'login') {
+            document.getElementById('auth-modal').classList.add('active');
+            switchTab(tab);
+        }
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.remove('active');
+        }
+        function switchTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+
+            if (tab === 'login') {
+                document.getElementById('tab-login').classList.add('active');
+                document.getElementById('form-login').classList.add('active');
+            } else {
+                document.getElementById('tab-register').classList.add('active');
+                document.getElementById('form-register').classList.add('active');
+            }
+        }
+
+        function sendOTP() {
+            const phone = document.getElementById('phone-number').value;
+            if(!phone) {
+                alert('Vui lòng nhập số điện thoại trước!');
+                return;
+            }
+            alert(`Đã gửi mã OTP đến số điện thoại: ${phone}\n(Mã thử nghiệm demo: 123456)`);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            alert('Đăng nhập thành công!');
+            closeAuthModal();
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            alert('Đăng ký tài khoản thành công!');
+            closeAuthModal();
+        }
+
+        // ==========================================
+        // --- PARTICLE BACKGROUND ---
         // ==========================================
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
@@ -626,23 +627,18 @@
                 this.color = Math.random() > 0.5 ? '#00f3ff' : '#ff0055';
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+                this.x += this.speedX; this.y += this.speedY;
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
             draw() {
                 ctx.fillStyle = this.color;
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = this.color;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
-
-        for (let i = 0; i < 45; i++) particles.push(new Particle());
-
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
@@ -651,200 +647,41 @@
         animateParticles();
 
         // ==========================================
-        // --- BXH CORE SYSTEM ---
+        // --- LOAD BXH DUMMY DATA ---
         // ==========================================
-        const MAX_CHECK = 200;
-        const BATCH_SIZE = 15;
         const gallery = document.getElementById('gallery-container');
-        const statsCount = document.getElementById('stats-count');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxWrapper = document.getElementById('lightbox-wrapper');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxTag = document.getElementById('lightbox-tag');
-        const closeBtn = document.getElementById('close-btn');
-
-        let validItems = [];
-        let loadedCount = 0;
-        let currentImageIndex = 0;
-
-        function showSkeletons() {
-            const fragment = document.createDocumentFragment();
-            for (let i = 0; i < 5; i++) {
-                const skel = document.createElement('div');
-                skel.className = 'skeleton skeleton-item';
-                fragment.appendChild(skel);
-            }
-            gallery.appendChild(fragment);
-        }
-
-        function checkImageExists(id) {
-            return new Promise((resolve) => {
-                const imgSrc = `${id}.png`;
-                const img = new Image();
-                img.onload = () => resolve({ id, src: imgSrc, exists: true });
-                img.onerror = () => resolve({ id, src: imgSrc, exists: false });
-                img.src = imgSrc;
-            });
-        }
-
-        async function fetchValidImages() {
-            const cached = localStorage.getItem('ndk_bxh_cache_v3');
-            if (cached) {
-                const cacheData = JSON.parse(cached);
-                if (Date.now() - cacheData.timestamp < 300000) return cacheData.items;
-            }
-
-            const checkPromises = [];
-            for (let i = 1; i <= MAX_CHECK; i++) {
-                checkPromises.push(checkImageExists(i));
-            }
-
-            const results = await Promise.all(checkPromises);
-            const valid = [];
-            for (const res of results) {
-                if (res.exists) valid.push(res);
-                else break;
-            }
-
-            localStorage.setItem('ndk_bxh_cache_v3', JSON.stringify({
-                timestamp: Date.now(),
-                items: valid
-            }));
-
-            return valid;
-        }
-
-        function renderNextBatch() {
-            if (loadedCount >= validItems.length) return;
-
-            const fragment = document.createDocumentFragment();
-            const nextBatch = validItems.slice(loadedCount, loadedCount + BATCH_SIZE);
-
-            nextBatch.forEach(({ id, src }, index) => {
-                const globalIndex = loadedCount + index;
+        function initGallery() {
+            for(let i = 1; i <= 5; i++) {
                 const item = document.createElement('div');
                 item.className = 'bxh-item';
-                item.setAttribute('data-id', id);
-
+                item.setAttribute('data-id', i);
                 item.innerHTML = `
-                    <div class="image-container" onclick="openLightbox(${globalIndex})">
-                        <img src="${src}" loading="lazy" decoding="async" alt="Bảng Xếp Hạng #${id}">
-                        <div class="image-number">#${id}</div>
+                    <div class="image-container" onclick="openLightbox('${i}.png')">
+                        <img src="${i}.png" onerror="this.src='https://via.placeholder.com/230x130/0f172a/00f3ff?text=BXH+${i}'">
+                        <div class="image-number">#${i}</div>
                     </div>
                     <div class="bxh-info">
-                        <div class="bxh-title">BẢNG XẾP HẠNG #${id}</div>
-                        <div class="bxh-subtext">NDKBOT ONLINE</div>
+                        <div class="bxh-title">BẢNG XẾP HẠNG #${i}</div>
                     </div>
                 `;
-                fragment.appendChild(item);
-            });
-
-            gallery.appendChild(fragment);
-            loadedCount += nextBatch.length;
-
-            if (loadedCount >= validItems.length && !document.getElementById('thanks-card')) {
-                renderThanksFooter();
+                gallery.appendChild(item);
             }
         }
-
-        function renderThanksFooter() {
-            const footerCard = document.createElement('div');
-            footerCard.id = 'thanks-card';
-            footerCard.className = 'thanks-footer-card';
-            footerCard.innerHTML = `
-                <div class="thanks-text">🧧 NDKBOT THANKS CHÚC AE VUI VẺ! 🧧</div>
-                <div class="thanks-subtext">✨ AN KHANG THỊNH VƯỢNG - VẠN SỰ NHƯ Ý ✨</div>
-            `;
-            gallery.appendChild(footerCard);
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
         }
-
-        async function loadGalleryUltraFast() {
-            showSkeletons();
-            validItems = await fetchValidImages();
-
-            gallery.innerHTML = '';
-            statsCount.innerText = `${validItems.length} / ${validItems.length} BẢNG`;
-
-            renderNextBatch();
-
-            setTimeout(() => {
-                while (loadedCount < validItems.length) {
-                    renderNextBatch();
-                }
-            }, 50);
-        }
-
-        function filterBXH() {
-            const value = document.getElementById('search-input').value.trim();
-            const items = document.querySelectorAll('.bxh-item');
-            const thanksCard = document.getElementById('thanks-card');
-
-            items.forEach(item => {
-                const id = item.getAttribute('data-id');
-                item.style.display = (value === '' || id === value) ? 'flex' : 'none';
-            });
-
-            if (thanksCard) thanksCard.style.display = value === '' ? 'block' : 'none';
-        }
-
-        // ==========================================
-        // --- LIGHTBOX NAVIGATION LOGIC ---
-        // ==========================================
-        function triggerScanEffect() {
-            lightboxWrapper.classList.remove('trigger-scan');
-            void lightboxWrapper.offsetWidth;
-            lightboxWrapper.classList.add('trigger-scan');
-        }
-
-        function openLightbox(index) {
-            if (index < 0 || index >= validItems.length) return;
-            currentImageIndex = index;
-
-            const item = validItems[currentImageIndex];
-            lightboxImg.src = item.src;
-            lightboxImg.classList.remove('zoomed');
-            lightboxTag.innerText = `BẢNG XẾP HẠNG #${item.id}`;
-
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            triggerScanEffect();
-        }
-
-        function navigateLightbox(direction) {
-            let newIndex = currentImageIndex + direction;
-            if (newIndex < 0) newIndex = validItems.length - 1;
-            if (newIndex >= validItems.length) newIndex = 0;
-            openLightbox(newIndex);
-        }
-
-        function toggleZoomImage() {
-            lightboxImg.classList.toggle('zoomed');
-        }
-
         function closeLightbox() {
-            lightbox.classList.remove('active');
-            lightboxImg.classList.remove('zoomed');
-            lightboxWrapper.classList.remove('trigger-scan');
-            document.body.style.overflow = '';
-            setTimeout(() => { lightboxImg.src = ''; }, 300);
+            document.getElementById('lightbox').classList.remove('active');
         }
-
-        closeBtn.onclick = closeLightbox;
-        lightbox.onclick = (e) => { 
-            if (e.target === lightbox) closeLightbox(); 
-        };
-
-        /* PHÍM TẮT BÀN PHÍM */
-        document.addEventListener('keydown', (e) => {
-            if (!lightbox.classList.contains('active')) return;
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') navigateLightbox(-1);
-            if (e.key === 'ArrowRight') navigateLightbox(1);
-        });
-
-        // Tải danh sách ngay lập tức khi vào trang
-        loadGalleryUltraFast();
+        function filterBXH() {
+            const val = document.getElementById('search-input').value.trim();
+            document.querySelectorAll('.bxh-item').forEach(item => {
+                const id = item.getAttribute('data-id');
+                item.style.display = (val === '' || id === val) ? 'flex' : 'none';
+            });
+        }
+        initGallery();
     </script>
 </body>
 </html>
