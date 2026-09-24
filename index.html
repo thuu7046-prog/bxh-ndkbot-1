@@ -3,698 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HNNP STUDIO - Dịch vụ Bot & Bảng Xếp Hạng</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>LỊCH SỬ BẢNG XẾP HẠNG</title>
+    <!-- Phông chữ Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* ========================================== */
-        /* --- DƠN GIẢN, TỐI MÀU (CLEAN DARK UI) --- */
-        /* ========================================== */
         :root {
-            --bg-dark: #0d0d11;
-            --card-bg: #16161e;
-            --input-bg: #1e1e28;
-            --accent-red: #ff3355;
-            --accent-red-glow: rgba(255, 51, 85, 0.35);
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border-color: #272738;
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --border-color: #1f2937;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-blue: #3b82f6;
+            --badge-bg: #1e293b;
+            --chip-bg: rgba(59, 130, 246, 0.15);
+            --chip-text: #60a5fa;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            user-select: none;
         }
 
-        body { 
-            background-color: var(--bg-dark); 
-            color: var(--text-main); 
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Khi chưa đăng nhập -> Khóa cuộn trang web */
-        body.locked {
-            overflow: hidden !important;
-        }
-
-        /* ========================================== */
-        /* --- SIDEBAR DRAWER MENU --- */
-        /* ========================================== */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-            z-index: 9998;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.25s ease;
-        }
-        .sidebar-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0; left: 0;
-            width: 270px;
-            height: 100%;
-            background: #121218;
-            border-right: 1px solid var(--border-color);
-            transform: translateX(-100%);
-            transition: transform 0.25s ease;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 16px;
-        }
-        .sidebar.active {
-            transform: translateX(0);
-        }
-
-        .sidebar-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            padding-bottom: 20px;
-            margin-bottom: 10px;
-        }
-
-        .sidebar-brand .logo-box {
-            width: 32px; height: 32px;
-            background: #d97706;
-            border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            color: #fff; font-weight: 800; font-size: 15px;
-        }
-
-        .menu-section {
-            margin-bottom: 20px;
-        }
-        .menu-section-title {
-            font-size: 11px;
-            font-weight: 700;
-            color: #64748b;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            padding-left: 8px;
-        }
-        .menu-list {
-            list-style: none;
-        }
-        .menu-list li {
-            margin-bottom: 4px;
-        }
-        .menu-list a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-        .menu-list a:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .menu-list li.active a {
-            background: var(--accent-red);
-            color: #fff;
-            font-weight: 600;
-            box-shadow: 0 4px 15px var(--accent-red-glow);
-        }
-
-        /* ========================================== */
-        /* --- HEADER NAVIGATION --- */
-        /* ========================================== */
-        .top-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            background: var(--bg-dark);
-            border-bottom: 1px solid var(--border-color);
-        }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .menu-btn {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .header-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-        .user-avatar-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 4px 12px 4px 4px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .avatar-circle {
-            width: 26px; height: 26px;
-            background: var(--accent-red);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: #fff; font-size: 12px;
-        }
-
-        /* ========================================== */
-        /* --- TRANG CHỦ DASHBOARD (TỔNG QUAN) --- */
-        /* ========================================== */
-        .main-container {
             padding: 20px;
-            max-width: 800px;
+        }
+
+        .container {
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        /* Banner Xin chào */
-        .welcome-card {
-            background: linear-gradient(135deg, rgba(255, 51, 85, 0.12) 0%, rgba(22, 22, 30, 0.9) 100%);
-            border: 1px solid rgba(255, 51, 85, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-        .welcome-tag {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--accent-red);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-        .welcome-title {
-            font-size: 22px;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-        .welcome-title span {
-            color: var(--accent-red);
-        }
-        .welcome-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
+        /* Top Header Bar */
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 25px;
         }
 
-        /* Thẻ Thông Báo */
-        .info-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 20px;
-        }
-        .info-card h4 {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        .info-card p {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 8px;
-        }
-        .info-card a {
-            color: var(--accent-red);
-            text-decoration: underline;
-        }
-
-        /* Danh Sách Thẻ Thống Kê (Profile, Lineup...) */
-        .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 12px;
-            position: relative;
-            box-shadow: inset 0 -2px 0 var(--accent-red);
-        }
-        .stat-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-        .stat-value {
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        /* Nút AI Float */
-        .ai-assistant-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--accent-red);
-            color: #fff;
-            padding: 10px 18px;
+        .count-badge {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            padding: 6px 16px;
             border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            border: none;
-            box-shadow: 0 4px 20px var(--accent-red-glow);
-            display: flex; align-items: center; gap: 6px;
-            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
-        /* ========================================== */
-        /* --- BẮT BUỘC ĐĂNG NHẬP (LOCK MODAL) --- */
-        /* ========================================== */
-        .auth-modal {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(13, 13, 17, 0.96); /* Tối xám bao phủ hoàn toàn */
-            z-index: 100000;
-            display: flex; align-items: center; justify-content: center;
-            padding: 16px;
-            opacity: 1; visibility: visible;
-            transition: all 0.3s ease;
-        }
-        .auth-modal.hidden {
-            opacity: 0; visibility: hidden; pointer-events: none;
+        .count-badge span {
+            color: #38bdf8;
         }
 
-        .auth-card {
-            width: 100%;
-            max-width: 400px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 28px 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .brand-badge {
-            display: inline-flex;
+        /* Title & Controls */
+        .header-section {
+            display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 6px;
-            background: rgba(255, 51, 85, 0.1);
-            color: var(--accent-red);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 1.1rem;
             font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-        }
-        .brand-badge::before {
-            content: '';
-            width: 6px; height: 6px;
-            background: var(--accent-red);
-            border-radius: 50%;
-        }
-
-        .auth-tabs-container {
-            background: var(--input-bg);
-            padding: 4px;
-            border-radius: 10px;
-            display: flex;
-            margin-bottom: 20px;
-        }
-        .auth-tab {
-            flex: 1;
-            text-align: center;
-            padding: 8px 0;
-            font-size: 13px;
-            font-weight: 600;
+            letter-spacing: 2px;
             color: var(--text-muted);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .auth-tab.active {
-            background: var(--accent-red);
-            color: #fff;
-            box-shadow: 0 2px 10px var(--accent-red-glow);
+            text-transform: uppercase;
         }
 
-        .auth-header {
-            margin-bottom: 20px;
-        }
-        .auth-header h2 {
-            font-size: 22px;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .auth-form {
-            display: none;
-            flex-direction: column;
-            gap: 14px;
-        }
-        .auth-form.active {
-            display: flex;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .form-group label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-        .input-wrapper {
+        .search-container {
             position: relative;
+            flex: 1;
+            max-width: 320px;
         }
-        .form-group input {
-            width: 100%;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            color: #fff;
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
             font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 10px 12px 10px 36px;
+            color: #fff;
+            font-size: 0.9rem;
             outline: none;
             transition: border-color 0.2s;
         }
-        .form-group input:focus {
-            border-color: var(--accent-red);
+
+        .search-input:focus {
+            border-color: #3b82f6;
         }
 
-        /* Mã Captcha bảo mật */
-        .captcha-row {
+        /* List Items Layout */
+        .list-container {
             display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .captcha-box {
-            background: #0d0d11;
-            border: 1px solid var(--border-color);
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-weight: 800;
-            letter-spacing: 4px;
-            color: #fff;
-            font-size: 15px;
-            user-select: none;
-            text-decoration: line-through;
-        }
-        .refresh-captcha {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 16px;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .submit-btn {
-            background: var(--accent-red);
+        .bxh-card {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Thumbnail Container */
+        .img-wrapper {
+            position: relative;
+            width: 240px;
+            aspect-ratio: 16 / 9;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #1e293b;
+            flex-shrink: 0;
+            cursor: pointer;
+            border: 1px solid #1f2937;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Badge số thứ tự nằm đè trên ảnh */
+        .rank-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(4px);
             color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 4px 10px;
+            border-radius: 6px;
             font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            margin-top: 6px;
-            box-shadow: 0 4px 15px var(--accent-red-glow);
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .auth-footer {
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 16px;
+        /* Info Section */
+        .info-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 5px;
         }
-        .auth-footer a {
-            color: var(--accent-red);
-            text-decoration: none;
+
+        .bxh-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #f3f4f6;
+        }
+
+        .bxh-tag {
+            display: inline-block;
+            background-color: var(--chip-bg);
+            color: var(--chip-text);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
             font-weight: 600;
+            width: fit-content;
+        }
+
+        /* Lightbox Preview */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; }
+
+        @media (max-width: 600px) {
+            .bxh-card { flex-direction: column; }
+            .img-wrapper { width: 100%; }
+            .search-container { max-width: 100%; }
         }
     </style>
 </head>
-<body class="locked">
+<body>
 
-    <!-- SIDEBAR DRAWER -->
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-brand">
-            <div class="logo-box">N</div>
-            <span>HNNP STUDIO</span>
-        </div>
-
-        <div class="menu-section">
-            <div class="menu-section-title">DỊCH VỤ</div>
-            <ul class="menu-list">
-                <li class="active"><a href="#">❖ Tổng quan</a></li>
-                <li><a href="#">🏆 Bảng xếp hạng</a></li>
-                <li><a href="#">👤 Lineup</a></li>
-                <li><a href="#">❇ Banner Custom</a></li>
-                <li><a href="#">▪ Mã QR</a></li>
-                <li><a href="#">🚩 Hồ sơ FF</a></li>
-            </ul>
-        </div>
-
-        <div class="menu-section">
-            <div class="menu-section-title">TÀI KHOẢN</div>
-            <ul class="menu-list">
-                <li><a href="#">⚙ Hồ sơ cá nhân</a></li>
-            </ul>
-        </div>
-
-        <div class="menu-section" style="margin-top: auto;">
-            <div class="menu-section-title">TIỆN ÍCH</div>
-            <ul class="menu-list">
-                <li><a href="#" style="color: var(--accent-red);" onclick="logout()">↗ Đăng xuất</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- MAIN APP CONTENT -->
-    <div class="top-header">
-        <div class="header-left">
-            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-            <div class="header-title">Tổng quan</div>
-        </div>
-        <div class="user-avatar-btn">
-            <div class="avatar-circle" id="avatar-letter">K</div>
-            <span id="display-username">khsjjjđ</span>
-        </div>
-    </div>
-
-    <div class="main-container">
-        <!-- Card Xin Chào -->
-        <div class="welcome-card">
-            <div class="welcome-tag">— TÀI KHOẢN HNNP STUDIO</div>
-            <div class="welcome-title">Xin chào, <span id="welcome-name">khsjjjđ</span>.</div>
-            <div class="welcome-desc">Quản lý bảng xếp hạng, lineup, banner custom, mã QR và hồ sơ Free Fire tại một nơi.</div>
-        </div>
-
-        <!-- Thông Báo -->
-        <div class="info-card">
-            <h4>Thông báo hệ thống</h4>
-            <p>Bên mình có Bot Messenger | Zalo chống phá box và tính điểm cần thuê các bạn bấm vào nút liên hệ bên dưới nhé!!!</p>
-            <p><strong>VỪA THÊM BANNER CUSTOM MỚI ANH EM</strong></p>
-            <p>HỖ TRỢ THÊM BẢNG RIÊNG CHO ANH EM IB <a href="#">tại đây</a> hoặc <a href="#">Facebook</a></p>
-        </div>
-
-        <!-- Các Mục Thống Kê -->
-        <div class="stat-card">
-            <div class="stat-label">PROFILE</div>
-            <div class="stat-value">5</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-label">LINEUP</div>
-            <div class="stat-value">8</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-label">BẢNG ĐIỂM</div>
-            <div class="stat-value">81</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-label">BANNER</div>
-            <div class="stat-value">0</div>
-        </div>
-    </div>
-
-    <!-- Nút AI Floating -->
-    <button class="ai-assistant-btn">🤖 Trợ lý AI</button>
-
-    <!-- ========================================== -->
-    <!-- MODAL KHÓA ĐĂNG NHẬP (KHÔNG CÓ NÚT X ĐÓNG) -->
-    <!-- ========================================== -->
-    <div class="auth-modal" id="auth-modal">
-        <div class="auth-card">
-            <div class="brand-badge">HNNP STUDIO</div>
-
-            <div class="auth-tabs-container">
-                <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Đăng nhập</div>
-                <div class="auth-tab" id="tab-register" onclick="switchTab('register')">Đăng ký</div>
+    <div class="container">
+        <!-- Badge đếm số lượng góc trên phải -->
+        <div class="top-bar">
+            <div class="count-badge">
+                <span id="total-count">0</span> / <span id="max-count">0</span> bảng
             </div>
-
-            <div class="auth-header">
-                <h2 id="auth-title">Chào mừng trở lại</h2>
-            </div>
-
-            <!-- FORM ĐĂNG NHẬP -->
-            <form class="auth-form active" id="form-login" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label>Email hoặc Tên tài khoản</label>
-                    <input type="text" id="login-user" required placeholder="ban@example.com">
-                </div>
-
-                <div class="form-group">
-                    <label>Mật khẩu</label>
-                    <input type="password" required placeholder="••••••••">
-                </div>
-
-                <div class="form-group">
-                    <label>Kiểm tra bảo mật</label>
-                    <div class="captcha-row">
-                        <div class="captcha-box" id="captcha-code">Q E Q E C</div>
-                        <button type="button" class="refresh-captcha" onclick="generateCaptcha()">↻</button>
-                        <input type="text" id="captcha-input" style="flex: 1;" required placeholder="NHẬP MÃ">
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn">Đăng nhập ➔</button>
-
-                <div class="auth-footer">
-                    Chưa có tài khoản? <a href="#" onclick="switchTab('register')">Đăng ký ngay</a>
-                </div>
-            </form>
-
-            <!-- FORM ĐĂNG KÝ -->
-            <form class="auth-form" id="form-register" onsubmit="handleRegister(event)">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" required placeholder="ban@example.com">
-                </div>
-
-                <div class="form-group">
-                    <label>Tên tài khoản</label>
-                    <input type="text" id="reg-user" required placeholder="Nhập tên tài khoản">
-                </div>
-
-                <div class="form-group">
-                    <label>Mật khẩu</label>
-                    <input type="password" required placeholder="••••••••">
-                </div>
-
-                <button type="submit" class="submit-btn">Tạo tài khoản ➔</button>
-
-                <div class="auth-footer">
-                    Đã có tài khoản? <a href="#" onclick="switchTab('login')">Đăng nhập</a>
-                </div>
-            </form>
         </div>
+
+        <!-- Tiêu đề & Ô tìm kiếm -->
+        <div class="header-section">
+            <h1 class="page-title">LỊCH SỬ BẢNG XẾP HẠNG</h1>
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" class="search-input" placeholder="Tìm số BXH...">
+            </div>
+        </div>
+
+        <!-- Danh sách hiển thị -->
+        <div class="list-container" id="gallery-container"></div>
+    </div>
+
+    <!-- Lightbox Xem Ảnh Lớn -->
+    <div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+        <img src="" id="lightbox-img" alt="Xem ảnh lớn">
     </div>
 
     <script>
-        let currentCaptcha = "";
+        // CẤU HÌNH GITHUB CỦA BẠN TẠI ĐÂY
+        const GITHUB_USERNAME = 'TÊN_USER_GITHUB_CỦA_BẠN'; // Ví dụ: 'octocat'
+        const REPO_NAME = 'TÊN_REPOSITORY_CỦA_BẠN';       // Ví dụ: 'my-bxh-repo'
+        const BRANCH = 'main';                               // Nhánh GitHub (mặc định 'main')
 
-        // Tạo mã Captcha ngẫu nhiên
-        function generateCaptcha() {
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            let code = "";
-            for (let i = 0; i < 5; i++) {
-                code += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            currentCaptcha = code;
-            document.getElementById('captcha-code').innerText = code.split('').join(' ');
+        // Tải danh sách ảnh từ GitHub (Giả định các ảnh đặt tên: 1.png, 2.png, 3.png...)
+        const TOTAL_ITEMS = 45; // Thay đổi tổng số lượng ảnh của bạn
+
+        const gallery = document.getElementById('gallery-container');
+        const searchInput = document.getElementById('search-input');
+        const totalCountEl = document.getElementById('total-count');
+        const maxCountEl = document.getElementById('max-count');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        maxCountEl.innerText = TOTAL_ITEMS;
+
+        // Hàm lấy URL đường dẫn trực tiếp ảnh trên GitHub (Raw / CDN)
+        function getImageUrl(index) {
+            // Sử dụng jsDelivr CDN giúp load ảnh từ GitHub siêu nhanh và không bị giới hạn
+            return `https://cdn.jsdelivr.net/gh/${GITHUB_USERNAME}/${REPO_NAME}@${BRANCH}/${index}.png`;
         }
 
-        // Chuyển Tab Đăng nhập / Đăng ký
-        function switchTab(tab) {
-            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+        let itemsData = [];
 
-            if (tab === 'login') {
-                document.getElementById('tab-login').classList.add('active');
-                document.getElementById('form-login').classList.add('active');
-                document.getElementById('auth-title').innerText = "Chào mừng trở lại";
-            } else {
-                document.getElementById('tab-register').classList.add('active');
-                document.getElementById('form-register').classList.add('active');
-                document.getElementById('auth-title').innerText = "Tạo tài khoản mới";
-            }
+        function renderList(filterIndex = '') {
+            gallery.innerHTML = '';
+            let visibleCount = 0;
+
+            itemsData.forEach(item => {
+                if (filterIndex !== '' && !item.id.toString().includes(filterIndex)) {
+                    return;
+                }
+
+                visibleCount++;
+
+                const card = document.createElement('div');
+                card.className = 'bxh-card';
+
+                card.innerHTML = `
+                    <div class="img-wrapper" onclick="openLightbox('${item.url}')">
+                        <span class="rank-number">${item.id}</span>
+                        <img src="${item.url}" alt="BXH #${item.id}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x169/1e293b/94a3b8?text=Lỗi+Ảnh';">
+                    </div>
+                    <div class="info-wrapper">
+                        <div class="bxh-title">BXH #${item.id}</div>
+                        <div class="bxh-tag">BXH #${item.id}</div>
+                    </div>
+                `;
+
+                gallery.appendChild(card);
+            });
+
+            totalCountEl.innerText = visibleCount;
         }
 
-        // Mở khóa giao diện sau khi đăng nhập
-        function unlockSite(username) {
-            document.getElementById('auth-modal').classList.add('hidden');
-            document.body.classList.remove('locked');
-            
-            // Cập nhật Tên hiển thị
-            document.getElementById('display-username').innerText = username;
-            document.getElementById('welcome-name').innerText = username;
-            document.getElementById('avatar-letter').innerText = username.charAt(0).toUpperCase();
+        // Khởi tạo dữ liệu danh sách
+        for (let i = 1; i <= TOTAL_ITEMS; i++) {
+            itemsData.push({
+                id: i,
+                url: getImageUrl(i)
+            });
         }
 
-        function logout() {
-            document.getElementById('auth-modal').classList.remove('hidden');
-            document.body.classList.add('locked');
-            toggleSidebar();
+        // Hiển thị ban đầu
+        renderList();
+
+        // Xử lý tìm kiếm
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            renderList(val);
+        });
+
+        // Mở ảnh lớn
+        function openLightbox(url) {
+            lightboxImg.src = url;
+            lightbox.classList.add('active');
         }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const inputCaptcha = document.getElementById('captcha-input').value.trim().toUpperCase();
-            
-            if (inputCaptcha !== currentCaptcha) {
-                alert("Mã kiểm tra bảo mật (Captcha) không chính xác!");
-                generateCaptcha();
-                return;
-            }
-
-            const username = document.getElementById('login-user').value.split('@')[0];
-            unlockSite(username || "User");
-        }
-
-        function handleRegister(e) {
-            e.preventDefault();
-            const username = document.getElementById('reg-user').value;
-            alert("Đăng ký thành công!");
-            unlockSite(username);
-        }
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('sidebar-overlay').classList.toggle('active');
-        }
-
-        // Khởi tạo Captcha khi tải trang
-        generateCaptcha();
     </script>
 </body>
 </html>
