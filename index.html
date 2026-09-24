@@ -36,6 +36,11 @@
             position: relative;
         }
 
+        /* Khi chưa đăng nhập -> Khóa cuộn trang web */
+        body.locked {
+            overflow: hidden !important;
+        }
+
         #particle-canvas {
             position: fixed;
             top: 0; left: 0; 
@@ -157,7 +162,6 @@
             box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
         }
 
-        /* Nút toggle menu hamburger */
         .menu-toggle-btn {
             background: rgba(0, 243, 255, 0.1);
             border: 1px solid var(--neon-cyan);
@@ -212,20 +216,15 @@
             filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.7));
         }
 
-        .auth-btn-trigger {
-            background: linear-gradient(135deg, var(--neon-magenta), var(--neon-purple));
-            color: #fff;
-            border: none;
+        .user-status-btn {
+            background: rgba(0, 243, 255, 0.15);
+            color: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
             padding: 8px 18px;
             border-radius: 8px;
             font-weight: 900;
-            cursor: pointer;
             letter-spacing: 1px;
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
-            transition: transform 0.2s;
-        }
-        .auth-btn-trigger:hover {
-            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
         }
 
         .title {
@@ -331,36 +330,46 @@
         }
 
         /* ========================================== */
-        /* --- MODAL ĐĂNG NHẬP / ĐĂNG KÝ / OTP --- */
+        /* --- BẮT BUỘC ĐĂNG NHẬP (LOCK MODAL) --- */
         /* ========================================== */
         .auth-modal {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background: rgba(3, 7, 18, 0.85);
-            backdrop-filter: blur(12px);
-            z-index: 10000;
+            background: rgba(3, 7, 18, 0.95); /* Tối hoàn toàn để chắn giao diện */
+            backdrop-filter: blur(20px);
+            z-index: 100000; /* Hiển thị cao nhất trên cùng */
             display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden;
+            opacity: 1; visibility: visible; /* Mặc định hiện ra ngay lập tức */
             transition: all 0.3s ease;
         }
-        .auth-modal.active {
-            opacity: 1; visibility: visible;
+        .auth-modal.hidden {
+            opacity: 0; visibility: hidden; pointer-events: none;
         }
         .auth-box {
-            width: 100%; max-width: 400px;
+            width: 90%; max-width: 420px;
             background: #0f172a;
-            border: 1.5px solid var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
             border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 0 40px rgba(0, 243, 255, 0.3);
+            padding: 30px 24px;
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.4);
             position: relative;
         }
-        .auth-close {
-            position: absolute;
-            top: 15px; right: 15px;
-            color: #64748b; font-size: 22px;
-            cursor: pointer;
+        .auth-header-notice {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .auth-header-notice h3 {
+            color: var(--neon-cyan);
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .auth-header-notice p {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 4px;
         }
         .auth-tabs {
             display: flex;
@@ -400,6 +409,7 @@
         }
         .form-group input:focus {
             border-color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
         }
         .otp-group {
             display: flex; gap: 8px;
@@ -411,12 +421,14 @@
         }
         .submit-btn {
             background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
-            color: #fff; border: none; padding: 12px;
+            color: #fff; border: none; padding: 14px;
             border-radius: 8px; font-weight: 900; cursor: pointer;
             letter-spacing: 1px; margin-top: 10px;
+            font-size: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.4);
         }
 
-        /* Lightbox CSS cũ */
+        /* Lightbox */
         .lightbox-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(3, 7, 18, 0.95);
@@ -435,7 +447,7 @@
         .close-lightbox { position: absolute; top: -20px; right: -20px; width: 40px; height: 40px; background: #000; border: 1px solid var(--neon-magenta); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     </style>
 </head>
-<body>
+<body class="locked"> <!-- Mặc định thêm class 'locked' để khóa trang -->
 
     <canvas id="particle-canvas"></canvas>
 
@@ -462,14 +474,14 @@
         <div class="menu-section">
             <div class="menu-section-title">TÀI KHOẢN</div>
             <ul class="menu-list">
-                <li><a href="#" onclick="openAuthModal('login')">⚙ Hồ sơ cá nhân</a></li>
+                <li><a href="#">⚙ Hồ sơ cá nhân</a></li>
             </ul>
         </div>
 
         <div class="menu-section" style="margin-top: auto;">
             <div class="menu-section-title">TIỆN ÍCH</div>
             <ul class="menu-list">
-                <li><a href="#" style="color: var(--neon-magenta);" onclick="openAuthModal('login')">↗ Đăng xuất / Đăng nhập</a></li>
+                <li><a href="#" style="color: var(--neon-magenta);" onclick="logout()">↗ Đăng xuất</a></li>
             </ul>
         </div>
     </div>
@@ -480,7 +492,7 @@
             <button class="menu-toggle-btn" onclick="toggleSidebar()">☰</button>
             <div class="brand-title">NDKBOT STUDIO</div>
         </div>
-        <button class="auth-btn-trigger" onclick="openAuthModal('login')">ĐẮNG NHẬP / ĐĂNG KÝ</button>
+        <div class="user-status-btn" id="user-display">CHƯA ĐĂNG NHẬP</div>
     </div>
 
     <div class="title">LỊCH SỬ BẢNG XẾP HẠNG NDKBOT</div>
@@ -498,10 +510,14 @@
     <!-- DANH SÁCH BẢNG XẾP HẠNG -->
     <div class="gallery" id="gallery-container"></div>
 
-    <!-- MODAL ĐĂNG NHẬP / ĐĂNG KÝ / XÁC THỰC SĐT -->
+    <!-- MODAL BẮT BUỘC ĐĂNG NHẬP / ĐĂNG KÝ (KHÔNG CÓ NÚT X ĐÓNG) -->
     <div class="auth-modal" id="auth-modal">
         <div class="auth-box">
-            <span class="auth-close" onclick="closeAuthModal()">&times;</span>
+            <div class="auth-header-notice">
+                <h3>YÊU CẦU XÁC THỰC</h3>
+                <p>Vui lòng đăng nhập hoặc đăng ký để xem nội dung</p>
+            </div>
+
             <div class="auth-tabs">
                 <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">ĐĂNG NHẬP</div>
                 <div class="auth-tab" id="tab-register" onclick="switchTab('register')">ĐĂNG KÝ</div>
@@ -511,7 +527,7 @@
             <form class="auth-form active" id="form-login" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>Tài khoản hoặc Số điện thoại</label>
-                    <input type="text" required placeholder="Nhập tài khoản/SĐT">
+                    <input type="text" id="login-username" required placeholder="Nhập tài khoản/SĐT">
                 </div>
                 <div class="form-group">
                     <label>Mật khẩu</label>
@@ -524,7 +540,7 @@
             <form class="auth-form" id="form-register" onsubmit="handleRegister(event)">
                 <div class="form-group">
                     <label>Tên tài khoản</label>
-                    <input type="text" required placeholder="Tạo tên tài khoản">
+                    <input type="text" id="reg-username" required placeholder="Tạo tên tài khoản">
                 </div>
                 <div class="form-group">
                     <label>Số điện thoại</label>
@@ -556,23 +572,23 @@
 
     <script>
         // ==========================================
-        // --- SIDEBAR SLIDE TOGGLE ---
+        // --- XỬ LÝ KHÓA TRANG & ĐĂNG NHẬP ---
         // ==========================================
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('sidebar-overlay').classList.toggle('active');
+        function unlockSite(username) {
+            // Ẩn modal đăng nhập và mở khóa cuộn trang
+            document.getElementById('auth-modal').classList.add('hidden');
+            document.body.classList.remove('locked');
+            document.getElementById('user-display').innerText = `XIN CHÀO: ${username.toUpperCase()}`;
         }
 
-        // ==========================================
-        // --- AUTH MODAL & FORM SWITCHING ---
-        // ==========================================
-        function openAuthModal(tab = 'login') {
-            document.getElementById('auth-modal').classList.add('active');
-            switchTab(tab);
+        function logout() {
+            // Khóa lại trang web khi chọn đăng xuất
+            document.getElementById('auth-modal').classList.remove('hidden');
+            document.body.classList.add('locked');
+            document.getElementById('user-display').innerText = 'CHƯA ĐĂNG NHẬP';
+            toggleSidebar(); // Đóng menu lại
         }
-        function closeAuthModal() {
-            document.getElementById('auth-modal').classList.remove('active');
-        }
+
         function switchTab(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
@@ -592,19 +608,29 @@
                 alert('Vui lòng nhập số điện thoại trước!');
                 return;
             }
-            alert(`Đã gửi mã OTP đến số điện thoại: ${phone}\n(Mã thử nghiệm demo: 123456)`);
+            alert(`Mã OTP xác thực đã được gửi tới SĐT: ${phone}\n(Mã thử nghiệm demo: 123456)`);
         }
 
         function handleLogin(e) {
             e.preventDefault();
+            const user = document.getElementById('login-username').value;
             alert('Đăng nhập thành công!');
-            closeAuthModal();
+            unlockSite(user);
         }
 
         function handleRegister(e) {
             e.preventDefault();
+            const user = document.getElementById('reg-username').value;
             alert('Đăng ký tài khoản thành công!');
-            closeAuthModal();
+            unlockSite(user);
+        }
+
+        // ==========================================
+        // --- SIDEBAR SLIDE TOGGLE ---
+        // ==========================================
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebar-overlay').classList.toggle('active');
         }
 
         // ==========================================
