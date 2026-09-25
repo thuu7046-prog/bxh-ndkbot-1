@@ -1,788 +1,424 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GBVH STUDIO Canh Toa Do & EDIT BXH</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Orbitron:wght@400;700;800;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --neon-blue: #00f3ff;
-            --neon-pink: #ff00ff;
-            --neon-yellow: #fcee0a;
-            --bg-dark: #020205;
-            --panel-bg: rgba(15, 15, 26, 0.95);
-            --bg-color: #030508;
-            --card-bg: rgba(8, 12, 20, 0.6);
-            --border-color: rgba(255, 255, 255, 0.05);
-            --border-cyan: rgba(0, 240, 255, 0.3);
-            --primary-cyan: #00f0ff;
-            --text-main: #d0dbe7;
-            --text-dim: #4a5a70;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BẢNG XẾP HẠNG NDK BOT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #030508;
+            --card-bg: rgba(8, 12, 20, 0.6);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --border-cyan: rgba(0, 240, 255, 0.3);
+            --primary-cyan: #00f0ff;
+            --text-main: #d0dbe7;
+            --text-dim: #4a5a70;
+        }
 
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--neon-blue);
-            font-family: 'Rajdhani', sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            user-select: none;
-            -webkit-user-select: none;
-        }
+        body { 
+            font-family: 'Chakra Petch', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main); 
+            padding: 20px 15px; 
+            min-height: 100vh;
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-        header {
-            background: var(--panel-bg);
-            padding: 10px 15px;
-            border-bottom: 2px solid var(--neon-blue);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 100;
-            overflow-y: auto;
-            max-height: 45vh;
-        }
+        .app-container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
 
-        .header-top { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #fff; text-shadow: 0 0 8px var(--neon-blue); }
+        /* Top Bar Layout matching image */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding: 0 5px;
+        }
 
-        .tab-menu {
-            display: flex;
-            gap: 10px;
-        }
+        .header-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #7b8e9f;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
 
-        .tab-btn {
-            background: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-cyan);
-            padding: 4px 10px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
+        .top-right-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-        .tab-btn.active {
-            background: var(--primary-cyan);
-            color: #000;
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
+        .search-box {
+            position: relative;
+        }
 
-        .controls, .overlay-controls {
-            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center;
-        }
-        
-        .divider { width: 100%; height: 1px; background: rgba(0, 243, 255, 0.3); margin: 2px 0; }
+        .search-box input {
+            background: #090e17;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            padding: 8px 12px 8px 32px;
+            border-radius: 8px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 13px;
+            outline: none;
+            width: 150px;
+            transition: all 0.3s ease;
+        }
 
-        .coord-input {
-            display: flex; align-items: center; background: rgba(0, 0, 0, 0.6);
-            padding: 5px 10px; border: 1px solid var(--neon-blue);
-            border-left: 4px solid var(--neon-pink); border-radius: 4px;
-        }
+        .search-box input:focus {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
 
-        .coord-input label { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; margin-right: 8px; color: var(--neon-pink); }
-        .coord-input input, .custom-input { background: transparent; border: none; color: var(--neon-yellow); font-weight: bold; outline: none; }
-        .coord-input input { width: 60px; font-family: 'monospace'; }
-        .custom-input { border: 1px solid var(--neon-blue); padding: 5px 8px; border-radius: 4px; font-size: 0.7rem; background: rgba(0,0,0,0.5); }
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            opacity: 0.5;
+        }
 
-        .btn-action {
-            background: transparent; color: var(--neon-blue); border: 1px solid var(--neon-blue);
-            padding: 5px 10px; font-family: 'Orbitron'; font-size: 0.6rem; border-radius: 4px; cursor: pointer;
-        }
+        .counter-badge {
+            background: #08111e;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            color: var(--primary-cyan);
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            min-width: 80px;
+            text-align: center;
+        }
 
-        .btn-action.active { background: var(--neon-pink); border-color: var(--neon-pink); color: #fff; }
+        /* Gallery Layout matching image */
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
 
-        main { flex: 1; position: relative; background: radial-gradient(circle, #1a1a2e 0%, #000 100%); display: flex; justify-content: center; align-items: center; overflow: auto; padding: 10px; }
+        .image-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            position: relative;
+        }
 
-        .tab-content {
-            width: 100%;
-            height: 100%;
-            display: none;
-        }
+        /* Prefix `>>` above each item */
+        .image-container::before {
+            content: '>>';
+            position: absolute;
+            top: -16px;
+            left: 0;
+            font-size: 11px;
+            color: var(--text-dim);
+            font-family: monospace;
+        }
 
-        .tab-content.active {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+        /* Image Box - Large Thumbnail like image */
+        .img-wrapper {
+            position: relative;
+            width: 260px;
+            height: 155px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #080d16;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
 
-        /* --- CANH TOA DO STYLES --- */
-        .upload-zone { width: 90%; max-width: 400px; padding: 40px 20px; border: 2px dashed var(--neon-blue); text-align: center; border-radius: 15px; cursor: pointer; }
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
-        .image-wrapper { position: relative; display: none; line-height: 0; }
-        #targetImg { display: block; max-width: 100%; max-height: 70vh; object-fit: contain; }
+        /* Number Badge inside image top-left */
+        .image-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(18, 22, 32, 0.85);
+            color: #ffffff;
+            padding: 5px 12px;
+            font-size: 13px;
+            font-weight: 800;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+        }
 
-        .nano-pointer {
-            position: absolute; width: 6px; height: 6px; background: #fff; border: 1px solid #000;
-            z-index: 999; transform: translate(-50%, -50%); pointer-events: none;
-        }
+        /* Right Content Details */
+        .item-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            padding-top: 5px;
+        }
 
-        .draggable-item {
-            position: absolute; cursor: move; z-index: 100; user-select: none;
-            border: 1px dashed transparent; transform-origin: top left;
-        }
+        .item-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+        }
 
-        .draggable-item.unlocked {
-            border: 2px dashed var(--neon-pink) !important;
-            animation: pulse 1s infinite;
-        }
+        .item-tag {
+            background: #091a2e;
+            border: 1px solid #14355a;
+            color: #2ed3ff;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 12px;
+            letter-spacing: 0.5px;
+        }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
+        .footer-thankyou {
+            margin: 40px auto 30px auto;
+            padding: 18px;
+            background: rgba(0, 240, 255, 0.02);
+            border: 1px dashed var(--border-cyan);
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--primary-cyan);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
 
-        .text-overlay {
-            font-family: 'Arial', sans-serif; color: #fff;
-            text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            white-space: nowrap; padding: 0; line-height: 1;
-        }
+        /* Lightbox Fullscreen */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(2, 4, 10, 0.95);
+            backdrop-filter: blur(12px);
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; 
+        }
 
-        /* --- EDIT BXH STYLES --- */
-        #tab-bxh {
-            overflow-y: auto;
-            justify-content: flex-start !important;
-            padding: 10px;
-            font-family: 'Chakra Petch', sans-serif;
-        }
+        .lightbox-overlay.active {
+            display: flex;
+        }
 
-        .app-container {
-            width: 100%;
-            max-width: 650px;
-            margin: 0 auto;
-        }
+        .lightbox-image {
+            max-width: 90%;
+            max-height: 85vh;
+            border: 1px solid var(--primary-cyan);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            border-radius: 8px;
+        }
 
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 25px;
-            padding: 0 5px;
-        }
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--primary-cyan);
+            font-size: 36px;
+            cursor: pointer;
+        }
 
-        .header-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #7b8e9f;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        .top-right-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .search-box {
-            position: relative;
-        }
-
-        .search-box input {
-            background: #090e17;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--text-main);
-            padding: 8px 12px 8px 32px;
-            border-radius: 8px;
-            font-family: 'Chakra Petch', sans-serif;
-            font-size: 13px;
-            outline: none;
-            width: 150px;
-            transition: all 0.3s ease;
-        }
-
-        .search-box input:focus {
-            border-color: var(--primary-cyan);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-        }
-
-        .search-box::before {
-            content: '🔍';
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 11px;
-            opacity: 0.5;
-        }
-
-        .counter-badge {
-            background: #08111e;
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            color: var(--primary-cyan);
-            padding: 7px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            min-width: 80px;
-            text-align: center;
-        }
-
-        .gallery {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .image-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            position: relative;
-        }
-
-        .image-container::before {
-            content: '>>';
-            position: absolute;
-            top: -16px;
-            left: 0;
-            font-size: 11px;
-            color: var(--text-dim);
-            font-family: monospace;
-        }
-
-        .img-wrapper {
-            position: relative;
-            width: 260px;
-            height: 155px;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #080d16;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .image-number {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(18, 22, 32, 0.85);
-            color: #ffffff;
-            padding: 5px 12px;
-            font-size: 13px;
-            font-weight: 800;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            backdrop-filter: blur(4px);
-        }
-
-        .item-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-            padding-top: 5px;
-        }
-
-        .item-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .item-tag {
-            background: #091a2e;
-            border: 1px solid #14355a;
-            color: #2ed3ff;
-            padding: 3px 10px;
-            font-size: 11px;
-            font-weight: 700;
-            border-radius: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-thankyou {
-            margin: 40px auto 30px auto;
-            padding: 18px;
-            background: rgba(0, 240, 255, 0.02);
-            border: 1px dashed var(--border-cyan);
-            border-radius: 8px;
-            text-align: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--primary-cyan);
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-        }
-
-        .lightbox-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(2, 4, 10, 0.95);
-            backdrop-filter: blur(12px);
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 1000; 
-        }
-
-        .lightbox-overlay.active {
-            display: flex;
-        }
-
-        .lightbox-image {
-            max-width: 90%;
-            max-height: 85vh;
-            border: 1px solid var(--primary-cyan);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
-            border-radius: 8px;
-        }
-
-        .close-lightbox {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: var(--primary-cyan);
-            font-size: 36px;
-            cursor: pointer;
-        }
-
-        footer { background: #000; padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #222; }
-        .credits { font-size: 0.7rem; color: var(--neon-yellow); }
-
-        #fileInput, #overlayFileInput { display: none; }
-
-        @media (max-width: 480px) {
-            .img-wrapper {
-                width: 180px;
-                height: 110px;
-            }
-            .search-box input {
-                width: 110px;
-            }
-        }
-    </style>
+        /* Responsive */
+        @media (max-width: 480px) {
+            .img-wrapper {
+                width: 180px;
+                height: 110px;
+            }
+            .search-box input {
+                width: 110px;
+            }
+        }
+    </style>
 </head>
 <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
 
-    <header>
-        <div class="header-top">
-            <div class="logo">GBVH STUDIO</div>
-            <div class="tab-menu">
-                <button class="tab-btn active" onclick="switchTab('coord')">CĂN TỌA ĐỘ</button>
-                <button class="tab-btn" onclick="switchTab('bxh')">EDIT BXH</button>
-            </div>
-            <button class="btn-action" style="background:red; color:white;" onclick="location.reload()">RESET</button>
-        </div>
-        
-        <!-- Controls Căn tọa độ -->
-        <div id="coord-controls-wrapper">
-            <div class="controls">
-                <div class="coord-input"><label>X:</label><input type="number" id="inX" value="0"></div>
-                <div class="coord-input"><label>Y:</label><input type="number" id="inY" value="0"></div>
-                <button class="btn-action" id="btnSave">LƯU TĐ 1</button>
-                <button class="btn-action" id="btnAddX">CỘNG X</button>
-                <button class="btn-action" id="btnAddY">CỘNG Y</button>
-            </div>
+    <div class="app-container">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="header-title">LỊCH SỬ BẢNG XẾP HẠNG</div>
+            <div class="top-right-group">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Tìm số BXH..." oninput="filterBXH()">
+                </div>
+                <div class="counter-badge" id="counter">Đang tải...</div>
+            </div>
+        </div>
 
-            <div class="divider"></div>
+        <!-- Main Gallery List -->
+        <div class="gallery" id="gallery-container"></div>
 
-            <div class="overlay-controls">
-                <button class="btn-action" id="btnChooseOverlay">CHỌN ẢNH</button>
-                <input type="number" class="custom-input" id="overlayW" placeholder="Rộng px" style="width: 60px;">
-                <input type="number" class="custom-input" id="overlayH" placeholder="Cao px" style="width: 60px;">
-                <button class="btn-action" id="btnAddOverlayImg">THÊM ẢNH</button>
-                <input type="text" class="custom-input" id="overlayText" placeholder="Nhập chữ..." style="width: 100px;">
-                <input type="number" class="custom-input" id="overlayFontSize" value="22" style="width: 45px;">
-                <button class="btn-action" id="btnAddOverlayText">THÊM CHỮ</button>
-            </div>
-            <div id="savedInfo" style="font-size: 0.7rem; text-align: center; color: var(--neon-pink); margin-top: 4px;">Nhấn 2 lần vào vật thể để ĐỒNG BỘ với ô nhập TĐ</div>
-        </div>
-    </header>
+        <!-- Footer -->
+        <div class="footer-thankyou" id="thankyou-block" style="display: none;">
+            NDKBOT THANK YOU
+        </div>
+    </div>
 
-    <main>
-        <!-- TAB 1: CANH TOA DO -->
-        <div id="tab-coord" class="tab-content active">
-            <div class="upload-zone" id="uploadBtn" onclick="document.getElementById('fileInput').click()">TẢI ẢNH NỀN</div>
-            <input type="file" id="fileInput" accept="image/*">
-            <div class="image-wrapper" id="imgBox">
-                <img id="targetImg">
-                <div class="nano-pointer" id="pointer"></div>
-            </div>
-            <input type="file" id="overlayFileInput" accept="image/*">
-        </div>
+    <!-- Modal Lightbox Xem Ảnh Lớn -->
+    <div class="lightbox-overlay" id="lightbox">
+        <span class="close-lightbox" id="close-btn">&times;</span>
+        <img src="" alt="BXH Chi Tiết" class="lightbox-image" id="lightbox-img">
+    </div>
 
-        <!-- TAB 2: EDIT BXH -->
-        <div id="tab-bxh" class="tab-content">
-            <div class="app-container">
-                <!-- Top Bar -->
-                <div class="top-bar">
-                    <div class="header-title">LỊCH SỬ BẢNG XẾP HẠNG</div>
-                    <div class="top-right-group">
-                        <div class="search-box">
-                            <input type="text" id="search-input" placeholder="Tìm số BXH..." oninput="filterBXH()">
-                        </div>
-                        <div class="counter-badge" id="counter">Đang tải...</div>
-                    </div>
-                </div>
+    <script>
+        const BATCH_SIZE = 15;
+        const gallery = document.getElementById('gallery-container');
+        const counterEl = document.getElementById('counter');
+        const thankyouBlock = document.getElementById('thankyou-block');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('close-btn');
 
-                <!-- Main Gallery List -->
-                <div class="gallery" id="gallery-container"></div>
+        let totalLoaded = 0;
 
-                <!-- Footer -->
-                <div class="footer-thankyou" id="thankyou-block" style="display: none;">
-                    NDKBOT THANK YOU
-                </div>
-            </div>
-        </div>
-    </main>
+        function checkImageExists(index) {
+            return new Promise((resolve) => {
+                const formats = [`${index}.png`, `${index}.jpg`, `${index}.jpeg`, `${index}.webp`];
+                let checkedCount = 0;
+                let foundSrc = null;
 
-    <!-- Modal Lightbox Xem Ảnh Lớn (BXH) -->
-    <div class="lightbox-overlay" id="lightbox">
-        <span class="close-lightbox" id="close-btn">&times;</span>
-        <img src="" alt="BXH Chi Tiết" class="lightbox-image" id="lightbox-img">
-    </div>
+                formats.forEach(src => {
+                    const img = new Image();
+                    img.onload = () => {
+                        if (!foundSrc) {
+                            foundSrc = src;
+                            resolve(foundSrc);
+                        }
+                    };
+                    img.onerror = () => {
+                        checkedCount++;
+                        if (checkedCount === formats.length && !foundSrc) {
+                            resolve(null);
+                        }
+                    };
+                    img.src = src;
+                });
+            });
+        }
 
-    <footer>
-        <div id="statusText" style="font-size:0.6rem;">READY</div>
-        <div class="credits">VAN HUY & HBOTVN & NDK BOT</div>
-    </footer>
+        async function loadFastUnlimitedImages() {
+            let currentIndex = 1;
+            let keepScanning = true;
 
-    <script>
-        // --- CHUYỂN TAB ---
-        function switchTab(tabName) {
-            const tabs = document.querySelectorAll('.tab-content');
-            const btns = document.querySelectorAll('.tab-btn');
-            const coordControls = document.getElementById('coord-controls-wrapper');
+            while (keepScanning) {
+                const batchPromises = [];
+                for (let i = 0; i < BATCH_SIZE; i++) {
+                    batchPromises.push(checkImageExists(currentIndex + i));
+                }
 
-            tabs.forEach(tab => tab.classList.remove('active'));
-            btns.forEach(btn => btn.classList.remove('active'));
+                const results = await Promise.all(batchPromises);
+                const fragment = document.createDocumentFragment();
+                let addedInBatch = 0;
 
-            if (tabName === 'coord') {
-                document.getElementById('tab-coord').classList.add('active');
-                btns[0].classList.add('active');
-                coordControls.style.display = 'block';
-            } else if (tabName === 'bxh') {
-                document.getElementById('tab-bxh').classList.add('active');
-                btns[1].classList.add('active');
-                coordControls.style.display = 'none';
-            }
-        }
+                for (let i = 0; i < results.length; i++) {
+                    const validSrc = results[i];
+                    const itemIndex = currentIndex + i;
 
-        // --- CODE CĂN TỌA ĐỘ ---
-        const inX = document.getElementById('inX'), inY = document.getElementById('inY');
-        const targetImg = document.getElementById('targetImg'), imgBox = document.getElementById('imgBox');
-        const pointer = document.getElementById('pointer');
-        let lockedEl = null;
+                    if (validSrc) {
+                        totalLoaded++;
+                        addedInBatch++;
 
-        document.getElementById('fileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                targetImg.src = URL.createObjectURL(file);
-                targetImg.onload = () => {
-                    document.getElementById('uploadBtn').style.display = 'none';
-                    imgBox.style.display = 'inline-block';
-                    updateUI();
-                };
-            }
-        });
+                        const div = document.createElement('div');
+                        div.className = 'image-container';
+                        div.setAttribute('data-index', itemIndex);
 
-        function updateUI() {
-            if (!targetImg.complete) return;
-            const rect = targetImg.getBoundingClientRect();
-            const visualScaleX = rect.width / targetImg.naturalWidth;
-            const visualScaleY = rect.height / targetImg.naturalHeight;
-            
-            pointer.style.left = (inX.value * visualScaleX) + "px";
-            pointer.style.top = (inY.value * visualScaleY) + "px";
+                        div.innerHTML = `
+                            <div class="img-wrapper" onclick="openLightbox('${validSrc}')">
+                                <img src="${validSrc}" alt="BXH #${itemIndex}" loading="lazy" decoding="async">
+                                <span class="image-number">${itemIndex}</span>
+                            </div>
+                            <div class="item-right">
+                                <div class="item-title">BXH #${itemIndex}</div>
+                                <span class="item-tag">BXH #${itemIndex}</span>
+                            </div>
+                        `;
+                        fragment.appendChild(div);
+                    } else {
+                        keepScanning = false;
+                        break;
+                    }
+                }
 
-            if (lockedEl) {
-                const ratioX = targetImg.naturalWidth / rect.width;
-                const ratioY = targetImg.naturalHeight / rect.height;
+                gallery.appendChild(fragment);
+                updateCounter(totalLoaded, totalLoaded);
 
-                let newLeft = inX.value / ratioX;
-                let newTop = inY.value / ratioY;
+                if (addedInBatch < BATCH_SIZE) {
+                    break;
+                }
 
-                if (lockedEl.classList.contains('text-overlay')) {
-                    newTop -= lockedEl.offsetHeight;
-                }
+                currentIndex += BATCH_SIZE;
+            }
 
-                lockedEl.style.left = newLeft + "px";
-                lockedEl.style.top = newTop + "px";
-            }
+            if (totalLoaded > 0) {
+                thankyouBlock.style.display = 'block';
+            } else {
+                counterEl.innerText = "0 / 0";
+            }
+        }
 
-            document.querySelectorAll('.draggable-item').forEach(el => {
-                if (el.tagName === 'IMG') {
-                    let nw = el.dataset.w ? el.dataset.w : el.naturalWidth;
-                    let nh = el.dataset.h ? el.dataset.h : el.naturalHeight;
-                    el.style.width = (nw * visualScaleX) + "px";
-                    el.style.height = (nh * visualScaleY) + "px";
-                } else {
-                    el.style.fontSize = (el.dataset.size * visualScaleX) + "px";
-                }
-            });
-        }
+        function updateCounter(visible, total) {
+            counterEl.innerText = `${visible} / ${total}`;
+        }
 
-        [inX, inY].forEach(input => input.addEventListener('input', updateUI));
+        function filterBXH() {
+            const input = document.getElementById('search-input').value.trim();
+            const items = document.querySelectorAll('.image-container');
+            let visibleCount = 0;
 
-        targetImg.addEventListener('click', (e) => {
-            const rect = targetImg.getBoundingClientRect();
-            inX.value = Math.round((e.clientX - rect.left) * (targetImg.naturalWidth / rect.width));
-            inY.value = Math.round((e.clientY - rect.top) * (targetImg.naturalHeight / rect.height));
-            updateUI();
-        });
+            items.forEach(item => {
+                const index = item.getAttribute('data-index');
+                if (input === '' || index === input || index.includes(input)) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
 
-        function makeSpecial(el) {
-            el.addEventListener('dblclick', () => toggleLock(el));
-            
-            let lastTap = 0;
-            el.addEventListener('touchstart', function(e) {
-                let curTime = new Date().getTime();
-                let tapLen = curTime - lastTap;
-                if (tapLen < 300 && tapLen > 0) {
-                    e.preventDefault();
-                    toggleLock(el);
-                }
-                lastTap = curTime;
-            });
+            updateCounter(visibleCount, totalLoaded);
+        }
 
-            makeDraggable(el);
-        }
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-        function toggleLock(el) {
-            if (lockedEl === el) {
-                el.classList.remove('unlocked');
-                lockedEl = null;
-            } else {
-                document.querySelectorAll('.draggable-item').forEach(i => i.classList.remove('unlocked'));
-                el.classList.add('unlocked');
-                lockedEl = el;
-                
-                const rect = targetImg.getBoundingClientRect();
-                const ratioX = targetImg.naturalWidth / rect.width;
-                const ratioY = targetImg.naturalHeight / rect.height;
-                
-                inX.value = Math.round(el.offsetLeft * ratioX);
-                let yVal = el.offsetTop;
-                if (el.classList.contains('text-overlay')) yVal += el.offsetHeight;
-                inY.value = Math.round(yVal * ratioY);
-                updateUI();
-            }
-        }
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-        document.getElementById('btnAddOverlayImg').addEventListener('click', () => {
-            const file = document.getElementById('overlayFileInput').files[0];
-            if (!file) return alert("Chọn ảnh trước!");
-            document.getElementById('single-overlay-img')?.remove();
-            const img = document.createElement('img');
-            img.id = 'single-overlay-img';
-            img.src = URL.createObjectURL(file);
-            img.className = 'draggable-item';
-            img.dataset.w = document.getElementById('overlayW').value;
-            img.dataset.h = document.getElementById('overlayH').value;
-            img.style.left = "50px"; img.style.top = "50px";
-            img.onload = () => { imgBox.appendChild(img); makeSpecial(img); updateUI(); };
-        });
+        closeBtn.onclick = closeLightbox;
+        lightbox.onclick = (e) => { if (e.target !== lightboxImg) closeLightbox(); };
 
-        document.getElementById('btnAddOverlayText').addEventListener('click', () => {
-            const txt = document.getElementById('overlayText').value;
-            if (!txt) return;
-            document.getElementById('single-overlay-text')?.remove();
-            const div = document.createElement('div');
-            div.id = 'single-overlay-text';
-            div.innerText = txt;
-            div.className = 'draggable-item text-overlay';
-            div.dataset.size = document.getElementById('overlayFontSize').value;
-            div.style.left = "50px"; div.style.top = "50px";
-            imgBox.appendChild(div);
-            makeSpecial(div);
-            updateUI();
-        });
-
-        function makeDraggable(el) {
-            let px, py;
-            el.addEventListener('mousedown', start);
-            el.addEventListener('touchstart', start, {passive:false});
-
-            function start(e) {
-                if (lockedEl === el) return;
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                px = clientX - el.offsetLeft; py = clientY - el.offsetTop;
-                document.onmousemove = drag; document.ontouchmove = drag;
-                document.onmouseup = end; document.ontouchend = end;
-            }
-
-            function drag(e) {
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                el.style.left = (clientX - px) + "px";
-                el.style.top = (clientY - py) + "px";
-                
-                const rect = targetImg.getBoundingClientRect();
-                inX.value = Math.round(el.offsetLeft * (targetImg.naturalWidth / rect.width));
-                let yVal = el.offsetTop;
-                if (el.classList.contains('text-overlay')) yVal += el.offsetHeight;
-                inY.value = Math.round(yVal * (targetImg.naturalHeight / rect.height));
-                updateUI();
-            }
-            function end() { document.onmousemove = null; document.ontouchmove = null; }
-        }
-
-        document.getElementById('btnChooseOverlay').onclick = () => document.getElementById('overlayFileInput').click();
-
-        // --- CODE EDIT BXH (NDK BOT) ---
-        const BATCH_SIZE = 15;
-        const gallery = document.getElementById('gallery-container');
-        const counterEl = document.getElementById('counter');
-        const thankyouBlock = document.getElementById('thankyou-block');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const closeBtn = document.getElementById('close-btn');
-
-        let totalLoaded = 0;
-
-        function checkImageExists(index) {
-            return new Promise((resolve) => {
-                const formats = [`${index}.png`, `${index}.jpg`, `${index}.jpeg`, `${index}.webp`];
-                let checkedCount = 0;
-                let foundSrc = null;
-
-                formats.forEach(src => {
-                    const img = new Image();
-                    img.onload = () => {
-                        if (!foundSrc) {
-                            foundSrc = src;
-                            resolve(foundSrc);
-                        }
-                    };
-                    img.onerror = () => {
-                        checkedCount++;
-                        if (checkedCount === formats.length && !foundSrc) {
-                            resolve(null);
-                        }
-                    };
-                    img.src = src;
-                });
-            });
-        }
-
-        async function loadFastUnlimitedImages() {
-            let currentIndex = 1;
-            let keepScanning = true;
-
-            while (keepScanning) {
-                const batchPromises = [];
-                for (let i = 0; i < BATCH_SIZE; i++) {
-                    batchPromises.push(checkImageExists(currentIndex + i));
-                }
-
-                const results = await Promise.all(batchPromises);
-                const fragment = document.createDocumentFragment();
-                let addedInBatch = 0;
-
-                for (let i = 0; i < results.length; i++) {
-                    const validSrc = results[i];
-                    const itemIndex = currentIndex + i;
-
-                    if (validSrc) {
-                        totalLoaded++;
-                        addedInBatch++;
-
-                        const div = document.createElement('div');
-                        div.className = 'image-container';
-                        div.setAttribute('data-index', itemIndex);
-
-                        div.innerHTML = `
-                            <div class="img-wrapper" onclick="openLightbox('${validSrc}')">
-                                <img src="${validSrc}" alt="BXH #${itemIndex}" loading="lazy" decoding="async">
-                                <span class="image-number">${itemIndex}</span>
-                            </div>
-                            <div class="item-right">
-                                <div class="item-title">BXH #${itemIndex}</div>
-                                <span class="item-tag">BXH #${itemIndex}</span>
-                            </div>
-                        `;
-                        fragment.appendChild(div);
-                    } else {
-                        keepScanning = false;
-                        break;
-                    }
-                }
-
-                gallery.appendChild(fragment);
-                updateCounter(totalLoaded, totalLoaded);
-
-                if (addedInBatch < BATCH_SIZE) {
-                    break;
-                }
-
-                currentIndex += BATCH_SIZE;
-            }
-
-            if (totalLoaded > 0) {
-                thankyouBlock.style.display = 'block';
-            } else {
-                counterEl.innerText = "0 / 0";
-            }
-        }
-
-        function updateCounter(visible, total) {
-            counterEl.innerText = `${visible} / ${total}`;
-        }
-
-        function filterBXH() {
-            const input = document.getElementById('search-input').value.trim();
-            const items = document.querySelectorAll('.image-container');
-            let visibleCount = 0;
-
-            items.forEach(item => {
-                const index = item.getAttribute('data-index');
-                if (input === '' || index === input || index.includes(input)) {
-                    item.style.display = 'flex';
-                    visibleCount++;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            updateCounter(visibleCount, totalLoaded);
-        }
-
-        function openLightbox(src) {
-            lightboxImg.src = src;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        closeBtn.onclick = closeLightbox;
-        lightbox.onclick = (e) => { if (e.target !== lightboxImg) closeLightbox(); };
-
-        // Khởi chạy quét ảnh BXH
-        loadFastUnlimitedImages();
-    </script>
+        loadFastUnlimitedImages();
+    </script>
 </body>
 </html>
+thêm code phía trên vô đây để là EDIT BXH
